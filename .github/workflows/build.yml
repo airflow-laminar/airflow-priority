@@ -59,8 +59,13 @@ jobs:
 
     - name: Test
       run: make coverage
+      env:
+        DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+        NEWRELIC_API_KEY: ${{ secrets.NEWRELIC_API_KEY }}
+        SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
       if: ${{ matrix.os == 'ubuntu-latest' }}
-
+      
     - name: Upload test results (Python)
       uses: actions/upload-artifact@v4
       with:

@@ -4,7 +4,7 @@ build-backend="hatchling.build"
 
 [project]
 name = "airflow-priority"
-authors = [{name = "Tim Paine", email = "t.paine154@gmail.com"}]
+authors = [{name = "the airflow-priority authors", email = "3105306+timkpaine@users.noreply.github.com"}]
 description="Priority Tags for Airflow Dags"
 readme = "README.md"
 license = { text = "Apache-2.0" }
@@ -24,7 +24,9 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 
-dependencies = []
+dependencies = [
+    "apache-airflow>=2,<3",
+]
 
 [project.urls]
 Repository = "https://github.com/timkpaine/airflow-priority"
@@ -41,9 +43,34 @@ develop = [
     "ruff",
     "twine",
     "wheel",
+    # Plugins
+    "boto3",
+    "botocore",
+    "datadog-api-client",
+    "newrelic-telemetry-sdk",
+    "slack-sdk",
+]
+aws = [
+    "boto3",
+    "botocore",
+]
+datadog = [
+    "datadog-api-client",
+]
+newrelic = [
+    "newrelic-telemetry-sdk",
+]
+slack = [
+    "slack-sdk",
 ]
 
 [project.scripts]
+
+[project.entry-points."airflow.plugins"]
+airflow_priority_newrelic = "airflow_priority.plugins.newrelic:NewRelicPriorityPlugin"
+airflow_priority_datadog = "airflow_priority.plugins.datadog:DatadogPriorityPlugin"
+airflow_priority_aws_cloudwatch = "airflow_priority.plugins.aws:AWSCloudWatchPriorityPlugin"
+airflow_priority_slack = "airflow_priority.plugins.slack:SlackPriorityPlugin"
 
 [tool.bumpversion]
 current_version = "0.1.0"
@@ -117,4 +144,4 @@ section-order = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"__init__.py" = ["F401"]
+"__init__.py" = ["F401", "F403"]
