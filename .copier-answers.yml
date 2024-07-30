@@ -1,0 +1,10 @@
+# Changes here will be overwritten by Copier
+_commit: acb4a69
+_src_path: ../../templates/base
+add_extension: python
+email: t.paine154@gmail.com
+github: timkpaine
+project_description: Priority Tags for Airflow Dags
+project_name: airflow-priority
+python_version_primary: '3.11'
+team: Tim Paine
