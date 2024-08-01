@@ -3,7 +3,7 @@ _commit: acb4a69
 _src_path: ../../templates/base
 add_extension: python
 email: 3105306+timkpaine@users.noreply.github.com
-github: timkpaine
+github: airflow-laminar
 project_description: Priority Tags for Airflow Dags
 project_name: airflow-priority
 python_version_primary: '3.11'
