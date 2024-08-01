@@ -29,8 +29,8 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/timkpaine/airflow-priority"
-Homepage = "https://github.com/timkpaine/airflow-priority"
+Repository = "https://github.com/airflow-laminar/airflow-priority"
+Homepage = "https://github.com/airflow-laminar/airflow-priority"
 
 [project.optional-dependencies]
 develop = [
