@@ -6,7 +6,6 @@ Priority Tags for Airflow Dags
 [![codecov](https://codecov.io/gh/airflow-laminar/airflow-priority/branch/main/graph/badge.svg)](https://codecov.io/gh/airflow-laminar/airflow-priority)
 [![License](https://img.shields.io/github/license/airflow-laminar/airflow-priority)](https://github.com/airflow-laminar/airflow-priority)
 [![PyPI](https://img.shields.io/pypi/v/airflow-priority.svg)](https://pypi.python.org/pypi/airflow-priority)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/airflow-laminar/airflow-priority/main?urlpath=lab)
 
 ## Overview
 
