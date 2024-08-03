@@ -1,5 +1,6 @@
 import sys
 from functools import lru_cache
+from logging import getLogger
 
 from airflow.listeners import hookimpl
 from airflow.models.dagrun import DagRun
@@ -15,6 +16,8 @@ __all__ = (
     "on_dag_run_failed",
     "NewRelicPriorityPlugin",
 )
+
+_log = getLogger(__name__)
 
 
 @lru_cache
@@ -50,6 +53,13 @@ def on_dag_run_failed(dag_run: DagRun, msg: str):
         send_metric_newrelic(dag_id, priority, "failed")
 
 
-class NewRelicPriorityPlugin(AirflowPlugin):
-    name = "NewRelicPriorityPlugin"
-    listeners = [sys.modules[__name__]]
+try:
+    # Call once to ensure plugin will work
+    get_client()
+
+    class NewRelicPriorityPlugin(AirflowPlugin):
+        name = "NewRelicPriorityPlugin"
+        listeners = [sys.modules[__name__]]
+
+except Exception:
+    _log.exception("Plugin could not be enabled")

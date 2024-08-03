@@ -1,6 +1,7 @@
 import sys
 from datetime import datetime
 from functools import lru_cache
+from logging import getLogger
 
 from airflow.listeners import hookimpl
 from airflow.models.dagrun import DagRun
@@ -14,6 +15,16 @@ from datadog_api_client.v2.model.metric_resource import MetricResource
 from datadog_api_client.v2.model.metric_series import MetricSeries
 
 from airflow_priority import DagStatus, get_config_option, has_priority_tag
+
+__all__ = (
+    "send_metric_datadog",
+    "on_dag_run_running",
+    "on_dag_run_success",
+    "on_dag_run_failed",
+    "DatadogPriorityPlugin",
+)
+
+_log = getLogger(__name__)
 
 
 @lru_cache
@@ -74,6 +85,12 @@ def on_dag_run_failed(dag_run: DagRun, msg: str):
         send_metric_datadog(dag_id, priority, "failed")
 
 
-class DatadogPriorityPlugin(AirflowPlugin):
-    name = "DatadogPriorityPlugin"
-    listeners = [sys.modules[__name__]]
+try:
+    # Call once to ensure plugin will work
+    get_configuration()
+
+    class DatadogPriorityPlugin(AirflowPlugin):
+        name = "DatadogPriorityPlugin"
+        listeners = [sys.modules[__name__]]
+except Exception:
+    _log.exception("Plugin could not be enabled")
