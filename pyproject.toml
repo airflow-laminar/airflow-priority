@@ -85,7 +85,7 @@ airflow_priority_symphony = "airflow_priority.plugins.symphony:SymphonyPriorityP
 [tool.bumpversion]
 current_version = "0.1.0"
 commit = true
-tag = true
+tag = false
 
 [[tool.bumpversion.files]]
 filename = "airflow_priority/__init__.py"
