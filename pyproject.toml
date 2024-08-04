@@ -8,7 +8,7 @@ authors = [{name = "the airflow-priority authors", email = "3105306+timkpaine@us
 description="Priority Tags for Airflow Dags"
 readme = "README.md"
 license = { text = "Apache-2.0" }
-version = "0.1.0"
+version = "0.1.1"
 requires-python = ">=3.9"
 keywords = []
 
@@ -83,9 +83,9 @@ airflow_priority_slack = "airflow_priority.plugins.slack:SlackPriorityPlugin"
 airflow_priority_symphony = "airflow_priority.plugins.symphony:SymphonyPriorityPlugin"
 
 [tool.bumpversion]
-current_version = "0.1.0"
+current_version = "0.1.1"
 commit = true
-tag = true
+tag = false
 
 [[tool.bumpversion.files]]
 filename = "airflow_priority/__init__.py"
