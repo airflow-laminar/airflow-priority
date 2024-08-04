@@ -47,6 +47,8 @@ develop = [
     "boto3",
     "botocore",
     "datadog-api-client",
+    "discord.py",
+    "httpx",
     "newrelic-telemetry-sdk",
     "slack-sdk",
 ]
@@ -57,20 +59,28 @@ aws = [
 datadog = [
     "datadog-api-client",
 ]
+discord = [
+    "discord.py",
+]
 newrelic = [
     "newrelic-telemetry-sdk",
 ]
 slack = [
     "slack-sdk",
 ]
+symphony = [
+    "httpx",
+]
 
 [project.scripts]
 
 [project.entry-points."airflow.plugins"]
-airflow_priority_newrelic = "airflow_priority.plugins.newrelic:NewRelicPriorityPlugin"
-airflow_priority_datadog = "airflow_priority.plugins.datadog:DatadogPriorityPlugin"
 airflow_priority_aws_cloudwatch = "airflow_priority.plugins.aws:AWSCloudWatchPriorityPlugin"
+airflow_priority_datadog = "airflow_priority.plugins.datadog:DatadogPriorityPlugin"
+airflow_priority_discord = "airflow_priority.plugins.discord:DiscordPriorityPlugin"
+airflow_priority_newrelic = "airflow_priority.plugins.newrelic:NewRelicPriorityPlugin"
 airflow_priority_slack = "airflow_priority.plugins.slack:SlackPriorityPlugin"
+airflow_priority_symphony = "airflow_priority.plugins.symphony:SymphonyPriorityPlugin"
 
 [tool.bumpversion]
 current_version = "0.1.0"

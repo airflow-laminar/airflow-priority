@@ -28,7 +28,7 @@ PriorityTags = MappingProxyType(
 class AirflowPriorityConfigurationOptionNotFound(RuntimeError): ...
 
 
-def get_config_option(section, key, default, required=True):
+def get_config_option(section, key, required=True, default=None):
     import airflow.configuration
 
     config_option = airflow.configuration.conf.get(f"priority.{section}", key, default)

@@ -12,11 +12,20 @@ def airflow_config():
     j2 = Environment(loader=DictLoader({"airflow.cfg": config_template}), trim_blocks=True)
     with TemporaryDirectory() as td:
         tmpl = j2.get_template("airflow.cfg").render(
-            SLACK_TOKEN=os.environ.get("SLACK_TOKEN", ""),
-            SLACK_CHANNEL=os.environ.get("SLACK_CHANNEL", ""),
             DATADOG_HOST=os.environ.get("DATADOG_HOST", ""),
             DATADOG_API_KEY=os.environ.get("DATADOG_API_KEY", ""),
+            DISCORD_TOKEN=os.environ.get("DISCORD_TOKEN", ""),
+            DISCORD_CHANNEL=os.environ.get("DISCORD_CHANNEL", ""),
             NEWRELIC_API_KEY=os.environ.get("NEWRELIC_API_KEY", ""),
+            SLACK_TOKEN=os.environ.get("SLACK_TOKEN", ""),
+            SLACK_CHANNEL=os.environ.get("SLACK_CHANNEL", ""),
+            SYMPHONY_ROOM_NAME=os.environ.get("SYMPHONY_ROOM_NAME", ""),
+            SYMPHONY_MESSAGE_CREATE_URL=os.environ.get("SYMPHONY_MESSAGE_CREATE_URL", ""),
+            SYMPHONY_CERT_FILE=os.environ.get("SYMPHONY_CERT_FILE", ""),
+            SYMPHONY_KEY_FILE=os.environ.get("SYMPHONY_KEY_FILE", ""),
+            SYMPHONY_SESSION_AUTH=os.environ.get("SYMPHONY_SESSION_AUTH", ""),
+            SYMPHONY_KEY_AUTH=os.environ.get("SYMPHONY_KEY_AUTH", ""),
+            SYMPHONY_ROOM_SEARCH_URL=os.environ.get("SYMPHONY_ROOM_SEARCH_URL", ""),
         )
         (Path(td) / "airflow.cfg").write_text(tmpl)
         os.environ["AIRFLOW_HOME"] = str(Path(td))

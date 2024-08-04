@@ -22,7 +22,7 @@ _log = getLogger(__name__)
 
 @lru_cache
 def get_client():
-    return MetricClient(get_config_option("newrelic", "api_key", "", True))
+    return MetricClient(get_config_option("newrelic", "api_key"))
 
 
 def send_metric_newrelic(dag_id: str, priority: int, tag: DagStatus) -> None:

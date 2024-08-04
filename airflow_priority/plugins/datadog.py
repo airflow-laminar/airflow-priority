@@ -30,7 +30,7 @@ _log = getLogger(__name__)
 @lru_cache
 def get_configuration():
     return Configuration(
-        api_key={"apiKeyAuth": get_config_option("datadog", "api_key", "")},
+        api_key={"apiKeyAuth": get_config_option("datadog", "api_key")},
     )
 
 

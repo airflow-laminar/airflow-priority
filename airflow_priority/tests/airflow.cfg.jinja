@@ -352,12 +352,26 @@ test = "blerg"
 test="blerg"
 {% endraw %}
 
+[priority.datadog]
+api_key = {{ DATADOG_API_KEY }}
+
+[priority.discord]
+token = {{ DISCORD_TOKEN }}
+channel = {{ DISCORD_CHANNEL }}
+
+[priority.newrelic]
+api_key = {{ NEWRELIC_API_KEY }}
+
 [priority.slack]
 token = {{ SLACK_TOKEN }}
 channel = {{ SLACK_CHANNEL }}
 
-[priority.datadog]
-api_key = {{ DATADOG_API_KEY }}
+[priority.symphony]
+room_name = {{ SYMPHONY_ROOM_NAME }}
+message_create_url = {{ SYMPHONY_MESSAGE_CREATE_URL }}
+cert_file = {{ SYMPHONY_CERT_FILE }}
+key_file = {{ SYMPHONY_KEY_FILE }}
+session_auth = {{ SYMPHONY_SESSION_AUTH }}
+key_auth = {{ SYMPHONY_KEY_AUTH }}
+room_search_url = {{ SYMPHONY_ROOM_SEARCH_URL }}
 
-[priority.newrelic]
-api_key = {{ NEWRELIC_API_KEY }}
