@@ -17,12 +17,12 @@ _log = getLogger(__name__)
 
 @lru_cache
 def get_client():
-    return WebClient(token=get_config_option("slack", "token", ""))
+    return WebClient(token=get_config_option("slack", "token"))
 
 
 @lru_cache
 def get_channel_id():
-    channel_name = get_config_option("slack", "channel", "")
+    channel_name = get_config_option("slack", "channel")
     conversations = get_client().conversations_list(types=["public_channel", "private_channel"])
     if conversations.data["ok"]:
         for channel in conversations.data["channels"]:

@@ -61,6 +61,8 @@ jobs:
       run: make coverage
       env:
         DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        DISCORD_CHANNEL: ${{ secrets.DISCORD_CHANNEL }}
         NEWRELIC_API_KEY: ${{ secrets.NEWRELIC_API_KEY }}
         SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
         SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}

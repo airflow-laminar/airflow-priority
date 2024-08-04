@@ -13,7 +13,9 @@ This repo provides [Airflow Plugins](https://airflow.apache.org/docs/apache-airf
 
 - [New Relic](https://newrelic.com)
 - [Datadog](https://www.datadoghq.com)
+- [Discord](http://discord.com)
 - [Slack](http://slack.com)
+- [Symphony](http://symphony.com)
 
 Where `P1` corresponds to highest priority, and `P5` corresponds to lowest.
 
@@ -32,12 +34,41 @@ conda install airflow-priority -c conda-forge
 ```
 
 ## Integrations
-| Integration | Metric / Tag |
-| :---------- | :----------- |
-| [New Relic](https://newrelic.com) | `airflow.custom.priority.p{1,2,3,4,5}.{failed,succeeded,running}` |
-| [Datadog](https://www.datadoghq.com) | `airflow.custom.priority.p{1,2,3,4,5}.{failed,succeeded,running}` |
-| [Slack](http://slack.com) | `N/A` | 
 
+| Integration                          | Metric / Tag                                                      |
+| :----------------------------------- | :---------------------------------------------------------------- |
+| [New Relic](https://newrelic.com)    | `airflow.custom.priority.p{1,2,3,4,5}.{failed,succeeded,running}` |
+| [Datadog](https://www.datadoghq.com) | `airflow.custom.priority.p{1,2,3,4,5}.{failed,succeeded,running}` |
+| [Discord](http://discord.com)        | `N/A`                                                             |
+| [Slack](http://slack.com)            | `N/A`                                                             |
+| [Symphony](http://symphony.com)      | `N/A`                                                             |
+
+### Datadog
+
+Create a new Datadog api key [following their guide](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token).
+
+Copy this api key into your `airflow.cfg` like so:
+
+```
+[priority.datadog]
+api_key = the api key
+```
+
+Ensure your dags are configured with tags and run some, it can often be convenient to have an intentionally failing `P1` dag to test the integration. With this, you can now [create custom monitors](https://docs.datadoghq.com/getting_started/monitors/) for the tags.
+
+### Discord
+
+Create a new Discord application following the [guide from the discord.py library](https://discordpy.readthedocs.io/en/stable/discord.html).
+
+Copy your bot's token into your `airflow.cfg` like so:
+
+```
+[priority.discord]
+token = the bot's token
+channel = the numerical channel ID, from the url or by right clicking
+```
+
+Ensure your bot is invited into any private channels.
 
 ### New Relic
 
@@ -91,18 +122,25 @@ token = xoxb-...
 channel = channel-name
 ```
 
-### Datadog
+### Symphony
 
-Create a new Datadog api key [following their guide](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token).
+Documentation coming soon!
 
-Copy this api key into your `airflow.cfg` like so:
+- [Overview of REST API](https://docs.developers.symphony.com/bots/overview-of-rest-api)
+- [Certificate Authentication Workflow](https://docs.developers.symphony.com/bots/authentication/certificate-authentication)
 
 ```
-[priority.datadog]
-api_key = the api key
+[priority.symphony]
+room_name = the room name
+message_create_url = https://mycompany.symphony.com/agent/v4/stream/SID/message/create
+cert_file = path/to/my/cert.pem
+key_file = path/to/my/key.pem
+session_auth = https://mycompany-api.symphony.com/sessionauth/v1/authenticate
+key_auth = https://mycompany-api.symphony.com/keyauth/v1/authenticate
+room_search_url = https://mycompany.symphony.com/pod/v3/room/search
 ```
-
-Ensure your dags are configured with tags and run some, it can often be convenient to have an intentionally failing `P1` dag to test the integration. With this, you can now [create custom monitors](https://docs.datadoghq.com/getting_started/monitors/) for the tags.
 
 
 ## License
+
+This software is licensed under the Apache 2.0 license. See the [LICENSE](LICENSE) file for details.
