@@ -7,7 +7,7 @@ from airflow.models.dagrun import DagRun
 from airflow.plugins_manager import AirflowPlugin
 from newrelic_telemetry_sdk import GaugeMetric, MetricClient
 
-from airflow_priority import DagStatus, get_config_option, has_priority_tag
+from airflow_priority import AirflowPriorityConfigurationOptionNotFound, DagStatus, get_config_option, has_priority_tag
 
 __all__ = (
     "send_metric_newrelic",
@@ -55,11 +55,10 @@ def on_dag_run_failed(dag_run: DagRun, msg: str):
 
 try:
     # Call once to ensure plugin will work
-    get_client()
+    get_config_option("newrelic", "api_key")
 
     class NewRelicPriorityPlugin(AirflowPlugin):
         name = "NewRelicPriorityPlugin"
         listeners = [sys.modules[__name__]]
-
-except Exception:
+except AirflowPriorityConfigurationOptionNotFound:
     _log.exception("Plugin could not be enabled")

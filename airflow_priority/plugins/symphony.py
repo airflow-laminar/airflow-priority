@@ -1,14 +1,14 @@
 import ssl
 import sys
 from functools import lru_cache
-from httpx import post
 from logging import getLogger
 
 from airflow.listeners import hookimpl
 from airflow.models.dagrun import DagRun
 from airflow.plugins_manager import AirflowPlugin
+from httpx import post
 
-from airflow_priority import DagStatus, get_config_option, has_priority_tag
+from airflow_priority import AirflowPriorityConfigurationOptionNotFound, DagStatus, get_config_option, has_priority_tag
 
 __all__ = ("get_config_options", "get_headers", "get_room_id", "send_metric_symphony", "on_dag_run_failed", "SymphonyPriorityPlugin")
 
@@ -103,5 +103,5 @@ try:
     class SymphonyPriorityPlugin(AirflowPlugin):
         name = "SymphonyPriorityPlugin"
         listeners = [sys.modules[__name__]]
-except Exception:
+except AirflowPriorityConfigurationOptionNotFound:
     _log.exception("Plugin could not be enabled")

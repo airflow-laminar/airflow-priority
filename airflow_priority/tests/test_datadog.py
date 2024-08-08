@@ -1,6 +1,10 @@
+import os
 from unittest.mock import patch
 
+import pytest
 
+
+@pytest.mark.skipif(os.environ.get("DATADOG_API_KEY") is None, reason="Datadog key not set")
 def test_datadog_send(airflow_config, dag_run):
     from airflow_priority.plugins.datadog import send_metric_datadog
 

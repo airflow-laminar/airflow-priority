@@ -51,10 +51,15 @@ develop = [
     "httpx",
     "newrelic-telemetry-sdk",
     "slack-sdk",
+    # Config
+    "airflow-config>=0.1.2",
 ]
 aws = [
     "boto3",
     "botocore",
+]
+config = [
+    "airflow-config>=0.1.2",
 ]
 datadog = [
     "datadog-api-client",

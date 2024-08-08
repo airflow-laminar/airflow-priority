@@ -14,7 +14,7 @@ from datadog_api_client.v2.model.metric_point import MetricPoint
 from datadog_api_client.v2.model.metric_resource import MetricResource
 from datadog_api_client.v2.model.metric_series import MetricSeries
 
-from airflow_priority import DagStatus, get_config_option, has_priority_tag
+from airflow_priority import AirflowPriorityConfigurationOptionNotFound, DagStatus, get_config_option, has_priority_tag
 
 __all__ = (
     "send_metric_datadog",
@@ -87,10 +87,10 @@ def on_dag_run_failed(dag_run: DagRun, msg: str):
 
 try:
     # Call once to ensure plugin will work
-    get_configuration()
+    get_config_option("datadog", "api_key")
 
     class DatadogPriorityPlugin(AirflowPlugin):
         name = "DatadogPriorityPlugin"
         listeners = [sys.modules[__name__]]
-except Exception:
+except AirflowPriorityConfigurationOptionNotFound:
     _log.exception("Plugin could not be enabled")

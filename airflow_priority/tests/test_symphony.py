@@ -1,6 +1,7 @@
 import os
-import pytest
 from unittest.mock import patch
+
+import pytest
 
 
 @pytest.mark.skipif(os.environ.get("SYMPHONY_ROOM_NAME", "") == "", reason="no symphony credentials")
