@@ -38,7 +38,7 @@ def airflow_config():
         airflow.configuration.load_standard_airflow_configuration(airflow_config_parser)
         airflow_config_parser.validate()
         airflow.configuration.conf = airflow_config_parser
-        yield
+        yield str(Path(td))
 
 
 @pytest.fixture(scope="function", autouse=True)

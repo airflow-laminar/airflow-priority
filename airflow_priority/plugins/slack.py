@@ -7,7 +7,7 @@ from airflow.models.dagrun import DagRun
 from airflow.plugins_manager import AirflowPlugin
 from slack_sdk import WebClient
 
-from airflow_priority import DagStatus, get_config_option, has_priority_tag
+from airflow_priority import AirflowPriorityConfigurationOptionNotFound, DagStatus, get_config_option, has_priority_tag
 
 __all__ = ("get_client", "get_channel_id", "send_metric_slack", "on_dag_run_failed", "SlackPriorityPlugin")
 
@@ -58,10 +58,11 @@ def on_dag_run_failed(dag_run: DagRun, msg: str):
 
 try:
     # Call once to ensure plugin will work
-    get_client()
+    get_config_option("slack", "token")
+    get_config_option("slack", "channel")
 
     class SlackPriorityPlugin(AirflowPlugin):
         name = "SlackPriorityPlugin"
         listeners = [sys.modules[__name__]]
-except Exception:
+except AirflowPriorityConfigurationOptionNotFound:
     _log.exception("Plugin could not be enabled")

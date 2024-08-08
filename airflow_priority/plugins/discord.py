@@ -11,7 +11,7 @@ from airflow.models.dagrun import DagRun
 from airflow.plugins_manager import AirflowPlugin
 from discord import Client, Intents
 
-from airflow_priority import DagStatus, get_config_option, has_priority_tag
+from airflow_priority import AirflowPriorityConfigurationOptionNotFound, DagStatus, get_config_option, has_priority_tag
 
 __all__ = ("get_client", "send_metric_discord", "on_dag_run_failed", "DiscordPriorityPlugin")
 
@@ -67,10 +67,11 @@ def on_dag_run_failed(dag_run: DagRun, msg: str):
 
 try:
     # Call once to ensure plugin will work
-    get_client()
+    get_config_option("discord", "channel")
+    get_config_option("discord", "token")
 
     class DiscordPriorityPlugin(AirflowPlugin):
         name = "DiscordPriorityPlugin"
         listeners = [sys.modules[__name__]]
-except Exception:
+except AirflowPriorityConfigurationOptionNotFound:
     _log.exception("Plugin could not be enabled")

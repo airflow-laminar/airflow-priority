@@ -1,3 +1,5 @@
+import os
+from pathlib import Path
 from types import MappingProxyType
 from typing import Literal, Optional, Tuple
 
@@ -29,6 +31,21 @@ class AirflowPriorityConfigurationOptionNotFound(RuntimeError): ...
 
 
 def get_config_option(section, key, required=True, default=None):
+    try:
+        try:
+            from airflow_config import ConfigNotFoundError, Configuration
+
+            config = Configuration.load("config", "config", basepath=str(Path(os.environ.get("AIRFLOW_HOME", "")) / "dags"), _offset=4)
+            ret = getattr(getattr(config.extensions.get("priority", None), section, None), key, None)
+            if ret is not None:
+                return ret
+        except ConfigNotFoundError:
+            # SKIP
+            pass
+    except ImportError:
+        # SKIP
+        pass
+
     import airflow.configuration
 
     config_option = airflow.configuration.conf.get(f"priority.{section}", key, default)
