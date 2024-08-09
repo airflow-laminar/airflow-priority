@@ -1,3 +1,4 @@
+import os
 import sys
 from asyncio import sleep
 from functools import lru_cache
@@ -66,9 +67,10 @@ def on_dag_run_failed(dag_run: DagRun, msg: str):
 
 
 try:
-    # Call once to ensure plugin will work
-    get_config_option("discord", "channel")
-    get_config_option("discord", "token")
+    if os.environ.get("SPHINX_BUILDING", "0") != "1":
+        # Call once to ensure plugin will work
+        get_config_option("discord", "channel")
+        get_config_option("discord", "token")
 
     class DiscordPriorityPlugin(AirflowPlugin):
         name = "DiscordPriorityPlugin"

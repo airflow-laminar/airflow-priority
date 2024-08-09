@@ -107,6 +107,7 @@ ignore = [
     ".copier-answers.yml",
     "Makefile",
     "setup.py",
+    "docs/*/*",
 ]
 
 [tool.hatch.build]
@@ -125,6 +126,7 @@ exclude = [
     "/.github",
     "/.gitattributes",
     "/.gitignore",
+    "/docs",
 ]
 
 [tool.hatch.build.targets.wheel]
@@ -136,6 +138,7 @@ exclude = [
     "/.gitattributes",
     "/.gitignore",
     "/pyproject.toml",
+    "/docs",
 ]
 
 [tool.hatch.build.targets.wheel.shared-data]
@@ -160,3 +163,9 @@ section-order = [
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401", "F403"]
+
+[tool.yardang]
+title = "airflow-priority"
+root = "README.md"
+pages = ["docs/src/API.md"]
+use-autoapi = false
