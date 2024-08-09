@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: 3.11
-      - run: pip install .
+      - run: pip install .[develop]
       - run: pip install yardang
       - run: yardang build
       - name: Deploy
