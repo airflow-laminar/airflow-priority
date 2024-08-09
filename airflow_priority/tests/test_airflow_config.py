@@ -40,8 +40,3 @@ def test_call_plugin_via_airflow_config(airflow_config, dag_run):
     client = get_client()
     assert client is not None
     assert client.token == "abc"
-    # with patch("airflow_priority.plugins.slack.send_metric_slack") as p2, \
-    #      patch("airflow_priority.plugins.slack.send_metric_slack") as p1:
-    #     on_dag_run_failed(dag_run, "test")
-
-    #     assert p1.call_args == []

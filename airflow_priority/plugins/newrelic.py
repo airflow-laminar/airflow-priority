@@ -1,3 +1,4 @@
+import os
 import sys
 from functools import lru_cache
 from logging import getLogger
@@ -54,8 +55,9 @@ def on_dag_run_failed(dag_run: DagRun, msg: str):
 
 
 try:
-    # Call once to ensure plugin will work
-    get_config_option("newrelic", "api_key")
+    if os.environ.get("SPHINX_BUILDING", "0") != "1":
+        # Call once to ensure plugin will work
+        get_config_option("newrelic", "api_key")
 
     class NewRelicPriorityPlugin(AirflowPlugin):
         name = "NewRelicPriorityPlugin"
