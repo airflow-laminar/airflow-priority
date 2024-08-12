@@ -10,7 +10,6 @@ from time import sleep as time_sleep
 from airflow.listeners import hookimpl
 from airflow.models.dagrun import DagRun
 from airflow.plugins_manager import AirflowPlugin
-from discord import Client, Intents
 
 from airflow_priority import AirflowPriorityConfigurationOptionNotFound, DagStatus, get_config_option, has_priority_tag
 
@@ -21,6 +20,8 @@ _log = getLogger(__name__)
 
 @lru_cache
 def get_client():
+    from discord import Client, Intents
+
     client = Client(intents=Intents.default())
     client.queue = Queue()
 
@@ -66,14 +67,16 @@ def on_dag_run_failed(dag_run: DagRun, msg: str):
         send_metric_discord(dag_id, priority, "failed")
 
 
+class DiscordPriorityPlugin(AirflowPlugin):
+    name = "DiscordPriorityPlugin"
+    listeners = []
+
+
 try:
     if os.environ.get("SPHINX_BUILDING", "0") != "1":
         # Call once to ensure plugin will work
         get_config_option("discord", "channel")
         get_config_option("discord", "token")
-
-    class DiscordPriorityPlugin(AirflowPlugin):
-        name = "DiscordPriorityPlugin"
-        listeners = [sys.modules[__name__]]
-except AirflowPriorityConfigurationOptionNotFound:
+    DiscordPriorityPlugin.listeners.append(sys.modules[__name__])
+except (ImportError, AirflowPriorityConfigurationOptionNotFound):
     _log.exception("Plugin could not be enabled")
