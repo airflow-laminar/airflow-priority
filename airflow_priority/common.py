@@ -32,9 +32,9 @@ class AirflowPriorityConfigurationOptionNotFound(RuntimeError): ...
 
 def get_config_option(section, key, required=True, default=None):
     try:
-        try:
-            from airflow_config import ConfigNotFoundError, Configuration
+        from airflow_config import ConfigNotFoundError, Configuration
 
+        try:
             config = Configuration.load("config", "config", basepath=str(Path(os.environ.get("AIRFLOW_HOME", "")) / "dags"), _offset=4)
             ret = getattr(getattr(config.extensions.get("priority", None), section, None), key, None)
             if ret is not None:
@@ -46,12 +46,15 @@ def get_config_option(section, key, required=True, default=None):
         # SKIP
         pass
 
-    import airflow.configuration
+    try:
+        import airflow.configuration
 
-    config_option = airflow.configuration.conf.get(f"priority.{section}", key, default)
-    if not config_option and required:
+        config_option = airflow.configuration.conf.get(f"priority.{section}", key, default)
+        if not config_option and required:
+            raise AirflowPriorityConfigurationOptionNotFound(f"{section}.{key}")
+        return config_option
+    except Exception:
         raise AirflowPriorityConfigurationOptionNotFound(f"{section}.{key}")
-    return config_option
 
 
 def has_priority_tag(dag_run: DagRun) -> Optional[Tuple[str, int]]:

@@ -7,7 +7,6 @@ from logging import getLogger
 from airflow.listeners import hookimpl
 from airflow.models.dagrun import DagRun
 from airflow.plugins_manager import AirflowPlugin
-from httpx import post
 
 from airflow_priority import AirflowPriorityConfigurationOptionNotFound, DagStatus, get_config_option, has_priority_tag
 
@@ -31,6 +30,8 @@ def get_config_options():
 
 
 def _client_cert_post(url: str, cert_file: str, key_file: str) -> str:
+    from httpx import post
+
     context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
     context.load_cert_chain(certfile=cert_file, keyfile=key_file)
     response = post(url=url, verify=context, headers={"Content-Type": "application/json"}, data="{}")
@@ -53,6 +54,8 @@ def get_headers():
 
 @lru_cache
 def get_room_id():
+    from httpx import post
+
     config_options = get_config_options()
 
     res = post(
@@ -69,6 +72,8 @@ def get_room_id():
 
 
 def send_metric_symphony(dag_id: str, priority: int, tag: DagStatus) -> None:
+    from httpx import post
+
     return post(
         url=get_config_options()["message_create_url"].replace("SID", get_room_id()),
         json={"message": f'<messageML>A P{priority} DAG "{dag_id}" has {tag}!</messageML>'},
@@ -97,13 +102,15 @@ def on_dag_run_failed(dag_run: DagRun, msg: str):
         send_metric_symphony(dag_id, priority, "failed")
 
 
+class SymphonyPriorityPlugin(AirflowPlugin):
+    name = "SymphonyPriorityPlugin"
+    listeners = []
+
+
 try:
     if os.environ.get("SPHINX_BUILDING", "0") != "1":
         # Call once to ensure plugin will work
         get_config_options()
-
-    class SymphonyPriorityPlugin(AirflowPlugin):
-        name = "SymphonyPriorityPlugin"
-        listeners = [sys.modules[__name__]]
-except AirflowPriorityConfigurationOptionNotFound:
+    SymphonyPriorityPlugin.listeners.append(sys.modules[__name__])
+except (ImportError, AirflowPriorityConfigurationOptionNotFound):
     _log.exception("Plugin could not be enabled")

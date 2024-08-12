@@ -6,7 +6,6 @@ from logging import getLogger
 from airflow.listeners import hookimpl
 from airflow.models.dagrun import DagRun
 from airflow.plugins_manager import AirflowPlugin
-from slack_sdk import WebClient
 
 from airflow_priority import AirflowPriorityConfigurationOptionNotFound, DagStatus, get_config_option, has_priority_tag
 
@@ -18,6 +17,8 @@ _log = getLogger(__name__)
 
 @lru_cache
 def get_client():
+    from slack_sdk import WebClient
+
     return WebClient(token=get_config_option("slack", "token"))
 
 
@@ -57,14 +58,16 @@ def on_dag_run_failed(dag_run: DagRun, msg: str):
         send_metric_slack(dag_id, priority, "failed")
 
 
+class SlackPriorityPlugin(AirflowPlugin):
+    name = "SlackPriorityPlugin"
+    listeners = []
+
+
 try:
     if os.environ.get("SPHINX_BUILDING", "0") != "1":
         # Call once to ensure plugin will work
         get_config_option("slack", "token")
         get_config_option("slack", "channel")
-
-    class SlackPriorityPlugin(AirflowPlugin):
-        name = "SlackPriorityPlugin"
-        listeners = [sys.modules[__name__]]
-except AirflowPriorityConfigurationOptionNotFound:
+    SlackPriorityPlugin.listeners.append(sys.modules[__name__])
+except (ImportError, AirflowPriorityConfigurationOptionNotFound):
     _log.exception("Plugin could not be enabled")
