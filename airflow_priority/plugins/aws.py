@@ -76,7 +76,9 @@ class AWSCloudWatchPriorityPlugin(AirflowPlugin):
 try:
     if os.environ.get("SPHINX_BUILDING", "0") != "1":
         # Call once to ensure plugin will work
-        get_client()
+        import boto3  # noqa: F401
+
+        get_config_option("aws", "region")
     AWSCloudWatchPriorityPlugin.listeners.append(sys.modules[__name__])
 except (ImportError, AirflowPriorityConfigurationOptionNotFound):
     _log.exception("Plugin could not be enabled")

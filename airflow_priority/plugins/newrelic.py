@@ -65,6 +65,8 @@ class NewRelicPriorityPlugin(AirflowPlugin):
 try:
     if os.environ.get("SPHINX_BUILDING", "0") != "1":
         # Call once to ensure plugin will work
+        import newrelic_telemetry_sdk  # noqa: F401
+
         get_config_option("newrelic", "api_key")
     NewRelicPriorityPlugin.listeners.append(sys.modules[__name__])
 except (ImportError, AirflowPriorityConfigurationOptionNotFound):
