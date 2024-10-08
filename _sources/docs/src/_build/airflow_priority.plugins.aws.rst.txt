@@ -1,0 +1,22 @@
+﻿airflow\_priority.plugins.aws
+=============================
+
+.. automodule:: airflow_priority.plugins.aws
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_client
+      on_dag_run_failed
+      on_dag_run_running
+      on_dag_run_success
+      send_metric_cloudwatch
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      AWSCloudWatchPriorityPlugin
+   

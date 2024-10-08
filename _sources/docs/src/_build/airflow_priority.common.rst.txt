@@ -1,0 +1,19 @@
+﻿airflow\_priority.common
+========================
+
+.. automodule:: airflow_priority.common
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_config_option
+      has_priority_tag
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      AirflowPriorityConfigurationOptionNotFound
+   
