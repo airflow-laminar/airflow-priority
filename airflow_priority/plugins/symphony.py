@@ -110,6 +110,8 @@ class SymphonyPriorityPlugin(AirflowPlugin):
 try:
     if os.environ.get("SPHINX_BUILDING", "0") != "1":
         # Call once to ensure plugin will work
+        import httpx  # noqa: F401
+
         get_config_options()
     SymphonyPriorityPlugin.listeners.append(sys.modules[__name__])
 except (ImportError, AirflowPriorityConfigurationOptionNotFound):

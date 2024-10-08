@@ -97,6 +97,7 @@ class DatadogPriorityPlugin(AirflowPlugin):
 try:
     if os.environ.get("SPHINX_BUILDING", "0") != "1":
         # Call once to ensure plugin will work
+        get_configuration()
         get_config_option("datadog", "api_key")
     DatadogPriorityPlugin.listeners.append(sys.modules[__name__])
 except (ImportError, AirflowPriorityConfigurationOptionNotFound):

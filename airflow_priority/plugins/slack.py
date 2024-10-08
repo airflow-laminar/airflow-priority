@@ -66,6 +66,8 @@ class SlackPriorityPlugin(AirflowPlugin):
 try:
     if os.environ.get("SPHINX_BUILDING", "0") != "1":
         # Call once to ensure plugin will work
+        import slack_sdk  # noqa: F401
+
         get_config_option("slack", "token")
         get_config_option("slack", "channel")
     SlackPriorityPlugin.listeners.append(sys.modules[__name__])

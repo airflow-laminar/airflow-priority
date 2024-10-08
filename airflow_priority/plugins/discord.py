@@ -75,8 +75,11 @@ class DiscordPriorityPlugin(AirflowPlugin):
 try:
     if os.environ.get("SPHINX_BUILDING", "0") != "1":
         # Call once to ensure plugin will work
+        import discord  # noqa: F401
+
         get_config_option("discord", "channel")
         get_config_option("discord", "token")
+
     DiscordPriorityPlugin.listeners.append(sys.modules[__name__])
 except (ImportError, AirflowPriorityConfigurationOptionNotFound):
     _log.exception("Plugin could not be enabled")
