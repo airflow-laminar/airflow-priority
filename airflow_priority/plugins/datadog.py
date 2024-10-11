@@ -91,7 +91,7 @@ def on_dag_run_failed(dag_run: DagRun, msg: str):
 
 class DatadogPriorityPlugin(AirflowPlugin):
     name = "DatadogPriorityPlugin"
-    listeners = [sys.modules[__name__]]
+    listeners = []
 
 
 try:
