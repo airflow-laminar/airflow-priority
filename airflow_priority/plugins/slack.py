@@ -72,4 +72,4 @@ try:
         get_config_option("slack", "channel")
     SlackPriorityPlugin.listeners.append(sys.modules[__name__])
 except (ImportError, AirflowPriorityConfigurationOptionNotFound):
-    _log.exception("Plugin could not be enabled")
+    _log.warning("slack plugin could not be enabled! Ensure `slack-sdk` is installed and all configuration options are set.")

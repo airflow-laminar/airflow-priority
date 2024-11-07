@@ -115,4 +115,4 @@ try:
         get_config_options()
     SymphonyPriorityPlugin.listeners.append(sys.modules[__name__])
 except (ImportError, AirflowPriorityConfigurationOptionNotFound):
-    _log.exception("Plugin could not be enabled")
+    _log.warning("symphony plugin could not be enabled! Ensure `httpx` is installed and all configuration options are set.")
