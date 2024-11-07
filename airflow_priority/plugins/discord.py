@@ -82,4 +82,4 @@ try:
 
     DiscordPriorityPlugin.listeners.append(sys.modules[__name__])
 except (ImportError, AirflowPriorityConfigurationOptionNotFound):
-    _log.exception("Plugin could not be enabled")
+    _log.warning("discord plugin could not be enabled! Ensure `discord.py` is installed and all configuration options are set.")

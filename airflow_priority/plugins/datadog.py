@@ -101,4 +101,4 @@ try:
         get_config_option("datadog", "api_key")
     DatadogPriorityPlugin.listeners.append(sys.modules[__name__])
 except (ImportError, AirflowPriorityConfigurationOptionNotFound):
-    _log.exception("Plugin could not be enabled")
+    _log.warning("datadog plugin could not be enabled! Ensure `datadog-api-client` is installed and all configuration options are set.")

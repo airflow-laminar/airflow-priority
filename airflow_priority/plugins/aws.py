@@ -81,4 +81,4 @@ try:
         get_config_option("aws", "region")
     AWSCloudWatchPriorityPlugin.listeners.append(sys.modules[__name__])
 except (ImportError, AirflowPriorityConfigurationOptionNotFound):
-    _log.exception("Plugin could not be enabled")
+    _log.warning("aws cloudwatch plugin could not be enabled!")

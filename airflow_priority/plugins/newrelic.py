@@ -70,4 +70,4 @@ try:
         get_config_option("newrelic", "api_key")
     NewRelicPriorityPlugin.listeners.append(sys.modules[__name__])
 except (ImportError, AirflowPriorityConfigurationOptionNotFound):
-    _log.exception("Plugin could not be enabled")
+    _log.warning("newrelic plugin could not be enabled! Ensure `newrelic-telemetry-sdk` is installed and all configuration options are set.")
