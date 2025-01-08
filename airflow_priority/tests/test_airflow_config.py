@@ -3,7 +3,7 @@ from pathlib import Path
 conf_text = """# @package _global_
 _target_: airflow_config.Configuration
 default_args:
-  _target_: airflow_config.DefaultArgs
+  _target_: airflow_config.TaskArgs
   owner: test
 extensions:
   priority:

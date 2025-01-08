@@ -4,8 +4,8 @@ build-backend="hatchling.build"
 
 [project]
 name = "airflow-priority"
-authors = [{name = "the airflow-priority authors", email = "3105306+timkpaine@users.noreply.github.com"}]
-description="Priority Tags for Airflow Dags"
+authors = [{name = "the airflow-priority authors", email = "t.paine154@gmail.com"}]
+description = "Priority Tags for Airflow Dags"
 readme = "README.md"
 license = { text = "Apache-2.0" }
 version = "0.2.2"
@@ -14,10 +14,10 @@ keywords = []
 
 classifiers = [
     "Development Status :: 3 - Alpha",
+    "Programming Language :: Python",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -27,10 +27,6 @@ classifiers = [
 dependencies = [
     "apache-airflow>=2,<3",
 ]
-
-[project.urls]
-Repository = "https://github.com/airflow-laminar/airflow-priority"
-Homepage = "https://github.com/airflow-laminar/airflow-priority"
 
 [project.optional-dependencies]
 develop = [
@@ -87,6 +83,10 @@ airflow_priority_newrelic = "airflow_priority.plugins.newrelic:NewRelicPriorityP
 airflow_priority_slack = "airflow_priority.plugins.slack:SlackPriorityPlugin"
 airflow_priority_symphony = "airflow_priority.plugins.symphony:SymphonyPriorityPlugin"
 
+[project.urls]
+Repository = "https://github.com/airflow-laminar/airflow-priority"
+Homepage = "https://github.com/airflow-laminar/airflow-priority"
+
 [tool.bumpversion]
 current_version = "0.2.2"
 commit = true
@@ -107,8 +107,22 @@ ignore = [
     ".copier-answers.yml",
     "Makefile",
     "setup.py",
-    "docs/*/*",
+    "docs/**/*",
 ]
+
+[tool.coverage.run]
+branch = true
+omit = [
+    "airflow_priority/tests/integration/",
+]
+[tool.coverage.report]
+exclude_also = [
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "@(abc\\.)?abstractmethod",
+]
+ignore_errors = true
+fail_under = 50
 
 [tool.hatch.build]
 artifacts = []
@@ -117,35 +131,13 @@ artifacts = []
 src = "/"
 
 [tool.hatch.build.targets.sdist]
-include = [
-    "/airflow_priority",
-    "LICENSE",
-    "README.md",
-]
-exclude = [
-    ".copier-answers.yml",
-    "/.github",
-    "/.gitattributes",
-    "/.gitignore",
-    "/docs",
-]
+packages = ["airflow_priority"]
 
 [tool.hatch.build.targets.wheel]
-include = [
-    "/airflow_priority",
-]
-exclude = [
-    ".copier-answers.yml",
-    "/.github",
-    "/.gitattributes",
-    "/.gitignore",
-    "/pyproject.toml",
-    "/docs",
-]
-
-[tool.hatch.build.targets.wheel.shared-data]
+packages = ["airflow_priority"]
 
 [tool.pytest.ini_options]
+addopts = ["-vvv", "--junitxml=junit.xml"]
 asyncio_mode = "strict"
 testpaths = "airflow_priority/tests"
 
