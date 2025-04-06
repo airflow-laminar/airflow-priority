@@ -38,6 +38,7 @@ develop = [
     "pytest-cov",
     "ruff",
     "twine",
+    "uv",
     "wheel",
     # Plugins
     "boto3",
