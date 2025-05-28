@@ -48,8 +48,17 @@ def get_config_option(section, key, required=True, default=None):
 
     try:
         import airflow.configuration
+        import airflow.exceptions
 
-        config_option = airflow.configuration.conf.get(f"priority.{section}", key, default)
+        config_option = default
+        try:
+            config_option = airflow.configuration.conf.get(f"priority.{section}", key, default)
+        except airflow.exceptions.AirflowConfigException:
+            try:
+                # Try nested variant
+                config_option = airflow.configuration.conf.get("priority", f"{section}_{key}", default)
+            except airflow.exceptions.AirflowConfigException:
+                pass
         if not config_option and required:
             raise AirflowPriorityConfigurationOptionNotFound(f"{section}.{key}")
         return config_option
