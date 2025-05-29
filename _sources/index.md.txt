@@ -65,11 +65,14 @@ Copy this api key into your `airflow.cfg` like so:
 ```
 [priority.datadog]
 api_key = the api key
+metric = my.custom.metric  # Optional metric name override, default is "airflow.custom.priority"
 ```
 
 Ensure your dags are configured with tags and run some, it can often be convenient to have an intentionally failing `P1` dag to test the integration. With this, you can now [create custom monitors](https://docs.datadoghq.com/getting_started/monitors/) for the tags.
 
 ### Discord
+
+<img src="./docs/img/discord.png" width=400 alt="Message in Discord reflecting DAG status">
 
 Create a new Discord application following the [guide from the discord.py library](https://discordpy.readthedocs.io/en/stable/discord.html).
 
@@ -83,7 +86,37 @@ channel = the numerical channel ID, from the url or by right clicking
 
 Ensure your bot is invited into any private channels.
 
+#### Verbose updates
+
+By default, only DAG failure events will be sent.
+On rerun, failure messages can be updated to reflect running/success.
+
+The plugin can also be configured to always send updates, including when a DAG starts running and/or succeeds.
+These can also be configured to send to different channels.
+
+```
+[priority.discord]
+# Update messages to reflect current state
+update_message = true
+
+send_success = true
+channel_success = a-different-channel
+send_running = true
+channel_running = a-different-channel
+```
+
+#### Customizing message colors
+
+```
+[priority.discord]
+failed_color = "#FF0000"
+running_color = "#FFFF00"
+success_color = "#00FF00"
+```
+
 ### New Relic
+
+<img src="./docs/img/newrelic.png" width=400 alt="Dashboard of newrelic metrics">
 
 Create a new New Relic API Key [following their guide](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/). Note that the type should have `INGEST - LICENSE`.
 
@@ -92,6 +125,7 @@ Copy this api key into your `airflow.cfg` like so:
 ```
 [priority.newrelic]
 api_key = the api key
+metric = my.custom.metric  # Optional metric name override, default is "airflow.custom.priority"
 ```
 
 Under `Query Your Data` in the New Relic UI, you can create a query for the new custom metric:
@@ -117,6 +151,8 @@ Thresholds: Critical: Query result is above or equals 1 at least once in 1 minut
 
 ### Slack
 
+<img src="./docs/img/slack.png" width=400 alt="Message in Slack reflecting DAG status">
+
 Configure a new slack application following the [Slack Quickstart](https://api.slack.com/quickstart).
 
 Ensure your application has the following scopes for public and private channel access:
@@ -133,6 +169,34 @@ Copy your Slack application's Oauth Token (starting with `xoxb-`) and your desir
 [priority.slack]
 token = xoxb-...
 channel = channel-name
+```
+
+#### Verbose updates
+
+By default, only DAG failure events will be sent.
+On rerun, failure messages can be updated to reflect running/success.
+
+The plugin can also be configured to always send updates, including when a DAG starts running and/or succeeds.
+These can also be configured to send to different channels.
+
+```
+[priority.slack]
+# Update messages to reflect current state
+update_message = true
+
+send_success = true
+channel_success = a-different-channel
+send_running = true
+channel_running = a-different-channel
+```
+
+#### Customizing message colors
+
+```
+[priority.slack]
+failed_color = "#FF0000"
+running_color = "#FFFF00"
+success_color = "#00FF00"
 ```
 
 ### Symphony
@@ -153,6 +217,36 @@ key_auth = https://mycompany-api.symphony.com/keyauth/v1/authenticate
 room_search_url = https://mycompany.symphony.com/pod/v3/room/search
 ```
 
+
+### AWS MWAA CloudWatch
+
+To use with [AWS MWAA](https://aws.amazon.com/managed-workflows-for-apache-airflow/), set the AWS region to match your MWAA instance.
+
+```
+[priority.aws]
+region = "us-east-1"
+```
+
+### Alternative Syntax
+
+> NOTE
+> AWS may require your to use the alternative configuration syntax
+
+All scoped configuration options can be set directly under `priority`.
+
+For example this:
+
+```
+[priority.aws]
+region = "us-east-1"
+```
+
+Can be provided as:
+
+```
+[priority]
+aws_region = "us-east-1"
+```
 
 ## License
 

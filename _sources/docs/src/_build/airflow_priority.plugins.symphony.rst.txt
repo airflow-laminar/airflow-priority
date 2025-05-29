@@ -11,12 +11,5 @@
       get_config_options
       get_headers
       get_room_id
-      on_dag_run_failed
-      send_metric_symphony
-   
-   .. rubric:: Classes
-
-   .. autosummary::
-   
-      SymphonyPriorityPlugin
+      send_metric
    

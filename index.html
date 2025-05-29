@@ -320,12 +320,15 @@
 <p>Copy this api key into your <code class="docutils literal notranslate"><span class="pre">airflow.cfg</span></code> like so:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">datadog</span><span class="p">]</span>
 <span class="n">api_key</span> <span class="o">=</span> <span class="n">the</span> <span class="n">api</span> <span class="n">key</span>
+<span class="n">metric</span> <span class="o">=</span> <span class="n">my</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">metric</span>  <span class="c1"># Optional metric name override, default is &quot;airflow.custom.priority&quot;</span>
 </pre></div>
 </div>
 <p>Ensure your dags are configured with tags and run some, it can often be convenient to have an intentionally failing <code class="docutils literal notranslate"><span class="pre">P1</span></code> dag to test the integration. With this, you can now <a class="reference external" href="https://docs.datadoghq.com/getting_started/monitors/">create custom monitors</a> for the tags.</p>
 </section>
 <section id="discord">
 <h3>Discord<a class="headerlink" href="#discord" title="Link to this heading">¶</a></h3>
+<a class="reference internal image-reference" href="_images/discord.png"><img alt="Message in Discord reflecting DAG status" src="_images/discord.png" style="width: 400px;" />
+</a>
 <p>Create a new Discord application following the <a class="reference external" href="https://discordpy.readthedocs.io/en/stable/discord.html">guide from the discord.py library</a>.</p>
 <p>Copy your bot’s token into your <code class="docutils literal notranslate"><span class="pre">airflow.cfg</span></code> like so:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">discord</span><span class="p">]</span>
@@ -334,13 +337,42 @@
 </pre></div>
 </div>
 <p>Ensure your bot is invited into any private channels.</p>
+<section id="verbose-updates">
+<h4>Verbose updates<a class="headerlink" href="#verbose-updates" title="Link to this heading">¶</a></h4>
+<p>By default, only DAG failure events will be sent.
+On rerun, failure messages can be updated to reflect running/success.</p>
+<p>The plugin can also be configured to always send updates, including when a DAG starts running and/or succeeds.
+These can also be configured to send to different channels.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">discord</span><span class="p">]</span>
+<span class="c1"># Update messages to reflect current state</span>
+<span class="n">update_message</span> <span class="o">=</span> <span class="n">true</span>
+
+<span class="n">send_success</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">channel_success</span> <span class="o">=</span> <span class="n">a</span><span class="o">-</span><span class="n">different</span><span class="o">-</span><span class="n">channel</span>
+<span class="n">send_running</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">channel_running</span> <span class="o">=</span> <span class="n">a</span><span class="o">-</span><span class="n">different</span><span class="o">-</span><span class="n">channel</span>
+</pre></div>
+</div>
+</section>
+<section id="customizing-message-colors">
+<h4>Customizing message colors<a class="headerlink" href="#customizing-message-colors" title="Link to this heading">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">discord</span><span class="p">]</span>
+<span class="n">failed_color</span> <span class="o">=</span> <span class="s2">&quot;#FF0000&quot;</span>
+<span class="n">running_color</span> <span class="o">=</span> <span class="s2">&quot;#FFFF00&quot;</span>
+<span class="n">success_color</span> <span class="o">=</span> <span class="s2">&quot;#00FF00&quot;</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="new-relic">
 <h3>New Relic<a class="headerlink" href="#new-relic" title="Link to this heading">¶</a></h3>
+<a class="reference internal image-reference" href="_images/newrelic.png"><img alt="Dashboard of newrelic metrics" src="_images/newrelic.png" style="width: 400px;" />
+</a>
 <p>Create a new New Relic API Key <a class="reference external" href="https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/">following their guide</a>. Note that the type should have <code class="docutils literal notranslate"><span class="pre">INGEST</span> <span class="pre">-</span> <span class="pre">LICENSE</span></code>.</p>
 <p>Copy this api key into your <code class="docutils literal notranslate"><span class="pre">airflow.cfg</span></code> like so:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">newrelic</span><span class="p">]</span>
 <span class="n">api_key</span> <span class="o">=</span> <span class="n">the</span> <span class="n">api</span> <span class="n">key</span>
+<span class="n">metric</span> <span class="o">=</span> <span class="n">my</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">metric</span>  <span class="c1"># Optional metric name override, default is &quot;airflow.custom.priority&quot;</span>
 </pre></div>
 </div>
 <p>Under <code class="docutils literal notranslate"><span class="pre">Query</span> <span class="pre">Your</span> <span class="pre">Data</span></code> in the New Relic UI, you can create a query for the new custom metric:</p>
@@ -363,6 +395,8 @@ Thresholds: Critical: Query result is above or equals 1 at least once in 1 minut
 </section>
 <section id="slack">
 <h3>Slack<a class="headerlink" href="#slack" title="Link to this heading">¶</a></h3>
+<a class="reference internal image-reference" href="_images/slack.png"><img alt="Message in Slack reflecting DAG status" src="_images/slack.png" style="width: 400px;" />
+</a>
 <p>Configure a new slack application following the <a class="reference external" href="https://api.slack.com/quickstart">Slack Quickstart</a>.</p>
 <p>Ensure your application has the following scopes for public and private channel access:</p>
 <ul class="simple">
@@ -377,6 +411,32 @@ Thresholds: Critical: Query result is above or equals 1 at least once in 1 minut
 <span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span><span class="o">-</span><span class="n">name</span>
 </pre></div>
 </div>
+<section id="id1">
+<h4>Verbose updates<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
+<p>By default, only DAG failure events will be sent.
+On rerun, failure messages can be updated to reflect running/success.</p>
+<p>The plugin can also be configured to always send updates, including when a DAG starts running and/or succeeds.
+These can also be configured to send to different channels.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">slack</span><span class="p">]</span>
+<span class="c1"># Update messages to reflect current state</span>
+<span class="n">update_message</span> <span class="o">=</span> <span class="n">true</span>
+
+<span class="n">send_success</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">channel_success</span> <span class="o">=</span> <span class="n">a</span><span class="o">-</span><span class="n">different</span><span class="o">-</span><span class="n">channel</span>
+<span class="n">send_running</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">channel_running</span> <span class="o">=</span> <span class="n">a</span><span class="o">-</span><span class="n">different</span><span class="o">-</span><span class="n">channel</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h4>Customizing message colors<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">slack</span><span class="p">]</span>
+<span class="n">failed_color</span> <span class="o">=</span> <span class="s2">&quot;#FF0000&quot;</span>
+<span class="n">running_color</span> <span class="o">=</span> <span class="s2">&quot;#FFFF00&quot;</span>
+<span class="n">success_color</span> <span class="o">=</span> <span class="s2">&quot;#00FF00&quot;</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="symphony">
 <h3>Symphony<a class="headerlink" href="#symphony" title="Link to this heading">¶</a></h3>
@@ -393,6 +453,32 @@ Thresholds: Critical: Query result is above or equals 1 at least once in 1 minut
 <span class="n">session_auth</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mycompany</span><span class="o">-</span><span class="n">api</span><span class="o">.</span><span class="n">symphony</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">sessionauth</span><span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">authenticate</span>
 <span class="n">key_auth</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mycompany</span><span class="o">-</span><span class="n">api</span><span class="o">.</span><span class="n">symphony</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keyauth</span><span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">authenticate</span>
 <span class="n">room_search_url</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mycompany</span><span class="o">.</span><span class="n">symphony</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pod</span><span class="o">/</span><span class="n">v3</span><span class="o">/</span><span class="n">room</span><span class="o">/</span><span class="n">search</span>
+</pre></div>
+</div>
+</section>
+<section id="aws-mwaa-cloudwatch">
+<h3>AWS MWAA CloudWatch<a class="headerlink" href="#aws-mwaa-cloudwatch" title="Link to this heading">¶</a></h3>
+<p>To use with <a class="reference external" href="https://aws.amazon.com/managed-workflows-for-apache-airflow/">AWS MWAA</a>, set the AWS region to match your MWAA instance.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">aws</span><span class="p">]</span>
+<span class="n">region</span> <span class="o">=</span> <span class="s2">&quot;us-east-1&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="alternative-syntax">
+<h3>Alternative Syntax<a class="headerlink" href="#alternative-syntax" title="Link to this heading">¶</a></h3>
+<blockquote>
+<div><p>NOTE
+AWS may require your to use the alternative configuration syntax</p>
+</div></blockquote>
+<p>All scoped configuration options can be set directly under <code class="docutils literal notranslate"><span class="pre">priority</span></code>.</p>
+<p>For example this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">aws</span><span class="p">]</span>
+<span class="n">region</span> <span class="o">=</span> <span class="s2">&quot;us-east-1&quot;</span>
+</pre></div>
+</div>
+<p>Can be provided as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="p">]</span>
+<span class="n">aws_region</span> <span class="o">=</span> <span class="s2">&quot;us-east-1&quot;</span>
 </pre></div>
 </div>
 </section>

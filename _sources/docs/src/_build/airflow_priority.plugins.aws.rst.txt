@@ -9,14 +9,5 @@
    .. autosummary::
    
       get_client
-      on_dag_run_failed
-      on_dag_run_running
-      on_dag_run_success
-      send_metric_cloudwatch
-   
-   .. rubric:: Classes
-
-   .. autosummary::
-   
-      AWSCloudWatchPriorityPlugin
+      send_metric
    

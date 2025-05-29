@@ -9,12 +9,5 @@
    .. autosummary::
    
       get_client
-      on_dag_run_failed
-      send_metric_discord
-   
-   .. rubric:: Classes
-
-   .. autosummary::
-   
-      DiscordPriorityPlugin
+      send_metric
    

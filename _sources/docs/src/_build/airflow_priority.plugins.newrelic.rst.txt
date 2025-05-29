@@ -9,14 +9,5 @@
    .. autosummary::
    
       get_client
-      on_dag_run_failed
-      on_dag_run_running
-      on_dag_run_success
-      send_metric_newrelic
-   
-   .. rubric:: Classes
-
-   .. autosummary::
-   
-      NewRelicPriorityPlugin
+      send_metric
    
