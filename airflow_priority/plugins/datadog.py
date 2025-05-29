@@ -1,104 +1,191 @@
-import os
-import sys
 from datetime import datetime
 from functools import lru_cache
-from logging import getLogger
+from typing import Any, Dict
 
-from airflow.listeners import hookimpl
-from airflow.models.dagrun import DagRun
-from airflow.plugins_manager import AirflowPlugin
+from datadog_api_client import ApiClient, Configuration
+from datadog_api_client.v2.api.metrics_api import MetricsApi
+from datadog_api_client.v2.model.metric_intake_type import MetricIntakeType
+from datadog_api_client.v2.model.metric_payload import MetricPayload
+from datadog_api_client.v2.model.metric_point import MetricPoint
+from datadog_api_client.v2.model.metric_resource import MetricResource
+from datadog_api_client.v2.model.metric_series import MetricSeries
 
-from airflow_priority import AirflowPriorityConfigurationOptionNotFound, DagStatus, get_config_option, has_priority_tag
+from ..common import DagStatus, get_config_option
 
-__all__ = (
-    "send_metric_datadog",
-    "on_dag_run_running",
-    "on_dag_run_success",
-    "on_dag_run_failed",
-    "DatadogPriorityPlugin",
-)
+__all__ = ("send_metric",)
 
-_log = getLogger(__name__)
+DefaultMetric: str = "airflow.custom.priority"
 
 
 @lru_cache
 def get_configuration():
-    from datadog_api_client import Configuration
-
     return Configuration(
         api_key={"apiKeyAuth": get_config_option("datadog", "api_key")},
     )
 
 
-def send_metric_datadog(dag_id: str, priority: int, tag: DagStatus) -> None:
-    from datadog_api_client import ApiClient
-    from datadog_api_client.v2.api.metrics_api import MetricsApi
-    from datadog_api_client.v2.model.metric_intake_type import MetricIntakeType
-    from datadog_api_client.v2.model.metric_payload import MetricPayload
-    from datadog_api_client.v2.model.metric_point import MetricPoint
-    from datadog_api_client.v2.model.metric_resource import MetricResource
-    from datadog_api_client.v2.model.metric_series import MetricSeries
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
+    metric = get_config_option("datadog", "metric", default=DefaultMetric)
 
     with ApiClient(get_configuration()) as api_client:
         api_instance = MetricsApi(api_client)
+        metrics = [
+            MetricSeries(
+                metric=f"{metric}.p{priority}.{tag}",
+                type=MetricIntakeType.GAUGE,
+                points=[
+                    MetricPoint(
+                        timestamp=int(datetime.now().timestamp()),
+                        value=1,
+                    ),
+                ],
+                resources=[
+                    MetricResource(
+                        name=dag_id,
+                        type="dag",
+                    ),
+                ],
+                tags=["airflow", "priority", f"dag_{dag_id}"],
+            )
+        ]
 
-        body = MetricPayload(
-            series=[
-                MetricSeries(
-                    metric=f"airflow.custom.priority.p{priority}.{tag}",
-                    type=MetricIntakeType.UNSPECIFIED,
-                    points=[
-                        MetricPoint(
-                            timestamp=int(datetime.now().timestamp()),
-                            value=priority,
-                        ),
-                    ],
-                    resources=[
-                        MetricResource(
-                            name=dag_id,
-                            type="dag",
-                        ),
-                    ],
-                    tags=["airflow", "priority", f"dag_{dag_id}"],
-                ),
-            ],
-        )
-
-        resp = api_instance.submit_metrics(body=body)
+        if tag == "success":
+            if "running" in context:
+                # If the task was running before, we need to decrement the running metric
+                metrics.append(
+                    MetricSeries(
+                        metric=f"{metric}.p{priority}.running",
+                        type=MetricIntakeType.GAUGE,
+                        points=[
+                            MetricPoint(
+                                timestamp=int(datetime.now().timestamp()),
+                                value=0,
+                            ),
+                        ],
+                        resources=[
+                            MetricResource(
+                                name=dag_id,
+                                type="dag",
+                            ),
+                        ],
+                        tags=["airflow", "priority", f"dag_{dag_id}"],
+                    )
+                )
+                context.pop("running", None)
+            if "failed" in context:
+                # If the task was failed before, we need to decrement the failed metric
+                metrics.append(
+                    MetricSeries(
+                        metric=f"{metric}.p{priority}.failed",
+                        type=MetricIntakeType.GAUGE,
+                        points=[
+                            MetricPoint(
+                                timestamp=int(datetime.now().timestamp()),
+                                value=0,
+                            ),
+                        ],
+                        resources=[
+                            MetricResource(
+                                name=dag_id,
+                                type="dag",
+                            ),
+                        ],
+                        tags=["airflow", "priority", f"dag_{dag_id}"],
+                    )
+                )
+                context.pop("failed", None)
+            context.clear()
+        elif tag == "failed":
+            # If the task was running before, we need to decrement the running metric
+            if "running" in context:
+                metrics.append(
+                    MetricSeries(
+                        metric=f"{metric}.p{priority}.running",
+                        type=MetricIntakeType.GAUGE,
+                        points=[
+                            MetricPoint(
+                                timestamp=int(datetime.now().timestamp()),
+                                value=0,
+                            ),
+                        ],
+                        resources=[
+                            MetricResource(
+                                name=dag_id,
+                                type="dag",
+                            ),
+                        ],
+                        tags=["airflow", "priority", f"dag_{dag_id}"],
+                    )
+                )
+                context.pop("running", None)
+            if "success" in context:
+                # If the task was successful before, we need to decrement the success metric
+                metrics.append(
+                    MetricSeries(
+                        metric=f"{metric}.p{priority}.success",
+                        type=MetricIntakeType.GAUGE,
+                        points=[
+                            MetricPoint(
+                                timestamp=int(datetime.now().timestamp()),
+                                value=0,
+                            ),
+                        ],
+                        resources=[
+                            MetricResource(
+                                name=dag_id,
+                                type="dag",
+                            ),
+                        ],
+                        tags=["airflow", "priority", f"dag_{dag_id}"],
+                    )
+                )
+                context.pop("success", None)
+            context["failed"] = True
+        elif tag == "running":
+            if "success" in context:
+                # If the task was successful before, we need to decrement the success metric
+                metrics.append(
+                    MetricSeries(
+                        metric=f"{metric}.p{priority}.success",
+                        type=MetricIntakeType.GAUGE,
+                        points=[
+                            MetricPoint(
+                                timestamp=int(datetime.now().timestamp()),
+                                value=0,
+                            ),
+                        ],
+                        resources=[
+                            MetricResource(
+                                name=dag_id,
+                                type="dag",
+                            ),
+                        ],
+                        tags=["airflow", "priority", f"dag_{dag_id}"],
+                    )
+                )
+                context.pop("success", None)
+            if "failed" in context:
+                # If the task was failed before, we need to decrement the failed metric
+                metrics.append(
+                    MetricSeries(
+                        metric=f"{metric}.p{priority}.failed",
+                        type=MetricIntakeType.GAUGE,
+                        points=[
+                            MetricPoint(
+                                timestamp=int(datetime.now().timestamp()),
+                                value=0,
+                            ),
+                        ],
+                        resources=[
+                            MetricResource(
+                                name=dag_id,
+                                type="dag",
+                            ),
+                        ],
+                        tags=["airflow", "priority", f"dag_{dag_id}"],
+                    )
+                )
+                context.pop("failed", None)
+            context["running"] = True
+        resp = api_instance.submit_metrics(body=MetricPayload(series=metrics))
         assert resp["errors"] == []
-
-
-@hookimpl
-def on_dag_run_running(dag_run: DagRun, msg: str):
-    dag_id, priority = has_priority_tag(dag_run=dag_run)
-    if priority:
-        send_metric_datadog(dag_id, priority, "running")
-
-
-@hookimpl
-def on_dag_run_success(dag_run: DagRun, msg: str):
-    dag_id, priority = has_priority_tag(dag_run=dag_run)
-    if priority:
-        send_metric_datadog(dag_id, priority, "success")
-
-
-@hookimpl
-def on_dag_run_failed(dag_run: DagRun, msg: str):
-    dag_id, priority = has_priority_tag(dag_run=dag_run)
-    if priority:
-        send_metric_datadog(dag_id, priority, "failed")
-
-
-class DatadogPriorityPlugin(AirflowPlugin):
-    name = "DatadogPriorityPlugin"
-    listeners = []
-
-
-try:
-    if os.environ.get("SPHINX_BUILDING", "0") != "1":
-        # Call once to ensure plugin will work
-        get_configuration()
-        get_config_option("datadog", "api_key")
-    DatadogPriorityPlugin.listeners.append(sys.modules[__name__])
-except (ImportError, AirflowPriorityConfigurationOptionNotFound):
-    _log.warning("datadog plugin could not be enabled! Ensure `datadog-api-client` is installed and all configuration options are set.")

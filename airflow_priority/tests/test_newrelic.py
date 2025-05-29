@@ -1,35 +1,36 @@
 import os
-from unittest.mock import patch
+from unittest.mock import MagicMock
 
 import pytest
 
 
 @pytest.mark.skipif(os.environ.get("NEWRELIC_API_KEY") is None, reason="New relic token not set")
 def test_newrelic_send(airflow_config, dag_run):
-    from airflow_priority.plugins.newrelic import send_metric_newrelic
+    from airflow_priority.plugins.newrelic import send_metric
 
-    send_metric_newrelic("UNIT TEST", 1, "testing")
-
-
-def test_newrelic_priority_failed(airflow_config, dag_run):
-    from airflow_priority.plugins.newrelic import on_dag_run_failed
-
-    with patch("airflow_priority.plugins.newrelic.send_metric_newrelic") as p1:
-        on_dag_run_failed(dag_run, "test")
-    assert p1.call_count == 1
+    send_metric("UNIT TEST", 1, "testing", {})
 
 
-def test_newrelic_priority_running(airflow_config, dag_run):
-    from airflow_priority.plugins.newrelic import on_dag_run_running
+def test_newrelic_priority_failed(airflow_config, dag_run, new_tracker):
+    new_tracker.register(backend="newrelic", necessary_configs=[])
+    new_tracker.backends["newrelic"] = MagicMock()
+    new_tracker.failed(dag_run)
+    assert new_tracker.backends["newrelic"].call_count == 1
 
-    with patch("airflow_priority.plugins.newrelic.send_metric_newrelic") as p1:
-        on_dag_run_running(dag_run, "test")
-    assert p1.call_count == 1
+
+def test_newrelic_priority_running(airflow_config, dag_run, new_tracker):
+    new_tracker.register(backend="newrelic", necessary_configs=[])
+    new_tracker.backends["newrelic"] = MagicMock()
+
+    new_tracker.backends["newrelic"].reset_mock()
+    new_tracker.running(dag_run)
+    assert new_tracker.backends["newrelic"].call_count == 1
 
 
-def test_newrelic_priority_success(airflow_config, dag_run):
-    from airflow_priority.plugins.newrelic import on_dag_run_success
+def test_newrelic_priority_success(airflow_config, dag_run, new_tracker):
+    new_tracker.register(backend="newrelic", necessary_configs=[])
+    new_tracker.backends["newrelic"] = MagicMock()
 
-    with patch("airflow_priority.plugins.newrelic.send_metric_newrelic") as p1:
-        on_dag_run_success(dag_run, "test")
-    assert p1.call_count == 1
+    new_tracker.backends["newrelic"].reset_mock()
+    new_tracker.success(dag_run)
+    assert new_tracker.backends["newrelic"].call_count == 1
