@@ -66,6 +66,9 @@ def get_config_option(section, key, required=True, default=None):
             config_option = airflow.configuration.conf.get("priority", f"{section}_{key}", default)
         except airflow.exceptions.AirflowConfigException:
             pass
+    if not config_option:
+        # restore default/None
+        config_option = default
     if not config_option and required:
         raise AirflowPriorityConfigurationOptionNotFound(f"{section}.{key}")
     return config_option
