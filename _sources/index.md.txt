@@ -65,6 +65,7 @@ Copy this api key into your `airflow.cfg` like so:
 ```
 [priority.datadog]
 api_key = the api key
+host = https://api.datadoghq.com  # Optional host change
 metric = my.custom.metric  # Optional metric name override, default is "airflow.custom.priority"
 ```
 
