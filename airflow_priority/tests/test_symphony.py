@@ -1,19 +1,20 @@
 import os
-from unittest.mock import patch
+from unittest.mock import MagicMock
 
 import pytest
 
 
 @pytest.mark.skipif(os.environ.get("SYMPHONY_ROOM_NAME", "") == "", reason="no symphony credentials")
 def test_symphony_send(airflow_config, dag_run):
-    from airflow_priority.plugins.symphony import send_metric_symphony
+    from airflow_priority.plugins.symphony import send_metric
 
-    send_metric_symphony("UNIT TEST", 1, "BEEN TESTED")
+    send_metric("UNIT TEST", 1, "BEEN TESTED", {})
 
 
-def test_symphony_priority_failed(airflow_config, dag_run):
-    from airflow_priority.plugins.symphony import on_dag_run_failed
+@pytest.mark.skipif(os.environ.get("SYMPHONY_ROOM_NAME", "") == "", reason="no symphony credentials")
+def test_symphony_priority_failed(airflow_config, dag_run, new_tracker):
+    new_tracker.register(backend="symphony", necessary_configs=[])
 
-    with patch("airflow_priority.plugins.symphony.send_metric_symphony") as p1:
-        on_dag_run_failed(dag_run, "test")
-    assert p1.call_count == 1
+    new_tracker.backends["symphony"] = MagicMock()
+    new_tracker.failed(dag_run)
+    assert new_tracker.backends["symphony"].call_count == 1

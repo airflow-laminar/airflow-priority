@@ -1,7 +1,8 @@
 import os
+from functools import lru_cache
 from pathlib import Path
 from types import MappingProxyType
-from typing import Literal, Optional, Tuple
+from typing import Any, Callable, Dict, Literal, Optional, Tuple
 
 from airflow.models.dagrun import DagRun
 
@@ -9,12 +10,18 @@ __all__ = (
     "has_priority_tag",
     "get_config_option",
     "DagStatus",
+    "BackendSpecificDagContext",
+    "DagContextIdentifier",
+    "SendMetricFunction",
     "PriorityTags",
     "AirflowPriorityConfigurationOptionNotFound",
 )
 
 
 DagStatus = Literal["running", "success", "failed"]
+BackendSpecificDagContext = Any
+DagContextIdentifier = Tuple[str, str]  # (backend, dag_instance_id)
+SendMetricFunction = Callable[[str, int, DagStatus, Dict[DagStatus, BackendSpecificDagContext]], None]
 
 PriorityTags = MappingProxyType(
     {
@@ -30,6 +37,7 @@ PriorityTags = MappingProxyType(
 class AirflowPriorityConfigurationOptionNotFound(RuntimeError): ...
 
 
+@lru_cache
 def get_config_option(section, key, required=True, default=None):
     try:
         from airflow_config import ConfigNotFoundError, Configuration
@@ -46,24 +54,21 @@ def get_config_option(section, key, required=True, default=None):
         # SKIP
         pass
 
-    try:
-        import airflow.configuration
-        import airflow.exceptions
+    import airflow.configuration
+    import airflow.exceptions
 
-        config_option = default
+    config_option = default
+    try:
+        config_option = airflow.configuration.conf.get(f"priority.{section}", key, default)
+    except airflow.exceptions.AirflowConfigException:
         try:
-            config_option = airflow.configuration.conf.get(f"priority.{section}", key, default)
+            # Try nested variant
+            config_option = airflow.configuration.conf.get("priority", f"{section}_{key}", default)
         except airflow.exceptions.AirflowConfigException:
-            try:
-                # Try nested variant
-                config_option = airflow.configuration.conf.get("priority", f"{section}_{key}", default)
-            except airflow.exceptions.AirflowConfigException:
-                pass
-        if not config_option and required:
-            raise AirflowPriorityConfigurationOptionNotFound(f"{section}.{key}")
-        return config_option
-    except Exception:
+            pass
+    if not config_option and required:
         raise AirflowPriorityConfigurationOptionNotFound(f"{section}.{key}")
+    return config_option
 
 
 def has_priority_tag(dag_run: DagRun) -> Optional[Tuple[str, int]]:

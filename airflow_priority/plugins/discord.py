@@ -1,37 +1,39 @@
-import os
-import sys
 from asyncio import sleep
 from functools import lru_cache
-from logging import getLogger
 from queue import Queue
 from threading import Thread
-from time import sleep as time_sleep
+from typing import Any, Dict, Optional
 
-from airflow.listeners import hookimpl
-from airflow.models.dagrun import DagRun
-from airflow.plugins_manager import AirflowPlugin
+from discord import Client, Color, Embed, Intents, Message, TextChannel
 
-from airflow_priority import AirflowPriorityConfigurationOptionNotFound, DagStatus, get_config_option, has_priority_tag
+from ..common import DagStatus, get_config_option
 
-__all__ = ("get_client", "send_metric_discord", "on_dag_run_failed", "DiscordPriorityPlugin")
-
-_log = getLogger(__name__)
+__all__ = ("send_metric",)
 
 
 @lru_cache
 def get_client():
-    from discord import Client, Intents
-
     client = Client(intents=Intents.default())
-    client.queue = Queue()
+    client.inqueue = Queue()
+    client.outqueue = Queue()
 
     @client.event
     async def on_ready():
-        channel = client.get_channel(int(get_config_option("discord", "channel")))
+        channel: TextChannel
+        msg: Message
+        new_msg: Optional[str]
+
         while True:
-            while client.queue.empty():
+            while client.outqueue.empty():
                 await sleep(5)
-            await channel.send(client.queue.get())
+
+            channel, msg, new_msg, color = client.outqueue.get()
+
+            if new_msg is None:
+                channel_inst = client.get_channel(channel)
+                client.inqueue.put(await channel_inst.send(embed=Embed(description=msg, color=Color.from_str(color))))
+            else:
+                client.inqueue.put(await msg.edit(embed=Embed(description=new_msg, color=Color.from_str(color))))
 
     token = get_config_option("discord", "token")
     t = Thread(target=client.run, args=(token,), daemon=True)
@@ -39,47 +41,48 @@ def get_client():
     return client
 
 
-def send_metric_discord(dag_id: str, priority: int, tag: DagStatus) -> None:
-    client_queue = get_client().queue
-    client_queue.put(f'A P{priority} DAG "{dag_id}" has {tag}!')
-    while not client_queue.empty():
-        time_sleep(1)
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
+    send_running = get_config_option("discord", "send_running", default="false").lower() == "true"
+    send_success = get_config_option("discord", "send_success", default="false").lower() == "true"
+    update_message = get_config_option("discord", "update_message", default="false").lower() == "true"
 
+    running_color = get_config_option("discord", "running_color", default="#ffff00")
+    failed_color = get_config_option("discord", "failed_color", default="#ff0000")
+    success_color = get_config_option("discord", "success_color", default="#00ff00")
 
-# @hookimpl
-# def on_dag_run_running(dag_run: DagRun, msg: str):
-#     dag_id, priority = has_priority_tag(dag_run=dag_run)
-#     if priority:
-#         send_metric_slack(dag_id, priority, "running")
+    default_channel = get_config_option("discord", "channel")
+    channel = int(get_config_option("discord", f"channel_{tag}", default=default_channel))
 
+    client = get_client()
+    client_out_queue = client.outqueue
+    client_in_queue = client.inqueue
 
-# @hookimpl
-# def on_dag_run_success(dag_run: DagRun, msg: str):
-#     dag_id, priority = has_priority_tag(dag_run=dag_run)
-#     if priority:
-#         send_metric_slack(dag_id, priority, "succeeded")
+    if tag == "failed" or (tag == "running" and send_running) or (tag == "success" and send_success):
+        # Send a message to the corresponding channel
+        client_out_queue.put(
+            (
+                channel,
+                f'A P{priority} DAG "{dag_id}" has been marked "{tag}"',
+                None,
+                running_color if tag == "running" else failed_color if tag == "failed" else success_color,
+            )
+        )
+        context[tag] = client_in_queue.get()
 
+    # Update the failure message
+    if tag != "failed" and update_message and "failed" in context:
+        channel = int(get_config_option("discord", "channel_failed", default=default_channel))
+        failed_context = context["failed"]
+        client_out_queue.put(
+            (
+                channel,
+                failed_context,
+                f'A P{priority} DAG "{dag_id}" has been marked "{tag}"',
+                running_color if tag == "running" else success_color,
+            )
+        )
+        context["failed"] = client_in_queue.get()
 
-@hookimpl
-def on_dag_run_failed(dag_run: DagRun, msg: str):
-    dag_id, priority = has_priority_tag(dag_run=dag_run)
-    if priority:
-        send_metric_discord(dag_id, priority, "failed")
-
-
-class DiscordPriorityPlugin(AirflowPlugin):
-    name = "DiscordPriorityPlugin"
-    listeners = []
-
-
-try:
-    if os.environ.get("SPHINX_BUILDING", "0") != "1":
-        # Call once to ensure plugin will work
-        import discord  # noqa: F401
-
-        get_config_option("discord", "channel")
-        get_config_option("discord", "token")
-
-    DiscordPriorityPlugin.listeners.append(sys.modules[__name__])
-except (ImportError, AirflowPriorityConfigurationOptionNotFound):
-    _log.warning("discord plugin could not be enabled! Ensure `discord.py` is installed and all configuration options are set.")
+    # On success, blank out the context
+    if tag == "success":
+        context.clear()

@@ -1,30 +1,22 @@
-import os
-import sys
 from functools import lru_cache
-from logging import getLogger
+from typing import Any, Dict
 
-from airflow.listeners import hookimpl
-from airflow.models.dagrun import DagRun
-from airflow.plugins_manager import AirflowPlugin
+from slack_sdk import WebClient
 
-from airflow_priority import AirflowPriorityConfigurationOptionNotFound, DagStatus, get_config_option, has_priority_tag
+from ..common import DagStatus, get_config_option
 
-__all__ = ("get_client", "get_channel_id", "send_metric_slack", "on_dag_run_failed", "SlackPriorityPlugin")
-
-
-_log = getLogger(__name__)
+__all__ = ("send_metric",)
 
 
 @lru_cache
-def get_client():
-    from slack_sdk import WebClient
-
+def get_client() -> WebClient:
     return WebClient(token=get_config_option("slack", "token"))
 
 
 @lru_cache
-def get_channel_id():
-    channel_name = get_config_option("slack", "channel")
+def get_channel_id(tag: DagStatus) -> str:
+    default_channel_name = get_config_option("slack", "channel")
+    channel_name = get_config_option("slack", f"channel_{tag}", default=default_channel_name)
     conversations = get_client().conversations_list(types=["public_channel", "private_channel"])
     if conversations.data["ok"]:
         for channel in conversations.data["channels"]:
@@ -33,43 +25,50 @@ def get_channel_id():
     raise Exception("TODO")
 
 
-def send_metric_slack(dag_id: str, priority: int, tag: DagStatus) -> None:
-    get_client().chat_postMessage(channel=get_channel_id(), text=f'A P{priority} DAG "{dag_id}" has {tag}!')
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
+    send_running = get_config_option("slack", "send_running", default="false").lower() == "true"
+    send_success = get_config_option("slack", "send_success", default="false").lower() == "true"
+    update_message = get_config_option("slack", "update_message", default="false").lower() == "true"
 
+    running_color = get_config_option("slack", "running_color", default="#ffff00")
+    failed_color = get_config_option("slack", "failed_color", default="#ff0000")
+    success_color = get_config_option("slack", "success_color", default="#00ff00")
 
-# @hookimpl
-# def on_dag_run_running(dag_run: DagRun, msg: str):
-#     dag_id, priority = has_priority_tag(dag_run=dag_run)
-#     if priority:
-#         send_metric_slack(dag_id, priority, "running")
+    client = get_client()
 
+    if tag == "failed" or (tag == "running" and send_running) or (tag == "success" and send_success):
+        # Send a message to the corresponding channel
+        channel = get_channel_id(tag)
+        context[tag] = client.chat_postMessage(
+            channel=channel,
+            attachments=[
+                {
+                    "mrkdwn_in": ["text"],
+                    "text": f'A P{priority} DAG "{dag_id}" has been marked "{tag}"',
+                    "color": running_color if tag == "running" else failed_color if tag == "failed" else success_color,
+                }
+            ],
+        )
 
-# @hookimpl
-# def on_dag_run_success(dag_run: DagRun, msg: str):
-#     dag_id, priority = has_priority_tag(dag_run=dag_run)
-#     if priority:
-#         send_metric_slack(dag_id, priority, "succeeded")
+    # Update the failure message
+    if tag != "failed" and update_message and "failed" in context:
+        channel = get_channel_id("failed")
+        failed_context = context["failed"]
+        failed_message_ts = failed_context.get("ts")
+        if failed_message_ts:
+            # Update the message for the failed DAG
+            client.chat_update(
+                channel=channel,
+                ts=failed_message_ts,
+                attachments=[
+                    {
+                        "mrkdwn_in": ["text"],
+                        "color": running_color if tag == "running" else success_color,
+                        "text": f'A P{priority} DAG "{dag_id}" has been marked "{tag}"',
+                    }
+                ],
+            )
 
-
-@hookimpl
-def on_dag_run_failed(dag_run: DagRun, msg: str):
-    dag_id, priority = has_priority_tag(dag_run=dag_run)
-    if priority:
-        send_metric_slack(dag_id, priority, "failed")
-
-
-class SlackPriorityPlugin(AirflowPlugin):
-    name = "SlackPriorityPlugin"
-    listeners = []
-
-
-try:
-    if os.environ.get("SPHINX_BUILDING", "0") != "1":
-        # Call once to ensure plugin will work
-        import slack_sdk  # noqa: F401
-
-        get_config_option("slack", "token")
-        get_config_option("slack", "channel")
-    SlackPriorityPlugin.listeners.append(sys.modules[__name__])
-except (ImportError, AirflowPriorityConfigurationOptionNotFound):
-    _log.warning("slack plugin could not be enabled! Ensure `slack-sdk` is installed and all configuration options are set.")
+    # On success, blank out the context
+    if tag == "success":
+        context.clear()

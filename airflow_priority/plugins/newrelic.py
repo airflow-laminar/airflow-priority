@@ -1,23 +1,13 @@
-import os
-import sys
 from functools import lru_cache
-from logging import getLogger
+from typing import Any, Dict
 
-from airflow.listeners import hookimpl
-from airflow.models.dagrun import DagRun
-from airflow.plugins_manager import AirflowPlugin
+from newrelic_telemetry_sdk import GaugeMetric
 
-from airflow_priority import AirflowPriorityConfigurationOptionNotFound, DagStatus, get_config_option, has_priority_tag
+from ..common import DagStatus, get_config_option
 
-__all__ = (
-    "send_metric_newrelic",
-    "on_dag_run_running",
-    "on_dag_run_success",
-    "on_dag_run_failed",
-    "NewRelicPriorityPlugin",
-)
+__all__ = ("send_metric",)
 
-_log = getLogger(__name__)
+DefaultMetric: str = "airflow.custom.priority"
 
 
 @lru_cache
@@ -27,47 +17,58 @@ def get_client():
     return MetricClient(get_config_option("newrelic", "api_key"))
 
 
-def send_metric_newrelic(dag_id: str, priority: int, tag: DagStatus) -> None:
-    from newrelic_telemetry_sdk import GaugeMetric
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
+    metric = get_config_option("newrelic", "metric", default=DefaultMetric)
+    metrics = [GaugeMetric(f"{metric}.p{priority}.{tag}", 1, tags={"application": "airflow", "dag": dag_id, "priority": priority, "tag": tag})]
 
-    priority = GaugeMetric(
-        f"airflow.custom.priority.p{priority}.{tag}", 1, tags={"application": "airflow", "dag": dag_id, "priority": priority, "tag": tag}
-    )
-    get_client().send_batch([priority])
-
-
-@hookimpl
-def on_dag_run_running(dag_run: DagRun, msg: str):
-    dag_id, priority = has_priority_tag(dag_run=dag_run)
-    if priority:
-        send_metric_newrelic(dag_id, priority, "running")
-
-
-@hookimpl
-def on_dag_run_success(dag_run: DagRun, msg: str):
-    dag_id, priority = has_priority_tag(dag_run=dag_run)
-    if priority:
-        send_metric_newrelic(dag_id, priority, "success")
-
-
-@hookimpl
-def on_dag_run_failed(dag_run: DagRun, msg: str):
-    dag_id, priority = has_priority_tag(dag_run=dag_run)
-    if priority:
-        send_metric_newrelic(dag_id, priority, "failed")
-
-
-class NewRelicPriorityPlugin(AirflowPlugin):
-    name = "NewRelicPriorityPlugin"
-    listeners = []
-
-
-try:
-    if os.environ.get("SPHINX_BUILDING", "0") != "1":
-        # Call once to ensure plugin will work
-        import newrelic_telemetry_sdk  # noqa: F401
-
-        get_config_option("newrelic", "api_key")
-    NewRelicPriorityPlugin.listeners.append(sys.modules[__name__])
-except (ImportError, AirflowPriorityConfigurationOptionNotFound):
-    _log.warning("newrelic plugin could not be enabled! Ensure `newrelic-telemetry-sdk` is installed and all configuration options are set.")
+    if tag == "success":
+        if "running" in context:
+            # If the task was running before, we need to decrement the running metric
+            metrics.append(
+                GaugeMetric(
+                    f"{metric}.p{priority}.running", 0, tags={"application": "airflow", "dag": dag_id, "priority": priority, "tag": "running"}
+                )
+            )
+            context.pop("running", None)
+        if "failed" in context:
+            # If the task was failed before, we need to decrement the failed metric
+            metrics.append(
+                GaugeMetric(f"{metric}.p{priority}.failed", 0, tags={"application": "airflow", "dag": dag_id, "priority": priority, "tag": "failed"})
+            )
+            context.pop("failed", None)
+        context.clear()
+    elif tag == "failed":
+        # If the task was running before, we need to decrement the running metric
+        if "running" in context:
+            metrics.append(
+                GaugeMetric(
+                    f"{metric}.p{priority}.running", 0, tags={"application": "airflow", "dag": dag_id, "priority": priority, "tag": "running"}
+                )
+            )
+            context.pop("running", None)
+        if "success" in context:
+            # If the task was successful before, we need to decrement the success metric
+            metrics.append(
+                GaugeMetric(
+                    f"{metric}.p{priority}.success", 0, tags={"application": "airflow", "dag": dag_id, "priority": priority, "tag": "success"}
+                )
+            )
+            context.pop("success", None)
+        context["failed"] = True
+    elif tag == "running":
+        if "success" in context:
+            # If the task was successful before, we need to decrement the success metric
+            metrics.append(
+                GaugeMetric(
+                    f"{metric}.p{priority}.success", 0, tags={"application": "airflow", "dag": dag_id, "priority": priority, "tag": "success"}
+                )
+            )
+            context.pop("success", None)
+        if "failed" in context:
+            # If the task was failed before, we need to decrement the failed metric
+            metrics.append(
+                GaugeMetric(f"{metric}.p{priority}.failed", 0, tags={"application": "airflow", "dag": dag_id, "priority": priority, "tag": "failed"})
+            )
+            context.pop("failed", None)
+        context["running"] = True
+    get_client().send_batch(metrics)

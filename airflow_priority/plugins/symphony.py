@@ -1,25 +1,17 @@
-import os
 import ssl
-import sys
 from functools import lru_cache
-from logging import getLogger
+from typing import Any, Dict
 
-from airflow.listeners import hookimpl
-from airflow.models.dagrun import DagRun
-from airflow.plugins_manager import AirflowPlugin
+from httpx import post
 
-from airflow_priority import AirflowPriorityConfigurationOptionNotFound, DagStatus, get_config_option, has_priority_tag
+from ..common import DagStatus, get_config_option
 
-__all__ = ("get_config_options", "get_headers", "get_room_id", "send_metric_symphony", "on_dag_run_failed", "SymphonyPriorityPlugin")
-
-
-_log = getLogger(__name__)
+__all__ = ("send_metric",)
 
 
 @lru_cache
 def get_config_options():
     return {
-        "room_name": get_config_option("symphony", "room_name"),
         "message_create_url": get_config_option("symphony", "message_create_url"),
         "cert_file": get_config_option("symphony", "cert_file"),
         "key_file": get_config_option("symphony", "key_file"),
@@ -53,14 +45,14 @@ def get_headers():
 
 
 @lru_cache
-def get_room_id():
-    from httpx import post
-
+def get_room_id(tag: DagStatus):
     config_options = get_config_options()
+    default_channel_name = get_config_option("symphony", "room_name")
+    channel_name = get_config_option("symphony", f"room_name_{tag}", default=default_channel_name)
 
     res = post(
         url=config_options["room_search_url"],
-        json={"query": config_options["room_name"]},
+        json={"query": channel_name},
         headers=get_headers(),
     )
     if res and res.status_code == 200:
@@ -71,48 +63,28 @@ def get_room_id():
     raise Exception("TODO")
 
 
-def send_metric_symphony(dag_id: str, priority: int, tag: DagStatus) -> None:
-    from httpx import post
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
+    send_running = get_config_option("symphony", "send_running", default="false").lower() == "true"
+    send_success = get_config_option("symphony", "send_success", default="false").lower() == "true"
+    update_message = get_config_option("symphony", "update_message", default="false").lower() == "true"
 
-    return post(
-        url=get_config_options()["message_create_url"].replace("SID", get_room_id()),
-        json={"message": f'<messageML>A P{priority} DAG "{dag_id}" has {tag}!</messageML>'},
-        headers=get_headers(),
-    )
+    if tag == "failed" or (tag == "running" and send_running) or (tag == "success" and send_success):
+        # Send a message to the corresponding channel
+        context[tag] = post(
+            url=get_config_options()["message_create_url"].replace("SID", get_room_id(tag)),
+            json={"message": f'<messageML>A P{priority} DAG "{dag_id}" has been marked "{tag}"</messageML>'},
+            headers=get_headers(),
+        )
 
+    # Update the failure message
+    if tag != "failed" and update_message and "failed" in context:
+        # Update the message for the failed DAG
+        context["failed"] = post(
+            url=get_config_options()["message_create_url"].replace("SID", get_room_id("failed")),
+            json={"message": f'<messageML>A P{priority} DAG "{dag_id}" has been marked "{tag}"</messageML>'},
+            headers=get_headers(),
+        )
 
-# @hookimpl
-# def on_dag_run_running(dag_run: DagRun, msg: str):
-#     dag_id, priority = has_priority_tag(dag_run=dag_run)
-#     if priority:
-#         send_metric_slack(dag_id, priority, "running")
-
-
-# @hookimpl
-# def on_dag_run_success(dag_run: DagRun, msg: str):
-#     dag_id, priority = has_priority_tag(dag_run=dag_run)
-#     if priority:
-#         send_metric_slack(dag_id, priority, "succeeded")
-
-
-@hookimpl
-def on_dag_run_failed(dag_run: DagRun, msg: str):
-    dag_id, priority = has_priority_tag(dag_run=dag_run)
-    if priority:
-        send_metric_symphony(dag_id, priority, "failed")
-
-
-class SymphonyPriorityPlugin(AirflowPlugin):
-    name = "SymphonyPriorityPlugin"
-    listeners = []
-
-
-try:
-    if os.environ.get("SPHINX_BUILDING", "0") != "1":
-        # Call once to ensure plugin will work
-        import httpx  # noqa: F401
-
-        get_config_options()
-    SymphonyPriorityPlugin.listeners.append(sys.modules[__name__])
-except (ImportError, AirflowPriorityConfigurationOptionNotFound):
-    _log.warning("symphony plugin could not be enabled! Ensure `httpx` is installed and all configuration options are set.")
+    # On success, blank out the context
+    if tag == "success":
+        context.clear()

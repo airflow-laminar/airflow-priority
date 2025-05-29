@@ -94,3 +94,10 @@ def dag_run():
     dag_run.dag = MagicMock()
     dag_run.dag.tags = ["P1"]
     return dag_run
+
+
+@pytest.fixture(scope="function", autouse=True)
+def new_tracker():
+    from airflow_priority.tracker import Tracker
+
+    yield Tracker()
