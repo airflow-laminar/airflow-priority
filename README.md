@@ -45,6 +45,8 @@ conda install airflow-priority -c conda-forge
 
 ### Datadog
 
+<img src="./docs/img/datadog.png" width=400 alt="Datadog metric for failed DAG run">
+
 Create a new Datadog api key [following their guide](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token).
 
 Copy this api key into your `airflow.cfg` like so:
