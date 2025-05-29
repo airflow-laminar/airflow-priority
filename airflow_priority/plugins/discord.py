@@ -41,6 +41,23 @@ def get_client():
     return client
 
 
+@lru_cache
+def get_channel_id(tag: DagStatus, priority: int) -> int:
+    # First, grab the default channel
+    channel_name = get_config_option("discord", "channel", default=0)
+
+    # Next, grab the channel name for the tag, if it exists
+    channel_name = get_config_option("discord", f"channel_{tag}", default=channel_name)
+
+    # Try the channel name for the priority, if it exists
+    channel_name = get_config_option("discord", f"channel_P{priority}", default=channel_name)
+
+    # And finally, try the channel name for tag + priority, if it exists
+    channel_name = get_config_option("discord", f"channel_{tag}_P{priority}", default=channel_name)
+
+    return int(channel_name)
+
+
 def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
     send_running = get_config_option("discord", "send_running", default="false").lower() == "true"
     send_success = get_config_option("discord", "send_success", default="false").lower() == "true"
@@ -50,8 +67,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
     failed_color = get_config_option("discord", "failed_color", default="#ff0000")
     success_color = get_config_option("discord", "success_color", default="#00ff00")
 
-    default_channel = get_config_option("discord", "channel")
-    channel = int(get_config_option("discord", f"channel_{tag}", default=default_channel))
+    channel = get_channel_id(tag, priority)
 
     client = get_client()
     client_out_queue = client.outqueue
@@ -71,7 +87,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
 
     # Update the failure message
     if tag != "failed" and update_message and "failed" in context:
-        channel = int(get_config_option("discord", "channel_failed", default=default_channel))
+        channel = get_channel_id(tag, priority)
         failed_context = context["failed"]
         client_out_queue.put(
             (

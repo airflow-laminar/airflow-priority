@@ -45,10 +45,20 @@ def get_headers():
 
 
 @lru_cache
-def get_room_id(tag: DagStatus):
+def get_room_id(tag: DagStatus, priority: int) -> str:
     config_options = get_config_options()
-    default_channel_name = get_config_option("symphony", "room_name")
-    channel_name = get_config_option("symphony", f"room_name_{tag}", default=default_channel_name)
+
+    # First, grab the default channel
+    channel_name = get_config_option("symphony", "room_name", default="")
+
+    # Next, grab the channel name for the tag, if it exists
+    channel_name = get_config_option("symphony", f"room_name_{tag}", default=channel_name)
+
+    # Try the channel name for the priority, if it exists
+    channel_name = get_config_option("symphony", f"room_name_P{priority}", default=channel_name)
+
+    # And finally, try the channel name for tag + priority, if it exists
+    channel_name = get_config_option("symphony", f"room_name_{tag}_P{priority}", default=channel_name)
 
     res = post(
         url=config_options["room_search_url"],
@@ -71,7 +81,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
     if tag == "failed" or (tag == "running" and send_running) or (tag == "success" and send_success):
         # Send a message to the corresponding channel
         context[tag] = post(
-            url=get_config_options()["message_create_url"].replace("SID", get_room_id(tag)),
+            url=get_config_options()["message_create_url"].replace("SID", get_room_id(tag, priority)),
             json={"message": f'<messageML>A P{priority} DAG "{dag_id}" has been marked "{tag}"</messageML>'},
             headers=get_headers(),
         )
@@ -80,7 +90,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
     if tag != "failed" and update_message and "failed" in context:
         # Update the message for the failed DAG
         context["failed"] = post(
-            url=get_config_options()["message_create_url"].replace("SID", get_room_id("failed")),
+            url=get_config_options()["message_create_url"].replace("SID", get_room_id("failed", priority)),
             json={"message": f'<messageML>A P{priority} DAG "{dag_id}" has been marked "{tag}"</messageML>'},
             headers=get_headers(),
         )

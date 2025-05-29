@@ -14,9 +14,20 @@ def get_client() -> WebClient:
 
 
 @lru_cache
-def get_channel_id(tag: DagStatus) -> str:
-    default_channel_name = get_config_option("slack", "channel")
-    channel_name = get_config_option("slack", f"channel_{tag}", default=default_channel_name)
+def get_channel_id(tag: DagStatus, priority: int) -> str:
+    # First, grab the default channel
+    channel_name = get_config_option("slack", "channel", default="")
+
+    # Next, grab the channel name for the tag, if it exists
+    channel_name = get_config_option("slack", f"channel_{tag}", default=channel_name)
+
+    # Try the channel name for the priority, if it exists
+    channel_name = get_config_option("slack", f"channel_P{priority}", default=channel_name)
+
+    # And finally, try the channel name for tag + priority, if it exists
+    channel_name = get_config_option("slack", f"channel_{tag}_P{priority}", default=channel_name)
+
+    # Lookup the channel ID
     conversations = get_client().conversations_list(types=["public_channel", "private_channel"])
     if conversations.data["ok"]:
         for channel in conversations.data["channels"]:
@@ -38,7 +49,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
 
     if tag == "failed" or (tag == "running" and send_running) or (tag == "success" and send_success):
         # Send a message to the corresponding channel
-        channel = get_channel_id(tag)
+        channel = get_channel_id(tag, priority)
         context[tag] = client.chat_postMessage(
             channel=channel,
             attachments=[
@@ -52,7 +63,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
 
     # Update the failure message
     if tag != "failed" and update_message and "failed" in context:
-        channel = get_channel_id("failed")
+        channel = get_channel_id("failed", priority)
         failed_context = context["failed"]
         failed_message_ts = failed_context.get("ts")
         if failed_message_ts:
