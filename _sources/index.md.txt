@@ -229,7 +229,7 @@ region = "us-east-1"
 
 ### Alternative Syntax
 
-> NOTE
+> [!NOTE]
 > AWS may require your to use the alternative configuration syntax
 
 All scoped configuration options can be set directly under `priority`.
