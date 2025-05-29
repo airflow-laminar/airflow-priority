@@ -8,6 +8,7 @@
 
    .. autosummary::
    
+      get_channel_id
       get_client
       send_metric
    

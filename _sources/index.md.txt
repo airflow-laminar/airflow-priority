@@ -83,6 +83,10 @@ Copy your bot's token into your `airflow.cfg` like so:
 [priority.discord]
 token = the bot's token
 channel = the numerical channel ID, from the url or by right clicking
+
+# Configure tag and priority specific channels
+channel_P3 = ...
+channel_failed_P1 = ...
 ```
 
 Ensure your bot is invited into any private channels.
@@ -170,6 +174,10 @@ Copy your Slack application's Oauth Token (starting with `xoxb-`) and your desir
 [priority.slack]
 token = xoxb-...
 channel = channel-name
+
+# Configure tag and priority specific channels
+channel_P3 = ...
+channel_failed_P1 = ...
 ```
 
 #### Verbose updates
