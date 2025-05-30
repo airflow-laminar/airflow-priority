@@ -28,6 +28,40 @@ Or via conda:
 conda install airflow-priority -c conda-forge
 ```
 
-## License
+## Configuration
 
-This software is licensed under the Apache 2.0 license. See the [LICENSE](LICENSE) file for details.
+The primary mechanism for configuration is the standard [`airflow.cfg` file](https://airflow.apache.org/docs/apache-airflow/stable/howto/set-config.html).
+All configuration is under the `priority` header.
+Here is an example configuration from our tests.
+
+```
+[priority]
+threshold = 3  # default threshold of all alerts to P1,P2, or P3 (ignore P4, P5)
+
+[priority.datadog]
+api_key = 1234567890abcdefg
+host = us1.datadoghq.com
+tags = environment:test,mycustom:tag
+metric = custom.metric
+threshold = 2  # datadog will only send a metric on P1, P2
+
+```
+
+All scoped configuration options can be set directly under `priority`.
+
+For example this:
+
+```
+[priority.aws]
+region = "us-east-1"
+```
+
+Can be provided as:
+
+```
+[priority]
+aws_region = "us-east-1"
+```
+
+> [!NOTE]
+> AWS MWAA and terraform may require you to use the alternative configuration syntax
