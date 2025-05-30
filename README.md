@@ -197,6 +197,16 @@ running_color = "#FFFF00"
 success_color = "#00FF00"
 ```
 
+### OpsGenie
+
+
+```
+[priority.opsgenie]
+api_key = ...
+update = true  # update incidents on rerun/success, default is true
+```
+
+
 ### Symphony
 
 Documentation coming soon!
@@ -214,7 +224,6 @@ session_auth = https://mycompany-api.symphony.com/sessionauth/v1/authenticate
 key_auth = https://mycompany-api.symphony.com/keyauth/v1/authenticate
 room_search_url = https://mycompany.symphony.com/pod/v3/room/search
 ```
-
 
 ### AWS MWAA CloudWatch
 

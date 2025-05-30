@@ -142,6 +142,13 @@ tracker_inst.register(
 )
 
 tracker_inst.register(
+    backend="opsgenie",
+    necessary_configs=[
+        ("opsgenie", "api_key"),
+    ],
+)
+
+tracker_inst.register(
     backend="slack",
     necessary_configs=[
         ("slack", "token"),

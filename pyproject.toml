@@ -48,6 +48,7 @@ develop = [
     "discord.py",
     "httpx",
     "newrelic-telemetry-sdk",
+    "opsgenie-sdk",
     "slack-sdk",
     # Config
     "airflow-config>=0.1.2",
@@ -67,6 +68,9 @@ discord = [
 ]
 newrelic = [
     "newrelic-telemetry-sdk",
+]
+opsgenie = [
+    "opsgenie-sdk",
 ]
 slack = [
     "slack-sdk",
