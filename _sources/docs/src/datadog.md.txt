@@ -36,5 +36,5 @@ Note that some choices can be varied depending on your desired response time.
 - Use the default `Threshold Alert`
 - Choose the correct metric source (the default would be something like `airflow.custom.priority.p1.failed`, but might vary if you customize the metric name)
 - Select `from (everywhere)`, then `min by dag`
-- Evaluate `minimum` over the `last 5 minutes`
+- Evaluate `sum` over the `last 5 minutes`
 - Set `Alert Threshold > 0`, `Warning threshold > -1`, which alert as soon as a DAG fails

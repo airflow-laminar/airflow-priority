@@ -31,7 +31,7 @@ threshold = 2  # only P1 and P2
 Under `Query Your Data` in the New Relic UI, you can create a query for the new custom metric:
 
 ```
-SELECT sum(`airflow.custom.priority.p1.failed`) FROM Metric FACET dag
+SELECT latest(`airflow.custom.priority.p1.failed`) FROM Metric FACET dag
 ```
 
 With this, you can now [create a custom alert](https://docs.newrelic.com/docs/alerts/create-alert/examples/define-custom-metrics-alert-condition/).

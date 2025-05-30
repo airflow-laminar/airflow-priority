@@ -294,7 +294,7 @@ Note that the type should have <code class="docutils literal notranslate"><span 
 <section id="monitor">
 <h2>Monitor<a class="headerlink" href="#monitor" title="Link to this heading">¶</a></h2>
 <p>Under <code class="docutils literal notranslate"><span class="pre">Query</span> <span class="pre">Your</span> <span class="pre">Data</span></code> in the New Relic UI, you can create a query for the new custom metric:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT sum(`airflow.custom.priority.p1.failed`) FROM Metric FACET dag
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT latest(`airflow.custom.priority.p1.failed`) FROM Metric FACET dag
 </pre></div>
 </div>
 <p>With this, you can now <a class="reference external" href="https://docs.newrelic.com/docs/alerts/create-alert/examples/define-custom-metrics-alert-condition/">create a custom alert</a>.

@@ -302,7 +302,7 @@ Note that some choices can be varied depending on your desired response time.</p
 <li><p>Use the default <code class="docutils literal notranslate"><span class="pre">Threshold</span> <span class="pre">Alert</span></code></p></li>
 <li><p>Choose the correct metric source (the default would be something like <code class="docutils literal notranslate"><span class="pre">airflow.custom.priority.p1.failed</span></code>, but might vary if you customize the metric name)</p></li>
 <li><p>Select <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">(everywhere)</span></code>, then <code class="docutils literal notranslate"><span class="pre">min</span> <span class="pre">by</span> <span class="pre">dag</span></code></p></li>
-<li><p>Evaluate <code class="docutils literal notranslate"><span class="pre">minimum</span></code> over the <code class="docutils literal notranslate"><span class="pre">last</span> <span class="pre">5</span> <span class="pre">minutes</span></code></p></li>
+<li><p>Evaluate <code class="docutils literal notranslate"><span class="pre">sum</span></code> over the <code class="docutils literal notranslate"><span class="pre">last</span> <span class="pre">5</span> <span class="pre">minutes</span></code></p></li>
 <li><p>Set <code class="docutils literal notranslate"><span class="pre">Alert</span> <span class="pre">Threshold</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">Warning</span> <span class="pre">threshold</span> <span class="pre">&gt;</span> <span class="pre">-1</span></code>, which alert as soon as a DAG fails</p></li>
 </ul>
 </section>
