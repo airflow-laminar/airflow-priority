@@ -158,5 +158,15 @@ section-order = ["future", "standard-library", "third-party", "first-party", "lo
 [tool.yardang]
 title = "airflow-priority"
 root = "README.md"
-pages = ["docs/src/API.md"]
+pages = [
+    "docs/src/introduction.md",
+    "docs/src/datadog.md",
+    "docs/src/discord.md",
+    "docs/src/newrelic.md",
+    "docs/src/opsgenie.md",
+    "docs/src/slack.md",
+    "docs/src/symphony.md",
+    "docs/src/cloudwatch.md",
+    "docs/src/API.md",
+]
 use-autoapi = false
