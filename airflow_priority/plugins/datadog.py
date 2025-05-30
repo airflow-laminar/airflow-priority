@@ -62,7 +62,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                         points=[
                             MetricPoint(
                                 timestamp=int(datetime.now().timestamp()),
-                                value=0,
+                                value=-1,
                             ),
                         ],
                         resources=[
@@ -84,7 +84,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                         points=[
                             MetricPoint(
                                 timestamp=int(datetime.now().timestamp()),
-                                value=0,
+                                value=-1,
                             ),
                         ],
                         resources=[
@@ -108,7 +108,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                         points=[
                             MetricPoint(
                                 timestamp=int(datetime.now().timestamp()),
-                                value=0,
+                                value=-1,
                             ),
                         ],
                         resources=[
@@ -130,7 +130,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                         points=[
                             MetricPoint(
                                 timestamp=int(datetime.now().timestamp()),
-                                value=0,
+                                value=-1,
                             ),
                         ],
                         resources=[
@@ -154,7 +154,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                         points=[
                             MetricPoint(
                                 timestamp=int(datetime.now().timestamp()),
-                                value=0,
+                                value=-1,
                             ),
                         ],
                         resources=[
@@ -176,7 +176,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                         points=[
                             MetricPoint(
                                 timestamp=int(datetime.now().timestamp()),
-                                value=0,
+                                value=-1,
                             ),
                         ],
                         resources=[
