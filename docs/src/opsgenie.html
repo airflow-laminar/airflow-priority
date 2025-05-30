@@ -184,7 +184,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -258,7 +258,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -268,11 +268,31 @@
 <h1>OpsGenie<a class="headerlink" href="#opsgenie" title="Link to this heading">¶</a></h1>
 <a class="reference internal image-reference" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/opsgenie.png"><img alt="OpsGenie alert showing failed DAG status" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/opsgenie.png" style="width: 400px;" />
 </a>
+<p>OpsGenie integration will create <a class="reference external" href="https://docs.opsgenie.com/docs/alert-api">OpsGenie Alerts</a> when a DAG fails.</p>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">¶</a></h2>
+<p>Under <code class="docutils literal notranslate"><span class="pre">Teams</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">&lt;your</span> <span class="pre">team&gt;</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Integrations</span></code>, add a new <code class="docutils literal notranslate"><span class="pre">API</span></code> integration.
+This will generate an api key.</p>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">api_key</span></code>: (<strong>Required</strong>) the API Key from above</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">entity</span></code>: (Optional) Override the name of the entity. The default is <code class="docutils literal notranslate"><span class="pre">airflow.priority.dag</span></code>, which will product alerts with entity like <code class="docutils literal notranslate"><span class="pre">airflow.priority.dag.p1.failed</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update</span></code>: (Optional) Update an open alert when dag is rerun or passes (default is <code class="docutils literal notranslate"><span class="pre">true</span></code>). When <code class="docutils literal notranslate"><span class="pre">true</span></code>, when the dag is <code class="docutils literal notranslate"><span class="pre">running</span></code> again the alert will be ack’d. If the DAG succeeds, the alert will be closed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">threshold</span></code>: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored</p></li>
+</ul>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">opsgenie</span><span class="p">]</span>
 <span class="n">api_key</span> <span class="o">=</span> <span class="o">...</span>
-<span class="n">update</span> <span class="o">=</span> <span class="n">true</span>  <span class="c1"># update incidents on rerun/success, default is true</span>
+<span class="n">entity</span> <span class="o">=</span> <span class="n">my</span><span class="o">.</span><span class="n">entity</span>
+<span class="n">update</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># only P1 and P2</span>
 </pre></div>
 </div>
+</section>
 </section>
 
         </article>
@@ -318,8 +338,29 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">OpsGenie</a><ul>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

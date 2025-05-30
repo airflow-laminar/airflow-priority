@@ -268,6 +268,9 @@
 <h1>Slack<a class="headerlink" href="#slack" title="Link to this heading">¶</a></h1>
 <a class="reference internal image-reference" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/slack.png"><img alt="Message in Slack reflecting DAG status" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/slack.png" style="width: 400px;" />
 </a>
+<p>Slack integration will create new messages when a DAG fails, and optionally update those messages when a DAG reruns/succeeds.</p>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">¶</a></h2>
 <p>Configure a new slack application following the <a class="reference external" href="https://api.slack.com/quickstart">Slack Quickstart</a>.</p>
 <p>Ensure your application has the following scopes for public and private channel access:</p>
 <ul class="simple">
@@ -276,7 +279,47 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">chat:write</span></code></p></li>
 </ul>
 <p>Enable and install your Slack application into your workspace, and add it as an integration in whatever channel you want it to post.</p>
-<p>Copy your Slack application’s Oauth Token (starting with <code class="docutils literal notranslate"><span class="pre">xoxb-</span></code>) and your desired channel into your <code class="docutils literal notranslate"><span class="pre">airflow.cfg</span></code> like so:</p>
+<p>Copy your Slack application’s Oauth Token (starting with <code class="docutils literal notranslate"><span class="pre">xoxb-</span></code>) somewhere secure.</p>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">token</span></code>: (<strong>Required</strong>) the OAuth token from above</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel</span></code>: (<strong>Required</strong>) channel name to send messages to</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">threshold</span></code>: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update_message</span></code>: (Optional) Update a failure message with running/succeeds. Defaults to <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">send_running</span></code>: (Optional) Send new messages when a DAG starts running. Defaults to <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">send_success</span></code>: (Optional) Send new messages when a DAG succeeds. Defaults to <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">failed_color</span></code>: (Optional) Color of a DAG failed message</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">running_color</span></code>: (Optional) Color of a DAG running message.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">success_color</span></code>: (Optional) Color of a DAG success message.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_P1</span></code>: (Optional) P1 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_P2</span></code>: (Optional) P2 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_P3</span></code>: (Optional) P3 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_P4</span></code>: (Optional) P4 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_P5</span></code>: (Optional) P5 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_failed</span></code>: (Optional) Failed channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_success</span></code>: (Optional) Success channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_running</span></code>: (Optional) Running channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_failed_P1</span></code>: (Optional) Failed P1 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_failed_P2</span></code>: (Optional) Failed P2 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_failed_P3</span></code>: (Optional) Failed P3 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_failed_P4</span></code>: (Optional) Failed P4 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_failed_P5</span></code>: (Optional) Failed P5 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_success_P1</span></code>: (Optional) Success P1 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_success_P2</span></code>: (Optional) Success P2 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_success_P3</span></code>: (Optional) Success P3 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_success_P4</span></code>: (Optional) Success P4 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_success_P5</span></code>: (Optional) Success P5 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_running_P1</span></code>: (Optional) Running P1 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_running_P2</span></code>: (Optional) Running P2 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_running_P3</span></code>: (Optional) Running P3 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_running_P4</span></code>: (Optional) Running P4 channel override</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channel_running_P5</span></code>: (Optional) Running P5 channel override</p></li>
+</ul>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">slack</span><span class="p">]</span>
 <span class="n">token</span> <span class="o">=</span> <span class="n">xoxb</span><span class="o">-...</span>
 <span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span><span class="o">-</span><span class="n">name</span>
@@ -286,6 +329,7 @@
 <span class="n">channel_failed_P1</span> <span class="o">=</span> <span class="o">...</span>
 </pre></div>
 </div>
+</section>
 <section id="verbose-updates">
 <h2>Verbose updates<a class="headerlink" href="#verbose-updates" title="Link to this heading">¶</a></h2>
 <p>By default, only DAG failure events will be sent.
@@ -370,6 +414,9 @@ These can also be configured to send to different channels.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Slack</a><ul>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
 <li><a class="reference internal" href="#verbose-updates">Verbose updates</a></li>
 <li><a class="reference internal" href="#customizing-message-colors">Customizing message colors</a></li>
 </ul>

@@ -184,7 +184,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -258,7 +258,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -268,15 +268,44 @@
 <h1>Datadog<a class="headerlink" href="#datadog" title="Link to this heading">¶</a></h1>
 <a class="reference internal image-reference" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/datadog.png"><img alt="Datadog metric for failed DAG run" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/datadog.png" style="width: 400px;" />
 </a>
+<p>Datadog integration will create <a class="reference external" href="https://docs.datadoghq.com/metrics/">Datadog metrics</a> for DAG <code class="docutils literal notranslate"><span class="pre">running</span></code>, <code class="docutils literal notranslate"><span class="pre">success</span></code>, and <code class="docutils literal notranslate"><span class="pre">failed</span></code> status.</p>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">¶</a></h2>
 <p>Create a new Datadog api key <a class="reference external" href="https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token">following their guide</a>.</p>
-<p>Copy this api key into your <code class="docutils literal notranslate"><span class="pre">airflow.cfg</span></code> like so:</p>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">api_key</span></code>: (<strong>Required</strong>) the API Key from above</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">host</span></code>: (Optional) Override the Datadog API host name. This is necessary for certain US and EU customers to use the Datadog API. The default is <code class="docutils literal notranslate"><span class="pre">https://api.datadoghq.com</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">metric</span></code>: (Optional) Override the name of the metric. The default is <code class="docutils literal notranslate"><span class="pre">airflow.custom.priority</span></code>, which will product metrics like <code class="docutils literal notranslate"><span class="pre">airflow.custom.priority.p1.failed</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">threshold</span></code>: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored</p></li>
+</ul>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">datadog</span><span class="p">]</span>
 <span class="n">api_key</span> <span class="o">=</span> <span class="n">the</span> <span class="n">api</span> <span class="n">key</span>
-<span class="n">host</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">api</span><span class="o">.</span><span class="n">datadoghq</span><span class="o">.</span><span class="n">com</span>  <span class="c1"># Optional host change</span>
-<span class="n">metric</span> <span class="o">=</span> <span class="n">my</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">metric</span>  <span class="c1"># Optional metric name override, default is &quot;airflow.custom.priority&quot;</span>
+<span class="n">host</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">us1</span><span class="o">.</span><span class="n">datadoghq</span><span class="o">.</span><span class="n">com</span>
+<span class="n">metric</span> <span class="o">=</span> <span class="n">my</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">metric</span>  <span class="c1"># will produce metrics like my.custom.metric.p2.success</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># only P1 and P2</span>
 </pre></div>
 </div>
-<p>Ensure your dags are configured with tags and run some, it can often be convenient to have an intentionally failing <code class="docutils literal notranslate"><span class="pre">P1</span></code> dag to test the integration. With this, you can now <a class="reference external" href="https://docs.datadoghq.com/getting_started/monitors/">create custom monitors</a> for the tags.</p>
+</section>
+<section id="monitor">
+<h2>Monitor<a class="headerlink" href="#monitor" title="Link to this heading">¶</a></h2>
+<p>Under <code class="docutils literal notranslate"><span class="pre">Monitors</span></code>, you can create a custom Datadog monitor to generate alerts when your DAGs fail.</p>
+<p>To do so, follow the steps below.
+Note that some choices can be varied depending on your desired response time.</p>
+<ul class="simple">
+<li><p>Create a <code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">Monitor</span></code> and then choose <code class="docutils literal notranslate"><span class="pre">Metric</span></code></p></li>
+<li><p>Use the default <code class="docutils literal notranslate"><span class="pre">Threshold</span> <span class="pre">Alert</span></code></p></li>
+<li><p>Choose the correct metric source (the default would be something like <code class="docutils literal notranslate"><span class="pre">airflow.custom.priority.p1.failed</span></code>, but might vary if you customize the metric name)</p></li>
+<li><p>Select <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">(everywhere)</span></code>, then <code class="docutils literal notranslate"><span class="pre">min</span> <span class="pre">by</span> <span class="pre">dag</span></code></p></li>
+<li><p>Evaluate <code class="docutils literal notranslate"><span class="pre">minimum</span></code> over the <code class="docutils literal notranslate"><span class="pre">last</span> <span class="pre">5</span> <span class="pre">minutes</span></code></p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">Alert</span> <span class="pre">Threshold</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">Warning</span> <span class="pre">threshold</span> <span class="pre">&gt;</span> <span class="pre">-1</span></code>, which alert as soon as a DAG fails</p></li>
+</ul>
+</section>
 </section>
 
         </article>
@@ -322,8 +351,30 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Datadog</a><ul>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#monitor">Monitor</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
