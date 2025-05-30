@@ -6,13 +6,19 @@
 [priority.datadog]
 api_key = {{ DATADOG_API_KEY }}
 host = {{ DATADOG_HOST }}
+tags = environment:test
+metric = "custom.metric"
 
 [priority.discord]
 token = {{ DISCORD_TOKEN }}
 channel = {{ DISCORD_CHANNEL }}
+channel_P1 = {{ DISCORD_CHANNEL }}
+channel_failed_P1 = {{ DISCORD_CHANNEL }}
 
 [priority.newrelic]
 api_key = {{ NEWRELIC_API_KEY }}
+tags = {"environment":"test"}
+metric = "custom.metric"
 
 [priority.opsgenie]
 api_key = {{ OPSGENIE_API_KEY }}
@@ -20,6 +26,8 @@ api_key = {{ OPSGENIE_API_KEY }}
 [priority.slack]
 token = {{ SLACK_TOKEN }}
 channel = {{ SLACK_CHANNEL }}
+channel_P1 = {{ DISCORD_CHANNEL }}
+channel_failed_P1 = {{ DISCORD_CHANNEL }}
 
 [priority.symphony]
 room_name = {{ SYMPHONY_ROOM_NAME }}

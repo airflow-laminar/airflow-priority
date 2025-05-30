@@ -27,6 +27,8 @@ def get_configuration():
 
 def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
     metric = get_config_option("datadog", "metric", default=DefaultMetric)
+    tags = get_config_option("datadog", "tags", default="").split(",")
+    tags = ["application:airflow", f"priority:{priority}", f"dag:{dag_id}", *tags]
 
     with ApiClient(get_configuration()) as api_client:
         api_instance = MetricsApi(api_client)
@@ -46,7 +48,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                         type="dag",
                     ),
                 ],
-                tags=["airflow", "priority", f"dag_{dag_id}"],
+                tags=tags,
             )
         ]
 
@@ -69,7 +71,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                                 type="dag",
                             ),
                         ],
-                        tags=["airflow", "priority", f"dag_{dag_id}"],
+                        tags=tags,
                     )
                 )
                 context.pop("running", None)
@@ -91,7 +93,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                                 type="dag",
                             ),
                         ],
-                        tags=["airflow", "priority", f"dag_{dag_id}"],
+                        tags=tags,
                     )
                 )
                 context.pop("failed", None)
@@ -115,7 +117,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                                 type="dag",
                             ),
                         ],
-                        tags=["airflow", "priority", f"dag_{dag_id}"],
+                        tags=tags,
                     )
                 )
                 context.pop("running", None)
@@ -137,7 +139,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                                 type="dag",
                             ),
                         ],
-                        tags=["airflow", "priority", f"dag_{dag_id}"],
+                        tags=tags,
                     )
                 )
                 context.pop("success", None)
@@ -161,7 +163,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                                 type="dag",
                             ),
                         ],
-                        tags=["airflow", "priority", f"dag_{dag_id}"],
+                        tags=tags,
                     )
                 )
                 context.pop("success", None)
@@ -183,7 +185,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                                 type="dag",
                             ),
                         ],
-                        tags=["airflow", "priority", f"dag_{dag_id}"],
+                        tags=tags,
                     )
                 )
                 context.pop("failed", None)
