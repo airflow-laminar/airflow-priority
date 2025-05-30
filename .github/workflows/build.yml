@@ -58,9 +58,10 @@ jobs:
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         DISCORD_CHANNEL: ${{ secrets.DISCORD_CHANNEL }}
         NEWRELIC_API_KEY: ${{ secrets.NEWRELIC_API_KEY }}
+        OPSGENIE_API_KEY: ${{ secrets.OPSGENIE_API_KEY }}
         SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
         SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
-      
+
     - name: Upload test results (Python)
       uses: actions/upload-artifact@v4
       with:
