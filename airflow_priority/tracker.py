@@ -21,6 +21,7 @@ class Tracker(object):
     def __init__(self):
         self.dagruns: Dict[DagContextIdentifier, Dict[DagStatus, BackendSpecificDagContext]] = {}
         self.backends: Dict[str, SendMetricFunction] = {}
+        self.thresholds: Dict[str, int] = {}
 
     def register(
         self,
@@ -53,6 +54,9 @@ class Tracker(object):
         # register
         self.backends[backend] = getattr(module, "send_metric")
 
+        # set threshold if available
+        self.thresholds[backend] = int(get_config_option(backend, "threshold", default=get_config_option("threshold", default=5)))
+
     def _setup_context(self, backend: str, dag_instance_id: str):
         key = (backend, dag_instance_id)
         if key not in self.dagruns:
@@ -67,6 +71,10 @@ class Tracker(object):
             for backend, sender in self.backends.items():
                 _log.info(f"Backend: {backend}")
 
+                if priority > self.thresholds.get(backend, 5):
+                    _log.info(f"Skipping running metric for backend {backend} with priority {priority} as it exceeds the threshold.")
+                    return
+
                 # Setup the context if needed
                 self._setup_context(backend, dag_run.id)
 
@@ -77,10 +85,15 @@ class Tracker(object):
 
     def success(self, dag_run: DagRun):
         dag_id, priority = has_priority_tag(dag_run=dag_run)
+
         if priority:
             _log.info(f"DAG Success: {dag_id} / P{priority}")
             for backend, sender in self.backends.items():
                 _log.info(f"Backend: {backend}")
+
+                if priority > self.thresholds.get(backend, 5):
+                    _log.info(f"Skipping success metric for backend {backend} with priority {priority} as it exceeds the threshold.")
+                    return
 
                 # Setup the context if needed
                 self._setup_context(backend, dag_run.id)
@@ -96,6 +109,10 @@ class Tracker(object):
             _log.info(f"DAG Failed: {dag_id} / P{priority}")
             for backend, sender in self.backends.items():
                 _log.info(f"Backend: {backend}")
+
+                if priority > self.thresholds.get(backend, 5):
+                    _log.info(f"Skipping failed metric for backend {backend} with priority {priority} as it exceeds the threshold.")
+                    return
 
                 # Setup the context if needed
                 self._setup_context(backend, dag_run.id)
