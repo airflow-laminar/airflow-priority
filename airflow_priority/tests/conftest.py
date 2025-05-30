@@ -99,6 +99,18 @@ def dag_run():
 
 
 @pytest.fixture(scope="function", autouse=True)
+def dag_run_p3():
+    from unittest.mock import MagicMock
+
+    from airflow.models.dagrun import DagRun
+
+    dag_run = DagRun("UNIT TEST")
+    dag_run.dag = MagicMock()
+    dag_run.dag.tags = ["P3"]
+    return dag_run
+
+
+@pytest.fixture(scope="function", autouse=True)
 def new_tracker():
     from airflow_priority.tracker import Tracker
 
