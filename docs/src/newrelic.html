@@ -184,7 +184,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -258,7 +258,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -268,18 +268,36 @@
 <h1>NewRelic<a class="headerlink" href="#newrelic" title="Link to this heading">¶</a></h1>
 <a class="reference internal image-reference" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/newrelic.png"><img alt="Dashboard of newrelic metrics" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/newrelic.png" style="width: 400px;" />
 </a>
-<p>Create a new New Relic API Key <a class="reference external" href="https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/">following their guide</a>. Note that the type should have <code class="docutils literal notranslate"><span class="pre">INGEST</span> <span class="pre">-</span> <span class="pre">LICENSE</span></code>.</p>
-<p>Copy this api key into your <code class="docutils literal notranslate"><span class="pre">airflow.cfg</span></code> like so:</p>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">¶</a></h2>
+<p>Create a new New Relic API Key <a class="reference external" href="https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/">following their guide</a>.
+Note that the type should have <code class="docutils literal notranslate"><span class="pre">INGEST</span> <span class="pre">-</span> <span class="pre">LICENSE</span></code>.</p>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">api_key</span></code>: (<strong>Required</strong>) the API Key from above</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">metric</span></code>: (Optional) Override the name of the metric. The default is <code class="docutils literal notranslate"><span class="pre">airflow.custom.priority</span></code>, which will product metrics like <code class="docutils literal notranslate"><span class="pre">airflow.custom.priority.p1.failed</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">threshold</span></code>: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored</p></li>
+</ul>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">newrelic</span><span class="p">]</span>
 <span class="n">api_key</span> <span class="o">=</span> <span class="n">the</span> <span class="n">api</span> <span class="n">key</span>
-<span class="n">metric</span> <span class="o">=</span> <span class="n">my</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">metric</span>  <span class="c1"># Optional metric name override, default is &quot;airflow.custom.priority&quot;</span>
+<span class="n">metric</span> <span class="o">=</span> <span class="n">my</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">metric</span>  <span class="c1"># will produce metrics like my.custom.metric.p2.success</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># only P1 and P2</span>
 </pre></div>
 </div>
+</section>
+</section>
+<section id="monitor">
+<h2>Monitor<a class="headerlink" href="#monitor" title="Link to this heading">¶</a></h2>
 <p>Under <code class="docutils literal notranslate"><span class="pre">Query</span> <span class="pre">Your</span> <span class="pre">Data</span></code> in the New Relic UI, you can create a query for the new custom metric:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT sum(`airflow.custom.priority.p1.failed`) FROM Metric FACET dag
 </pre></div>
 </div>
-<p>With this, you can now <a class="reference external" href="https://docs.newrelic.com/docs/alerts/create-alert/examples/define-custom-metrics-alert-condition/">create a custom alert</a>. For fast alerting, we recommend the following parameters:</p>
+<p>With this, you can now <a class="reference external" href="https://docs.newrelic.com/docs/alerts/create-alert/examples/define-custom-metrics-alert-condition/">create a custom alert</a>.
+For fast alerting, we recommend the following parameters:</p>
 <div class="highlight-raw notranslate"><div class="highlight"><pre><span></span>Window duration - 30 seconds
 Sliding window aggregation - Disabled
 Slide by interval - Not set
@@ -292,6 +310,18 @@ Evaluation delay - Not set
 Thresholds: Critical: Query result is above or equals 1 at least once in 1 minute
 </pre></div>
 </div>
+</section>
+<section id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Link to this heading">¶</a></h2>
+<p>Here is an example of querying all failed metrics in NewRelic in the last 30 minutes, which might be useful for debugging connectivity issues/</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT *
+FROM Metric
+WHERE metricName = &#39;airflow.custom.priority.p1.failed&#39;
+WHERE `airflow.custom.priority.p1.failed` IS NOT NULL
+SINCE 30 minutes ago UNTIL now
+</pre></div>
+</div>
+</section>
 </section>
 
         </article>
@@ -337,8 +367,33 @@ Thresholds: Critical: Query result is above or equals 1 at least once in 1 minut
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">NewRelic</a><ul>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#monitor">Monitor</a></li>
+<li><a class="reference internal" href="#utilities">Utilities</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

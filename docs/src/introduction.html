@@ -318,9 +318,38 @@ In layman’s terms, one need only add a <a class="reference external" href="htt
 </pre></div>
 </div>
 </section>
-<section id="license">
-<h2>License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h2>
-<p>This software is licensed under the Apache 2.0 license. See the <a class="reference internal" href="#LICENSE"><span class="xref myst">LICENSE</span></a> file for details.</p>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
+<p>The primary mechanism for configuration is the standard <a class="reference external" href="https://airflow.apache.org/docs/apache-airflow/stable/howto/set-config.html"><code class="docutils literal notranslate"><span class="pre">airflow.cfg</span></code> file</a>.
+All configuration is under the <code class="docutils literal notranslate"><span class="pre">priority</span></code> header.
+Here is an example configuration from our tests.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="p">]</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># default threshold of all alerts to P1,P2, or P3 (ignore P4, P5)</span>
+
+<span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">datadog</span><span class="p">]</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="mi">1234567890</span><span class="n">abcdefg</span>
+<span class="n">host</span> <span class="o">=</span> <span class="n">us1</span><span class="o">.</span><span class="n">datadoghq</span><span class="o">.</span><span class="n">com</span>
+<span class="n">tags</span> <span class="o">=</span> <span class="n">environment</span><span class="p">:</span><span class="n">test</span><span class="p">,</span><span class="n">mycustom</span><span class="p">:</span><span class="n">tag</span>
+<span class="n">metric</span> <span class="o">=</span> <span class="n">custom</span><span class="o">.</span><span class="n">metric</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># datadog will only send a metric on P1, P2</span>
+
+</pre></div>
+</div>
+<p>All scoped configuration options can be set directly under <code class="docutils literal notranslate"><span class="pre">priority</span></code>.</p>
+<p>For example this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">aws</span><span class="p">]</span>
+<span class="n">region</span> <span class="o">=</span> <span class="s2">&quot;us-east-1&quot;</span>
+</pre></div>
+</div>
+<p>Can be provided as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="p">]</span>
+<span class="n">aws_region</span> <span class="o">=</span> <span class="s2">&quot;us-east-1&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>AWS MWAA and terraform may require you to use the alternative configuration syntax</p>
+</div>
 </section>
 </section>
 
@@ -382,7 +411,7 @@ In layman’s terms, one need only add a <a class="reference external" href="htt
 <li><a class="reference internal" href="#">Introduction</a><ul>
 <li><a class="reference internal" href="#integrations">Integrations</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#license">License</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
 </ul>
 </li>
 </ul>
