@@ -1,7 +1,7 @@
 from functools import lru_cache
 from typing import Any, Dict
 
-from newrelic_telemetry_sdk import GaugeMetric
+from newrelic_telemetry_sdk import GaugeMetric, MetricClient
 
 from ..common import DagStatus, get_config_option
 
@@ -12,8 +12,6 @@ DefaultMetric: str = "airflow.custom.priority"
 
 @lru_cache
 def get_client():
-    from newrelic_telemetry_sdk import MetricClient
-
     return MetricClient(get_config_option("newrelic", "api_key"))
 
 

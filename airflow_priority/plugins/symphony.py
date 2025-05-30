@@ -22,8 +22,6 @@ def get_config_options():
 
 
 def _client_cert_post(url: str, cert_file: str, key_file: str) -> str:
-    from httpx import post
-
     context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
     context.load_cert_chain(certfile=cert_file, keyfile=key_file)
     response = post(url=url, verify=context, headers={"Content-Type": "application/json"}, data="{}")
