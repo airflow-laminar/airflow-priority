@@ -1,0 +1,34 @@
+# NewRelic
+
+<img src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/newrelic.png" width=400 alt="Dashboard of newrelic metrics">
+
+Create a new New Relic API Key [following their guide](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/). Note that the type should have `INGEST - LICENSE`.
+
+Copy this api key into your `airflow.cfg` like so:
+
+```
+[priority.newrelic]
+api_key = the api key
+metric = my.custom.metric  # Optional metric name override, default is "airflow.custom.priority"
+```
+
+Under `Query Your Data` in the New Relic UI, you can create a query for the new custom metric:
+
+```
+SELECT sum(`airflow.custom.priority.p1.failed`) FROM Metric FACET dag
+```
+
+With this, you can now [create a custom alert](https://docs.newrelic.com/docs/alerts/create-alert/examples/define-custom-metrics-alert-condition/). For fast alerting, we recommend the following parameters:
+
+```raw
+Window duration - 30 seconds
+Sliding window aggregation - Disabled
+Slide by interval - Not set
+Streaming method - Event timer
+Timer - 5 seconds
+
+Fill data gaps with - None
+Evaluation delay - Not set
+
+Thresholds: Critical: Query result is above or equals 1 at least once in 1 minute
+```

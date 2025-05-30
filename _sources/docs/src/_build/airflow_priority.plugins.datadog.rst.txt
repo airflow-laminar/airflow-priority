@@ -1,0 +1,13 @@
+﻿airflow\_priority.plugins.datadog
+=================================
+
+.. automodule:: airflow_priority.plugins.datadog
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_configuration
+      send_metric
+   

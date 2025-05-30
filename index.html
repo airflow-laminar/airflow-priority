@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="API Reference" href="docs/src/API.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Introduction" href="docs/src/introduction.html" />
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
         <title>airflow-priority v1.1.2</title>
@@ -205,13 +205,23 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/datadog.html">Datadog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/discord.html">Discord</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/newrelic.html">NewRelic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/opsgenie.html">OpsGenie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/slack.html">Slack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/symphony.html">Symphony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/cloudwatch.html">AWS MWAA CloudWatch</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="docs/src/API.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.common.html">airflow_priority.common</a></li>
-<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.plugins.aws.html">airflow_priority.plugins.aws</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.plugins.datadog.html">airflow_priority.plugins.datadog</a></li>
 <li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.plugins.discord.html">airflow_priority.plugins.discord</a></li>
 <li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.plugins.newrelic.html">airflow_priority.plugins.newrelic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.plugins.opsgenie.html">airflow_priority.plugins.opsgenie</a></li>
 <li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.plugins.slack.html">airflow_priority.plugins.slack</a></li>
 <li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.plugins.symphony.html">airflow_priority.plugins.symphony</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.plugins.aws.html">airflow_priority.plugins.aws</a></li>
 </ul>
 </li>
 </ul>
@@ -265,15 +275,52 @@
 <a class="reference external" href="https://pypi.python.org/pypi/airflow-priority"><img alt="PyPI" src="https://img.shields.io/pypi/v/airflow-priority.svg" /></a></p>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
-<p>This repo provides <a class="reference external" href="https://airflow.apache.org/docs/apache-airflow/stable/authoring-and-scheduling/plugins.html">Airflow Plugins</a> for priority-driven DAG failure alerting. In layman’s terms, one need only add a <a class="reference external" href="https://airflow.apache.org/docs/apache-airflow/stable/howto/add-dag-tags.html">tag</a> to their DAG in <code class="docutils literal notranslate"><span class="pre">P1,</span> <span class="pre">P2,</span> <span class="pre">P3,</span> <span class="pre">P4,</span> <span class="pre">P5</span></code>, and that dag will send a notification to:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://newrelic.com">New Relic</a></p></li>
-<li><p><a class="reference external" href="https://www.datadoghq.com">Datadog</a></p></li>
-<li><p><a class="reference external" href="http://discord.com">Discord</a></p></li>
-<li><p><a class="reference external" href="http://slack.com">Slack</a></p></li>
-<li><p><a class="reference external" href="http://symphony.com">Symphony</a></p></li>
-</ul>
-<p>Where <code class="docutils literal notranslate"><span class="pre">P1</span></code> corresponds to highest priority, and <code class="docutils literal notranslate"><span class="pre">P5</span></code> corresponds to lowest.</p>
+<p>This repo provides an <a class="reference external" href="https://airflow.apache.org/docs/apache-airflow/stable/authoring-and-scheduling/plugins.html">Airflow Plugin</a> for priority-driven DAG failure alerting.
+In layman’s terms, one need only add a <a class="reference external" href="https://airflow.apache.org/docs/apache-airflow/stable/howto/add-dag-tags.html">tag</a> to their DAG in <code class="docutils literal notranslate"><span class="pre">P1,</span> <span class="pre">P2,</span> <span class="pre">P3,</span> <span class="pre">P4,</span> <span class="pre">P5</span></code>, where <code class="docutils literal notranslate"><span class="pre">P1</span></code> corresponds to highest priority and <code class="docutils literal notranslate"><span class="pre">P5</span></code> corresponds to lowest, and that dag will send a notification to a backend integration.</p>
+<p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/introduction.html">See the documentation for more information on getting started</a></p>
+</section>
+<section id="integrations">
+<h2>Integrations<a class="headerlink" href="#integrations" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Integration</p></th>
+<th class="head text-left"><p>Metric / Tag</p></th>
+<th class="head text-left"><p>Docs</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><a class="reference external" href="https://www.datadoghq.com">Datadog</a></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">airflow.custom.priority.p{1,2,3,4,5}.{failed,succeeded,running}</span></code></p></td>
+<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/datadog.html">Link</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><a class="reference external" href="http://discord.com">Discord</a></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
+<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/discord.html">Link</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><a class="reference external" href="https://newrelic.com">New Relic</a></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">airflow.custom.priority.p{1,2,3,4,5}.{failed,succeeded,running}</span></code></p></td>
+<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/newrelic.html">Link</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><a class="reference external" href="https://www.atlassian.com/software/opsgenie">OpsGenie</a></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
+<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/opsgenie.html">Link</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><a class="reference external" href="http://slack.com">Slack</a></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
+<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/slack.html">Link</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><a class="reference external" href="http://symphony.com">Symphony</a></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
+<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/symphony.html">Link</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><a class="reference external" href="https://aws.amazon.com/cloudwatch/">Cloudwatch</a></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">airflow.custom.priority.p{1,2,3,4,5}.{failed,succeeded,running}</span></code></p></td>
+<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/cloudwatch.html">Link</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
@@ -286,222 +333,6 @@
 </pre></div>
 </div>
 </section>
-<section id="integrations">
-<h2>Integrations<a class="headerlink" href="#integrations" title="Link to this heading">¶</a></h2>
-<div class="table-wrapper colwidths-auto docutils container">
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head text-left"><p>Integration</p></th>
-<th class="head text-left"><p>Metric / Tag</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td class="text-left"><p><a class="reference external" href="https://newrelic.com">New Relic</a></p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">airflow.custom.priority.p{1,2,3,4,5}.{failed,succeeded,running}</span></code></p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p><a class="reference external" href="https://www.datadoghq.com">Datadog</a></p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">airflow.custom.priority.p{1,2,3,4,5}.{failed,succeeded,running}</span></code></p></td>
-</tr>
-<tr class="row-even"><td class="text-left"><p><a class="reference external" href="http://discord.com">Discord</a></p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p><a class="reference external" href="http://slack.com">Slack</a></p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
-</tr>
-<tr class="row-even"><td class="text-left"><p><a class="reference external" href="http://symphony.com">Symphony</a></p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<section id="datadog">
-<h3>Datadog<a class="headerlink" href="#datadog" title="Link to this heading">¶</a></h3>
-<a class="reference internal image-reference" href="_images/datadog.png"><img alt="Datadog metric for failed DAG run" src="_images/datadog.png" style="width: 400px;" />
-</a>
-<p>Create a new Datadog api key <a class="reference external" href="https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token">following their guide</a>.</p>
-<p>Copy this api key into your <code class="docutils literal notranslate"><span class="pre">airflow.cfg</span></code> like so:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">datadog</span><span class="p">]</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="n">the</span> <span class="n">api</span> <span class="n">key</span>
-<span class="n">host</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">api</span><span class="o">.</span><span class="n">datadoghq</span><span class="o">.</span><span class="n">com</span>  <span class="c1"># Optional host change</span>
-<span class="n">metric</span> <span class="o">=</span> <span class="n">my</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">metric</span>  <span class="c1"># Optional metric name override, default is &quot;airflow.custom.priority&quot;</span>
-</pre></div>
-</div>
-<p>Ensure your dags are configured with tags and run some, it can often be convenient to have an intentionally failing <code class="docutils literal notranslate"><span class="pre">P1</span></code> dag to test the integration. With this, you can now <a class="reference external" href="https://docs.datadoghq.com/getting_started/monitors/">create custom monitors</a> for the tags.</p>
-</section>
-<section id="discord">
-<h3>Discord<a class="headerlink" href="#discord" title="Link to this heading">¶</a></h3>
-<a class="reference internal image-reference" href="_images/discord.png"><img alt="Message in Discord reflecting DAG status" src="_images/discord.png" style="width: 400px;" />
-</a>
-<p>Create a new Discord application following the <a class="reference external" href="https://discordpy.readthedocs.io/en/stable/discord.html">guide from the discord.py library</a>.</p>
-<p>Copy your bot’s token into your <code class="docutils literal notranslate"><span class="pre">airflow.cfg</span></code> like so:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">discord</span><span class="p">]</span>
-<span class="n">token</span> <span class="o">=</span> <span class="n">the</span> <span class="n">bot</span><span class="s1">&#39;s token</span>
-<span class="n">channel</span> <span class="o">=</span> <span class="n">the</span> <span class="n">numerical</span> <span class="n">channel</span> <span class="n">ID</span><span class="p">,</span> <span class="kn">from</span><span class="w"> </span><span class="nn">the</span> <span class="n">url</span> <span class="ow">or</span> <span class="n">by</span> <span class="n">right</span> <span class="n">clicking</span>
-
-<span class="c1"># Configure tag and priority specific channels</span>
-<span class="n">channel_P3</span> <span class="o">=</span> <span class="o">...</span>
-<span class="n">channel_failed_P1</span> <span class="o">=</span> <span class="o">...</span>
-</pre></div>
-</div>
-<p>Ensure your bot is invited into any private channels.</p>
-<section id="verbose-updates">
-<h4>Verbose updates<a class="headerlink" href="#verbose-updates" title="Link to this heading">¶</a></h4>
-<p>By default, only DAG failure events will be sent.
-On rerun, failure messages can be updated to reflect running/success.</p>
-<p>The plugin can also be configured to always send updates, including when a DAG starts running and/or succeeds.
-These can also be configured to send to different channels.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">discord</span><span class="p">]</span>
-<span class="c1"># Update messages to reflect current state</span>
-<span class="n">update_message</span> <span class="o">=</span> <span class="n">true</span>
-
-<span class="n">send_success</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">channel_success</span> <span class="o">=</span> <span class="n">a</span><span class="o">-</span><span class="n">different</span><span class="o">-</span><span class="n">channel</span>
-<span class="n">send_running</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">channel_running</span> <span class="o">=</span> <span class="n">a</span><span class="o">-</span><span class="n">different</span><span class="o">-</span><span class="n">channel</span>
-</pre></div>
-</div>
-</section>
-<section id="customizing-message-colors">
-<h4>Customizing message colors<a class="headerlink" href="#customizing-message-colors" title="Link to this heading">¶</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">discord</span><span class="p">]</span>
-<span class="n">failed_color</span> <span class="o">=</span> <span class="s2">&quot;#FF0000&quot;</span>
-<span class="n">running_color</span> <span class="o">=</span> <span class="s2">&quot;#FFFF00&quot;</span>
-<span class="n">success_color</span> <span class="o">=</span> <span class="s2">&quot;#00FF00&quot;</span>
-</pre></div>
-</div>
-</section>
-</section>
-<section id="new-relic">
-<h3>New Relic<a class="headerlink" href="#new-relic" title="Link to this heading">¶</a></h3>
-<a class="reference internal image-reference" href="_images/newrelic.png"><img alt="Dashboard of newrelic metrics" src="_images/newrelic.png" style="width: 400px;" />
-</a>
-<p>Create a new New Relic API Key <a class="reference external" href="https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/">following their guide</a>. Note that the type should have <code class="docutils literal notranslate"><span class="pre">INGEST</span> <span class="pre">-</span> <span class="pre">LICENSE</span></code>.</p>
-<p>Copy this api key into your <code class="docutils literal notranslate"><span class="pre">airflow.cfg</span></code> like so:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">newrelic</span><span class="p">]</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="n">the</span> <span class="n">api</span> <span class="n">key</span>
-<span class="n">metric</span> <span class="o">=</span> <span class="n">my</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">metric</span>  <span class="c1"># Optional metric name override, default is &quot;airflow.custom.priority&quot;</span>
-</pre></div>
-</div>
-<p>Under <code class="docutils literal notranslate"><span class="pre">Query</span> <span class="pre">Your</span> <span class="pre">Data</span></code> in the New Relic UI, you can create a query for the new custom metric:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT sum(`airflow.custom.priority.p1.failed`) FROM Metric FACET dag
-</pre></div>
-</div>
-<p>With this, you can now <a class="reference external" href="https://docs.newrelic.com/docs/alerts/create-alert/examples/define-custom-metrics-alert-condition/">create a custom alert</a>. For fast alerting, we recommend the following parameters:</p>
-<div class="highlight-raw notranslate"><div class="highlight"><pre><span></span>Window duration - 30 seconds
-Sliding window aggregation - Disabled
-Slide by interval - Not set
-Streaming method - Event timer
-Timer - 5 seconds
-
-Fill data gaps with - None
-Evaluation delay - Not set
-
-Thresholds: Critical: Query result is above or equals 1 at least once in 1 minute
-</pre></div>
-</div>
-</section>
-<section id="slack">
-<h3>Slack<a class="headerlink" href="#slack" title="Link to this heading">¶</a></h3>
-<a class="reference internal image-reference" href="_images/slack.png"><img alt="Message in Slack reflecting DAG status" src="_images/slack.png" style="width: 400px;" />
-</a>
-<p>Configure a new slack application following the <a class="reference external" href="https://api.slack.com/quickstart">Slack Quickstart</a>.</p>
-<p>Ensure your application has the following scopes for public and private channel access:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">channels:read</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">groups:read</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">chat:write</span></code></p></li>
-</ul>
-<p>Enable and install your Slack application into your workspace, and add it as an integration in whatever channel you want it to post.</p>
-<p>Copy your Slack application’s Oauth Token (starting with <code class="docutils literal notranslate"><span class="pre">xoxb-</span></code>) and your desired channel into your <code class="docutils literal notranslate"><span class="pre">airflow.cfg</span></code> like so:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">slack</span><span class="p">]</span>
-<span class="n">token</span> <span class="o">=</span> <span class="n">xoxb</span><span class="o">-...</span>
-<span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span><span class="o">-</span><span class="n">name</span>
-
-<span class="c1"># Configure tag and priority specific channels</span>
-<span class="n">channel_P3</span> <span class="o">=</span> <span class="o">...</span>
-<span class="n">channel_failed_P1</span> <span class="o">=</span> <span class="o">...</span>
-</pre></div>
-</div>
-<section id="id1">
-<h4>Verbose updates<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
-<p>By default, only DAG failure events will be sent.
-On rerun, failure messages can be updated to reflect running/success.</p>
-<p>The plugin can also be configured to always send updates, including when a DAG starts running and/or succeeds.
-These can also be configured to send to different channels.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">slack</span><span class="p">]</span>
-<span class="c1"># Update messages to reflect current state</span>
-<span class="n">update_message</span> <span class="o">=</span> <span class="n">true</span>
-
-<span class="n">send_success</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">channel_success</span> <span class="o">=</span> <span class="n">a</span><span class="o">-</span><span class="n">different</span><span class="o">-</span><span class="n">channel</span>
-<span class="n">send_running</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">channel_running</span> <span class="o">=</span> <span class="n">a</span><span class="o">-</span><span class="n">different</span><span class="o">-</span><span class="n">channel</span>
-</pre></div>
-</div>
-</section>
-<section id="id2">
-<h4>Customizing message colors<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">slack</span><span class="p">]</span>
-<span class="n">failed_color</span> <span class="o">=</span> <span class="s2">&quot;#FF0000&quot;</span>
-<span class="n">running_color</span> <span class="o">=</span> <span class="s2">&quot;#FFFF00&quot;</span>
-<span class="n">success_color</span> <span class="o">=</span> <span class="s2">&quot;#00FF00&quot;</span>
-</pre></div>
-</div>
-</section>
-</section>
-<section id="opsgenie">
-<h3>OpsGenie<a class="headerlink" href="#opsgenie" title="Link to this heading">¶</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">opsgenie</span><span class="p">]</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="o">...</span>
-<span class="n">update</span> <span class="o">=</span> <span class="n">true</span>  <span class="c1"># update incidents on rerun/success, default is true</span>
-</pre></div>
-</div>
-</section>
-<section id="symphony">
-<h3>Symphony<a class="headerlink" href="#symphony" title="Link to this heading">¶</a></h3>
-<p>Documentation coming soon!</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://docs.developers.symphony.com/bots/overview-of-rest-api">Overview of REST API</a></p></li>
-<li><p><a class="reference external" href="https://docs.developers.symphony.com/bots/authentication/certificate-authentication">Certificate Authentication Workflow</a></p></li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">symphony</span><span class="p">]</span>
-<span class="n">room_name</span> <span class="o">=</span> <span class="n">the</span> <span class="n">room</span> <span class="n">name</span>
-<span class="n">message_create_url</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mycompany</span><span class="o">.</span><span class="n">symphony</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">agent</span><span class="o">/</span><span class="n">v4</span><span class="o">/</span><span class="n">stream</span><span class="o">/</span><span class="n">SID</span><span class="o">/</span><span class="n">message</span><span class="o">/</span><span class="n">create</span>
-<span class="n">cert_file</span> <span class="o">=</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">cert</span><span class="o">.</span><span class="n">pem</span>
-<span class="n">key_file</span> <span class="o">=</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">key</span><span class="o">.</span><span class="n">pem</span>
-<span class="n">session_auth</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mycompany</span><span class="o">-</span><span class="n">api</span><span class="o">.</span><span class="n">symphony</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">sessionauth</span><span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">authenticate</span>
-<span class="n">key_auth</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mycompany</span><span class="o">-</span><span class="n">api</span><span class="o">.</span><span class="n">symphony</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keyauth</span><span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">authenticate</span>
-<span class="n">room_search_url</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mycompany</span><span class="o">.</span><span class="n">symphony</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pod</span><span class="o">/</span><span class="n">v3</span><span class="o">/</span><span class="n">room</span><span class="o">/</span><span class="n">search</span>
-</pre></div>
-</div>
-</section>
-<section id="aws-mwaa-cloudwatch">
-<h3>AWS MWAA CloudWatch<a class="headerlink" href="#aws-mwaa-cloudwatch" title="Link to this heading">¶</a></h3>
-<p>To use with <a class="reference external" href="https://aws.amazon.com/managed-workflows-for-apache-airflow/">AWS MWAA</a>, set the AWS region to match your MWAA instance.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">aws</span><span class="p">]</span>
-<span class="n">region</span> <span class="o">=</span> <span class="s2">&quot;us-east-1&quot;</span>
-</pre></div>
-</div>
-</section>
-<section id="alternative-syntax">
-<h3>Alternative Syntax<a class="headerlink" href="#alternative-syntax" title="Link to this heading">¶</a></h3>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>AWS MWAA may require you to use the alternative configuration syntax</p>
-</div>
-<p>All scoped configuration options can be set directly under <code class="docutils literal notranslate"><span class="pre">priority</span></code>.</p>
-<p>For example this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">aws</span><span class="p">]</span>
-<span class="n">region</span> <span class="o">=</span> <span class="s2">&quot;us-east-1&quot;</span>
-</pre></div>
-</div>
-<p>Can be provided as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="p">]</span>
-<span class="n">aws_region</span> <span class="o">=</span> <span class="s2">&quot;us-east-1&quot;</span>
-</pre></div>
-</div>
-</section>
-</section>
 <section id="license">
 <h2>License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h2>
 <p>This software is licensed under the Apache 2.0 license. See the <a class="reference download internal" download="" href="_downloads/9879d6db96fd29134fc802214163b95a/LICENSE"><span class="xref download myst">LICENSE</span></a> file for details.</p>
@@ -513,12 +344,12 @@ These can also be configured to send to different channels.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="docs/src/API.html">
+          <a class="next-page" href="docs/src/introduction.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">API Reference</div>
+                <div class="title">Introduction</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>

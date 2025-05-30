@@ -1,0 +1,14 @@
+﻿airflow\_priority.plugins.opsgenie
+==================================
+
+.. automodule:: airflow_priority.plugins.opsgenie
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_client
+      get_configuration
+      send_metric
+   
