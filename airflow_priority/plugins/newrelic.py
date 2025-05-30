@@ -33,34 +33,34 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
             metrics.append(
                 GaugeMetric(
                     f"{metric}.p{priority}.running",
-                    0,
+                    -1,
                     tags=tags,
                 )
             )
             context.pop("running", None)
         if "failed" in context:
             # If the task was failed before, we need to decrement the failed metric
-            metrics.append(GaugeMetric(f"{metric}.p{priority}.failed", 0, tags=tags))
+            metrics.append(GaugeMetric(f"{metric}.p{priority}.failed", -1, tags=tags))
             context.pop("failed", None)
         context.clear()
     elif tag == "failed":
         # If the task was running before, we need to decrement the running metric
         if "running" in context:
-            metrics.append(GaugeMetric(f"{metric}.p{priority}.running", 0, tags=tags))
+            metrics.append(GaugeMetric(f"{metric}.p{priority}.running", -1, tags=tags))
             context.pop("running", None)
         if "success" in context:
             # If the task was successful before, we need to decrement the success metric
-            metrics.append(GaugeMetric(f"{metric}.p{priority}.success", 0, tags=tags))
+            metrics.append(GaugeMetric(f"{metric}.p{priority}.success", -1, tags=tags))
             context.pop("success", None)
         context["failed"] = True
     elif tag == "running":
         if "success" in context:
             # If the task was successful before, we need to decrement the success metric
-            metrics.append(GaugeMetric(f"{metric}.p{priority}.success", 0, tags=tags))
+            metrics.append(GaugeMetric(f"{metric}.p{priority}.success", -1, tags=tags))
             context.pop("success", None)
         if "failed" in context:
             # If the task was failed before, we need to decrement the failed metric
-            metrics.append(GaugeMetric(f"{metric}.p{priority}.failed", 0, tags=tags))
+            metrics.append(GaugeMetric(f"{metric}.p{priority}.failed", -1, tags=tags))
             context.pop("failed", None)
         context["running"] = True
     get_client().send_batch(metrics)
