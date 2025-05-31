@@ -15,6 +15,15 @@ def get_client() -> EventsApiV2Client:
     return EventsApiV2Client(api_key=get_config_option("pagerduty", "routing_key"))
 
 
+_severity_map: Dict[int, str] = {
+    1: "critical",
+    2: "error",
+    3: "warning",
+    4: "info",
+    5: "info",
+}
+
+
 def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
     client = get_client()
 
@@ -30,7 +39,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
         source = source.format(priority=priority)
 
     if tag == "failed":
-        create_dedup_key = client.trigger(summary=summary, source=source, severity=f"SEV-{priority}")
+        create_dedup_key = client.trigger(summary=summary, source=source, severity=_severity_map[priority])
         context[tag] = create_dedup_key
 
     # Update the failure message
