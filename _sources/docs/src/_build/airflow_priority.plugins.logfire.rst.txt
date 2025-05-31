@@ -1,0 +1,14 @@
+﻿airflow\_priority.plugins.logfire
+=================================
+
+.. automodule:: airflow_priority.plugins.logfire
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_client
+      get_gauges
+      send_metric
+   

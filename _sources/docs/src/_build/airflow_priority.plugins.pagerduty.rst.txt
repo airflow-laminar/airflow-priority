@@ -1,0 +1,13 @@
+﻿airflow\_priority.plugins.pagerduty
+===================================
+
+.. automodule:: airflow_priority.plugins.pagerduty
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_client
+      send_metric
+   

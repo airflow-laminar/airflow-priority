@@ -218,8 +218,10 @@
 <li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.common.html">airflow_priority.common</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.plugins.datadog.html">airflow_priority.plugins.datadog</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.plugins.discord.html">airflow_priority.plugins.discord</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.plugins.logfire.html">airflow_priority.plugins.logfire</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.plugins.newrelic.html">airflow_priority.plugins.newrelic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.plugins.opsgenie.html">airflow_priority.plugins.opsgenie</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.plugins.pagerduty.html">airflow_priority.plugins.pagerduty</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.plugins.slack.html">airflow_priority.plugins.slack</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.plugins.symphony.html">airflow_priority.plugins.symphony</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.plugins.aws.html">airflow_priority.plugins.aws</a></li>
@@ -280,29 +282,41 @@ In layman’s terms, one need only add a <a class="reference external" href="htt
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-left"><p><a class="reference external" href="https://www.datadoghq.com">Datadog</a></p></td>
+<tr class="row-even"><td class="text-left"><p><a href="https://www.datadoghq.com"><a class="reference internal" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/datadog.png"><img alt="datadog logo" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/datadog.png" style="width: 180px;" /></a></a></p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">airflow.custom.priority.p{1,2,3,4,5}.{failed,succeeded,running}</span></code></p></td>
 <td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/datadog.html">Link</a></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><a class="reference external" href="http://discord.com">Discord</a></p></td>
+<tr class="row-odd"><td class="text-left"><p><a href="http://discord.com"><a class="reference internal" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/discord.png"><img alt="discord logo" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/discord.png" style="width: 180px;" /></a></a></p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
 <td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/discord.html">Link</a></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><a class="reference external" href="https://newrelic.com">New Relic</a></p></td>
+<tr class="row-even"><td class="text-left"><p><a href="https://logfire.pydantic.dev"><a class="reference internal" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/logfire.png"><img alt="logfire logo" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/logfire.png" style="width: 180px;" /></a></a></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">airflow.priority.p{1,2,3,4,5}.{failed,succeeded,running}</span></code></p></td>
+<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/logfire.html">Link</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><a href="https://pagerduty.com"><a class="reference internal" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/pagerduty.png"><img alt="pagerduty logo" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/pagerduty.png" style="width: 180px;" /></a></a></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A}</span></code></p></td>
+<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/pagerduty.html">Link</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><a href="https://newrelic.com"><a class="reference internal" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/newrelic.png"><img alt="newrelic logo" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/newrelic.png" style="width: 180px;" /></a></a></p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">airflow.custom.priority.p{1,2,3,4,5}.{failed,succeeded,running}</span></code></p></td>
 <td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/newrelic.html">Link</a></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><a class="reference external" href="https://www.atlassian.com/software/opsgenie">OpsGenie</a></p></td>
+<tr class="row-odd"><td class="text-left"><p><a href="https://www.atlassian.com/software/opsgenie"><a class="reference internal" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/opsgenie.png"><img alt="opsgenie logo" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/opsgenie.png" style="width: 175px;" /></a></a></p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
 <td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/opsgenie.html">Link</a></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><a class="reference external" href="http://slack.com">Slack</a></p></td>
+<tr class="row-even"><td class="text-left"><p><a href="http://slack.com"><a class="reference internal" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/slack.png"><img alt="slack logo" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/slack.png" style="width: 175px;" /></a></a></p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
 <td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/slack.html">Link</a></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><a class="reference external" href="http://symphony.com">Symphony</a></p></td>
+<tr class="row-odd"><td class="text-left"><p><a href="http://symphony.com"><a class="reference internal" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/symphony.png"><img alt="symphony logo" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/symphony.png" style="width: 175px;" /></a></a></p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
 <td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/symphony.html">Link</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><a class="reference external" href="https://aws.amazon.com/cloudwatch/">AWS Cloudwatch</a></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">airflow.custom.priority.p{1,2,3,4,5}.{failed,succeeded,running}</span></code></p></td>
+<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/cloudwatch.html">Link</a></p></td>
 </tr>
 </tbody>
 </table>
