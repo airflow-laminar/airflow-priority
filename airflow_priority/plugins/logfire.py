@@ -12,7 +12,7 @@ DefaultMetric = "airflow.priority"
 
 
 @lru_cache
-def get_client():
+def get_client() -> logfire.Logfire:
     token = get_config_option("logfire", "token")
     environment = get_config_option("logfire", "environment", required=False)
     return logfire.configure(

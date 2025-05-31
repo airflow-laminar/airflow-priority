@@ -21,13 +21,14 @@ DefaultMetric: str = "airflow.custom.priority"
 
 
 @lru_cache
-def get_configuration():
+def get_configuration() -> Configuration:
     conf = Configuration()
     conf.api_key["Authorization"] = get_config_option("opsgenie", "api_key")
+    return conf
 
 
 @lru_cache
-def get_client():
+def get_client() -> AlertApi:
     conf = get_configuration()
     api_client = ApiClient(configuration=conf)
     alert_api = AlertApi(api_client=api_client)

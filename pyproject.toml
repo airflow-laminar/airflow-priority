@@ -76,6 +76,9 @@ newrelic = [
 opsgenie = [
     "opsgenie-sdk",
 ]
+pagerduty = [
+    "pagerduty",
+]
 slack = [
     "slack-sdk",
 ]
@@ -168,6 +171,7 @@ pages = [
     "docs/src/discord.md",
     "docs/src/newrelic.md",
     "docs/src/opsgenie.md",
+    "docs/src/logfire.md",
     "docs/src/slack.md",
     "docs/src/symphony.md",
     "docs/src/cloudwatch.md",
