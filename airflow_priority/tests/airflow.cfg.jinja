@@ -4,39 +4,45 @@
 {{ super() }}
 
 [priority.datadog]
-api_key = {{ DATADOG_API_KEY }}
-host = {{ DATADOG_HOST }}
+api_key = datadog_api_key
+host = https://datadog.host
 tags = environment:test
-metric = "custom.metric"
+metric = custom.metric
 threshold = 2
 
 [priority.discord]
-token = {{ DISCORD_TOKEN }}
-channel = {{ DISCORD_CHANNEL }}
-channel_P1 = {{ DISCORD_CHANNEL }}
-channel_failed_P1 = {{ DISCORD_CHANNEL }}
+token = discord_token
+send_running = true
+send_success = true
+update_message = true
+channel = 1
+channel_P1 = 2
+channel_failed_P1 = 3
 
 [priority.newrelic]
-api_key = {{ NEWRELIC_API_KEY }}
+api_key = newrelic_api_key
 tags = {"environment":"test"}
-metric = "custom.metric"
+metric = custom.metric
 
 [priority.opsgenie]
-api_key = {{ OPSGENIE_API_KEY }}
+api_key = opsgenie_api_key
 
 [priority.slack]
-token = {{ SLACK_TOKEN }}
-channel = {{ SLACK_CHANNEL }}
-channel_P1 = {{ DISCORD_CHANNEL }}
-channel_failed_P1 = {{ DISCORD_CHANNEL }}
+token = slack_token
+send_running = true
+send_success = true
+update_message = true
+channel = slack_channel
+channel_P1 = slack_channel_P1
+channel_failed_P1 = slack_channel_failed_P1
 
 [priority.symphony]
-room_name = {{ SYMPHONY_ROOM_NAME }}
-message_create_url = {{ SYMPHONY_MESSAGE_CREATE_URL }}
-cert_file = {{ SYMPHONY_CERT_FILE }}
-key_file = {{ SYMPHONY_KEY_FILE }}
-session_auth = {{ SYMPHONY_SESSION_AUTH }}
-key_auth = {{ SYMPHONY_KEY_AUTH }}
-room_search_url = {{ SYMPHONY_ROOM_SEARCH_URL }}
+room_name = symphony_room_name
+message_create_url = https://symphony.message.create.url
+cert_file = symphony_cert_file
+key_file = symphony_key_file
+session_auth = session_auth
+key_auth = symphony_key_auth
+room_search_url = https://symphony.room.search.url
 
 {% endblock content %}

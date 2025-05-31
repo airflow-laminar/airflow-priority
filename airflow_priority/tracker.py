@@ -152,6 +152,13 @@ tracker_inst.register(
 )
 
 tracker_inst.register(
+    backend="logfire",
+    necessary_configs=[
+        ("logfire", "token"),
+    ],
+)
+
+tracker_inst.register(
     backend="newrelic",
     necessary_configs=[
         ("newrelic", "api_key"),
