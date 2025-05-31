@@ -1,6 +1,6 @@
 # Discord
 
-<img src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/discord.png" width=400 alt="Message in Discord reflecting DAG status">
+<img src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/discord.png" width=600 alt="Message in Discord reflecting DAG status">
 
 Discord integration will create new messages when a DAG fails, and optionally update those messages when a DAG reruns/succeeds.
 
@@ -44,7 +44,6 @@ Copy the bot token somewhere secure.
 - `channel_running_P3`: (Optional) Running P3 channel override
 - `channel_running_P4`: (Optional) Running P4 channel override
 - `channel_running_P5`: (Optional) Running P5 channel override
-
 
 ```
 [priority.discord]

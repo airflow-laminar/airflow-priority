@@ -1,6 +1,6 @@
 # Datadog
 
-<img src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/datadog.png" width=400 alt="Datadog metric for failed DAG run">
+<img src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/datadog.png" width=600 alt="Datadog metric for failed DAG run">
 
 Datadog integration will create [Datadog metrics](https://docs.datadoghq.com/metrics/) for DAG `running`, `success`, and `failed` status.
 
