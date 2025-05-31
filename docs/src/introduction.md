@@ -5,14 +5,14 @@ In layman's terms, one need only add a [tag](https://airflow.apache.org/docs/apa
 
 ## Integrations
 
-| Integration                          | Metric / Tag                                                      | Docs |
-| :----------------------------------- | :---------------------------------------------------------------- |:-----|
-| [Datadog](https://www.datadoghq.com) | `airflow.custom.priority.p{1,2,3,4,5}.{failed,succeeded,running}` | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/datadog.html) |
-| [Discord](http://discord.com)        | `N/A`                                                             | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/discord.html) |
-| [New Relic](https://newrelic.com)    | `airflow.custom.priority.p{1,2,3,4,5}.{failed,succeeded,running}` | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/newrelic.html) |
-| [OpsGenie](https://www.atlassian.com/software/opsgenie) | `N/A`                                          | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/opsgenie.html) |
-| [Slack](http://slack.com)            | `N/A`                                                             | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/slack.html) |
-| [Symphony](http://symphony.com)      | `N/A`                                                             | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/symphony.html) |
+| Integration                                             | Metric / Tag                                                      | Docs                                                                              |
+| :------------------------------------------------------ | :---------------------------------------------------------------- | :-------------------------------------------------------------------------------- |
+| [Datadog](https://www.datadoghq.com)                    | `airflow.custom.priority.p{1,2,3,4,5}.{failed,succeeded,running}` | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/datadog.html)  |
+| [Discord](http://discord.com)                           | `N/A`                                                             | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/discord.html)  |
+| [New Relic](https://newrelic.com)                       | `airflow.custom.priority.p{1,2,3,4,5}.{failed,succeeded,running}` | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/newrelic.html) |
+| [OpsGenie](https://www.atlassian.com/software/opsgenie) | `N/A`                                                             | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/opsgenie.html) |
+| [Slack](http://slack.com)                               | `N/A`                                                             | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/slack.html)    |
+| [Symphony](http://symphony.com)                         | `N/A`                                                             | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/symphony.html) |
 
 ## Installation
 

@@ -1,6 +1,6 @@
 # OpsGenie
 
-<img src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/opsgenie.png" width=400 alt="OpsGenie alert showing failed DAG status">
+<img src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/opsgenie.png" width=600 alt="OpsGenie alert showing failed DAG status">
 
 OpsGenie integration will create [OpsGenie Alerts](https://docs.opsgenie.com/docs/alert-api) when a DAG fails.
 
