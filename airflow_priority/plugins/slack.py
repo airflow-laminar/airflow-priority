@@ -1,4 +1,5 @@
 from functools import lru_cache
+from ssl import CERT_NONE, create_default_context
 from typing import Any, Dict
 
 from slack_sdk import WebClient
@@ -10,6 +11,11 @@ __all__ = ("send_metric",)
 
 @lru_cache
 def get_client() -> WebClient:
+    if get_config_option("slack", "nossl", default="false").lower() == "true":
+        unsafe_context = create_default_context()
+        unsafe_context.check_hostname = False
+        unsafe_context.verify_mode = CERT_NONE
+        return WebClient(token=get_config_option("slack", "token"), ssl=unsafe_context)
     return WebClient(token=get_config_option("slack", "token"))
 
 
