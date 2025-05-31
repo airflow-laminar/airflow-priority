@@ -272,13 +272,14 @@
 <p>Pagerduty integration will create <a class="reference external" href="https://support.pagerduty.com/main/docs/alerts">Pagerduty Alerts</a> when a DAG fails.</p>
 <section id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">¶</a></h2>
-<p>Under <code class="docutils literal notranslate"><span class="pre">Integrations</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">API</span> <span class="pre">Access</span> <span class="pre">Keys</span></code>, create a new <code class="docutils literal notranslate"><span class="pre">API</span></code> key.
-This will generate an api key.</p>
+<p>Under <code class="docutils literal notranslate"><span class="pre">Services</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">Service</span></code>, create a new service.
+Choose your escalation and noise reduction strategies, then select “Events API V2” from <code class="docutils literal notranslate"><span class="pre">Integrations</span></code>.
+This will generate an <code class="docutils literal notranslate"><span class="pre">Integration</span> <span class="pre">Key</span></code>, which you can use below.</p>
 </section>
 <section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">api_key</span></code>: (<strong>Required</strong>) the API Key from above</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">routing_key</span></code>: (<strong>Required</strong>) the Integration key from above</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">source</span></code>: (Optional) Override the name of the source. The default is <code class="docutils literal notranslate"><span class="pre">airflow.priority</span></code>, which will product alerts with entity like <code class="docutils literal notranslate"><span class="pre">airflow.priority.p1.failed</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">update</span></code>: (Optional) Update an open alert when DAG is rerun or passes (default is <code class="docutils literal notranslate"><span class="pre">true</span></code>). When <code class="docutils literal notranslate"><span class="pre">true</span></code>, when the DAG is <code class="docutils literal notranslate"><span class="pre">running</span></code> again the alert will be ack’d. If the DAG succeeds, the alert will be resolved.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">threshold</span></code>: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored</p></li>
