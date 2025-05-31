@@ -12,7 +12,7 @@ DefaultMetric: str = "airflow.priority"
 
 @lru_cache
 def get_client() -> EventsApiV2Client:
-    return EventsApiV2Client(api_key=get_config_option("pagerduty", "api_key"))
+    return EventsApiV2Client(api_key=get_config_option("pagerduty", "routing_key"))
 
 
 def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
