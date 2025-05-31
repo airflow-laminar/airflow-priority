@@ -173,12 +173,20 @@ tracker_inst.register(
 )
 
 tracker_inst.register(
+    backend="pagerduty",
+    necessary_configs=[
+        ("pagerduty", "api_key"),
+    ],
+)
+
+tracker_inst.register(
     backend="slack",
     necessary_configs=[
         ("slack", "token"),
         ("slack", "channel"),
     ],
 )
+
 tracker_inst.register(
     backend="symphony",
     necessary_configs=[
