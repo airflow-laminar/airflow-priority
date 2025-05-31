@@ -281,7 +281,7 @@ Note that the type should have <code class="docutils literal notranslate"><span 
 <h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">api_key</span></code>: (<strong>Required</strong>) the API Key from above</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">metric</span></code>: (Optional) Override the name of the metric. The default is <code class="docutils literal notranslate"><span class="pre">airflow.custom.priority</span></code>, which will product metrics like <code class="docutils literal notranslate"><span class="pre">airflow.custom.priority.p1.failed</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">metric</span></code>: (Optional) Override the name of the metric. The default is <code class="docutils literal notranslate"><span class="pre">airflow.priority</span></code>, which will product metrics like <code class="docutils literal notranslate"><span class="pre">airflow.priority.p1.failed</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">threshold</span></code>: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored</p></li>
 </ul>
 <section id="example">
@@ -297,7 +297,7 @@ Note that the type should have <code class="docutils literal notranslate"><span 
 <section id="monitor">
 <h2>Monitor<a class="headerlink" href="#monitor" title="Link to this heading">¶</a></h2>
 <p>Under <code class="docutils literal notranslate"><span class="pre">Query</span> <span class="pre">Your</span> <span class="pre">Data</span></code> in the New Relic UI, you can create a query for the new custom metric:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT latest(`airflow.custom.priority.p1.failed`) FROM Metric FACET dag
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT latest(`airflow.priority.p1.failed`) FROM Metric FACET dag
 </pre></div>
 </div>
 <p>With this, you can now <a class="reference external" href="https://docs.newrelic.com/docs/alerts/create-alert/examples/define-custom-metrics-alert-condition/">create a custom alert</a>.
@@ -320,8 +320,8 @@ Thresholds: Critical: Query result is above or equals 1 at least once in 1 minut
 <p>Here is an example of querying all failed metrics in NewRelic in the last 30 minutes, which might be useful for debugging connectivity issues/</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT *
 FROM Metric
-WHERE metricName = &#39;airflow.custom.priority.p1.failed&#39;
-WHERE `airflow.custom.priority.p1.failed` IS NOT NULL
+WHERE metricName = &#39;airflow.priority.p1.failed&#39;
+WHERE `airflow.priority.p1.failed` IS NOT NULL
 SINCE 30 minutes ago UNTIL now
 </pre></div>
 </div>
