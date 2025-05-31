@@ -18,7 +18,7 @@ DefaultMetric: str = "airflow.custom.priority"
 
 
 @lru_cache
-def get_configuration():
+def get_configuration() -> Configuration:
     return Configuration(
         host=get_config_option("datadog", "host", default="https://api.datadoghq.com"),
         api_key={"apiKeyAuth": get_config_option("datadog", "api_key")},

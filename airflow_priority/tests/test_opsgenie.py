@@ -51,19 +51,3 @@ def test_opsgenie_sequence(airflow_config, dag_run):
         assert mock_client.create_alert.call_count == 1
         assert mock_client.acknowledge_alert.call_count == 1
         assert mock_client.close_alert.call_count == 1
-
-
-#         assert mock_client.chat_postMessage.call_count == 4
-#         assert mock_client.chat_update.call_count == 2
-#         assert mock_client.chat_update.call_args_list == [
-#             call(
-#                 channel=1,
-#                 ts="1234567890.123456",
-#                 attachments=[{"mrkdwn_in": ["text"], "color": "#ffff00", "text": 'A P1 DAG "UNIT TEST" has been marked "running"'}],
-#             ),
-#             call(
-#                 channel=1,
-#                 ts="1234567890.123456",
-#                 attachments=[{"mrkdwn_in": ["text"], "color": "#00ff00", "text": 'A P1 DAG "UNIT TEST" has been marked "success"'}],
-#             ),
-#         ]

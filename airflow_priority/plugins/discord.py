@@ -12,7 +12,7 @@ __all__ = ("send_metric",)
 
 
 @lru_cache
-def get_client():
+def get_client() -> Client:
     client = Client(intents=Intents.default())
     client.inqueue = Queue()
     client.outqueue = Queue()

@@ -12,7 +12,7 @@ DefaultMetric: str = "airflow.custom.priority"
 
 
 @lru_cache
-def get_client():
+def get_client() -> MetricClient:
     return MetricClient(get_config_option("newrelic", "api_key"))
 
 
