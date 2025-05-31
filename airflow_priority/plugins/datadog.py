@@ -190,5 +190,6 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                 )
                 context.pop("failed", None)
             context["running"] = True
+
         resp = api_instance.submit_metrics(body=MetricPayload(series=metrics))
         assert resp["errors"] == []
