@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Slack" href="slack.html" /><link rel="prev" title="NewRelic" href="newrelic.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Logfire" href="logfire.html" /><link rel="prev" title="NewRelic" href="newrelic.html" />
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
         <title>OpsGenie - airflow-priority v1.2.1</title>
@@ -210,6 +210,7 @@
 <li class="toctree-l1"><a class="reference internal" href="discord.html">Discord</a></li>
 <li class="toctree-l1"><a class="reference internal" href="newrelic.html">NewRelic</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">OpsGenie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logfire.html">Logfire</a></li>
 <li class="toctree-l1"><a class="reference internal" href="slack.html">Slack</a></li>
 <li class="toctree-l1"><a class="reference internal" href="symphony.html">Symphony</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloudwatch.html">AWS MWAA CloudWatch</a></li>
@@ -278,8 +279,8 @@ This will generate an api key.</p>
 <h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">api_key</span></code>: (<strong>Required</strong>) the API Key from above</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">entity</span></code>: (Optional) Override the name of the entity. The default is <code class="docutils literal notranslate"><span class="pre">airflow.priority.dag</span></code>, which will product alerts with entity like <code class="docutils literal notranslate"><span class="pre">airflow.priority.dag.p1.failed</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">update</span></code>: (Optional) Update an open alert when dag is rerun or passes (default is <code class="docutils literal notranslate"><span class="pre">true</span></code>). When <code class="docutils literal notranslate"><span class="pre">true</span></code>, when the dag is <code class="docutils literal notranslate"><span class="pre">running</span></code> again the alert will be ack’d. If the DAG succeeds, the alert will be closed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">entity</span></code>: (Optional) Override the name of the entity. The default is <code class="docutils literal notranslate"><span class="pre">airflow.priority</span></code>, which will product alerts with entity like <code class="docutils literal notranslate"><span class="pre">airflow.priority.p1.failed</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update</span></code>: (Optional) Update an open alert when DAG is rerun or passes (default is <code class="docutils literal notranslate"><span class="pre">true</span></code>). When <code class="docutils literal notranslate"><span class="pre">true</span></code>, when the DAG is <code class="docutils literal notranslate"><span class="pre">running</span></code> again the alert will be ack’d. If the DAG succeeds, the alert will be closed.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">threshold</span></code>: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored</p></li>
 </ul>
 </section>
@@ -300,12 +301,12 @@ This will generate an api key.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="slack.html">
+          <a class="next-page" href="logfire.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Slack</div>
+                <div class="title">Logfire</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
