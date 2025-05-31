@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Discord" href="discord.html" /><link rel="prev" title="Introduction" href="introduction.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
-        <title>Datadog - airflow-priority v1.2.1</title>
+        <title>Logfire - airflow-priority v1.2.1</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -204,9 +204,9 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul class="current">
+  <ul>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Datadog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datadog.html">Datadog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="discord.html">Discord</a></li>
 <li class="toctree-l1"><a class="reference internal" href="newrelic.html">NewRelic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="opsgenie.html">OpsGenie</a></li>
@@ -244,7 +244,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="../../_sources/docs/src/datadog.md.txt" title="View this page">
+  <a class="muted-link" href="../../_sources/docs/src/logfire.md.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -264,47 +264,50 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section class="tex2jax_ignore mathjax_ignore" id="datadog">
-<h1>Datadog<a class="headerlink" href="#datadog" title="Link to this heading">¶</a></h1>
-<a class="reference internal image-reference" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/datadog.png"><img alt="Datadog metric for failed DAG run" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/datadog.png" style="width: 600px;" />
+          <section class="tex2jax_ignore mathjax_ignore" id="logfire">
+<h1>Logfire<a class="headerlink" href="#logfire" title="Link to this heading">¶</a></h1>
+<a class="reference internal image-reference" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logfire.png"><img alt="Logfire metric for failed DAG run" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logfire.png" style="width: 600px;" />
 </a>
-<p>Datadog integration will create <a class="reference external" href="https://docs.datadoghq.com/metrics/">Datadog metrics</a> for DAG <code class="docutils literal notranslate"><span class="pre">running</span></code>, <code class="docutils literal notranslate"><span class="pre">success</span></code>, and <code class="docutils literal notranslate"><span class="pre">failed</span></code> status.</p>
+<p>Logfire integration will create <a class="reference external" href="https://logfire.pydantic.dev/docs/guides/onboarding-checklist/add-metrics/#gauge-callback">Logfire metrics</a> for DAG <code class="docutils literal notranslate"><span class="pre">running</span></code>, <code class="docutils literal notranslate"><span class="pre">success</span></code>, and <code class="docutils literal notranslate"><span class="pre">failed</span></code> status.</p>
 <section id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">¶</a></h2>
-<p>Create a new Datadog api key <a class="reference external" href="https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token">following their guide</a>.</p>
+<p>Create a new Logfire token <a class="reference external" href="https://logfire.pydantic.dev/docs/how-to-guides/create-write-tokens/">following their guide</a>.</p>
 </section>
 <section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">api_key</span></code>: (<strong>Required</strong>) the API Key from above</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">host</span></code>: (Optional) Override the Datadog API host name. This is necessary for certain US and EU customers to use the Datadog API. The default is <code class="docutils literal notranslate"><span class="pre">https://api.datadoghq.com</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">metric</span></code>: (Optional) Override the name of the metric. The default is <code class="docutils literal notranslate"><span class="pre">airflow.custom.priority</span></code>, which will product metrics like <code class="docutils literal notranslate"><span class="pre">airflow.custom.priority.p1.failed</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">token</span></code>: (<strong>Required</strong>) the token from above</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">metric</span></code>: (Optional) Override the name of the metric. The default is <code class="docutils literal notranslate"><span class="pre">airflow.priority</span></code>, which will product metrics like <code class="docutils literal notranslate"><span class="pre">airflow.priority.p1.failed</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">threshold</span></code>: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored</p></li>
 </ul>
 </section>
 <section id="example">
 <h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">datadog</span><span class="p">]</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="n">the</span> <span class="n">api</span> <span class="n">key</span>
-<span class="n">host</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">us1</span><span class="o">.</span><span class="n">datadoghq</span><span class="o">.</span><span class="n">com</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">logfire</span><span class="p">]</span>
+<span class="n">token</span> <span class="o">=</span> <span class="n">the</span> <span class="n">token</span>
 <span class="n">metric</span> <span class="o">=</span> <span class="n">my</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">metric</span>  <span class="c1"># will produce metrics like my.custom.metric.p2.success</span>
 <span class="n">threshold</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># only P1 and P2</span>
 </pre></div>
 </div>
 </section>
-<section id="monitor">
-<h2>Monitor<a class="headerlink" href="#monitor" title="Link to this heading">¶</a></h2>
-<p>Under <code class="docutils literal notranslate"><span class="pre">Monitors</span></code>, you can create a custom Datadog monitor to generate alerts when your DAGs fail.</p>
+<section id="alerts">
+<h2>Alerts<a class="headerlink" href="#alerts" title="Link to this heading">¶</a></h2>
+<p>Under <code class="docutils literal notranslate"><span class="pre">Alerts</span></code>, you can create a custom Logfire alert to generate alerts when your DAGs fail.</p>
 <p>To do so, follow the steps below.
 Note that some choices can be varied depending on your desired response time.</p>
 <ul class="simple">
-<li><p>Create a <code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">Monitor</span></code> and then choose <code class="docutils literal notranslate"><span class="pre">Metric</span></code></p></li>
-<li><p>Use the default <code class="docutils literal notranslate"><span class="pre">Threshold</span> <span class="pre">Alert</span></code></p></li>
-<li><p>Choose the correct metric source (the default would be something like <code class="docutils literal notranslate"><span class="pre">airflow.custom.priority.p1.failed</span></code>, but might vary if you customize the metric name)</p></li>
-<li><p>Select <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">(everywhere)</span></code>, then <code class="docutils literal notranslate"><span class="pre">min</span> <span class="pre">by</span> <span class="pre">dag</span></code></p></li>
-<li><p>Evaluate <code class="docutils literal notranslate"><span class="pre">sum</span></code> over the <code class="docutils literal notranslate"><span class="pre">last</span> <span class="pre">5</span> <span class="pre">minutes</span></code></p></li>
-<li><p>Set <code class="docutils literal notranslate"><span class="pre">Alert</span> <span class="pre">Threshold</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">Warning</span> <span class="pre">threshold</span> <span class="pre">&gt;</span> <span class="pre">-1</span></code>, which alert as soon as a DAG fails</p></li>
+<li><p>Create a <code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">Alert</span></code></p></li>
+<li><p>Use the following SQL Query: <code class="docutils literal notranslate"><span class="pre">select</span> <span class="pre">*</span> <span class="pre">from</span> <span class="pre">metrics</span> <span class="pre">where</span> <span class="pre">&quot;metric_name&quot;</span> <span class="pre">=</span> <span class="pre">'airflow.priority.p1.failed'</span> <span class="pre">and</span> <span class="pre">&quot;scalar_value&quot;</span> <span class="pre">=</span> <span class="pre">1</span></code></p></li>
+<li><p>Adjust the notification parameters as needed, use <code class="docutils literal notranslate"><span class="pre">Notify</span> <span class="pre">me</span> <span class="pre">when</span></code> <code class="docutils literal notranslate"><span class="pre">the</span> <span class="pre">query</span> <span class="pre">has</span> <span class="pre">any</span> <span class="pre">results</span></code></p></li>
+<li><p>See Slack for information about creating a slack alert, you can use Slack webhooks</p></li>
 </ul>
+</section>
+<section id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Link to this heading">¶</a></h2>
+<p>Here is an example of querying all failed metrics in Logfire, which might be useful for debugging connectivity issues/</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span><span class="w"> </span><span class="nn">metrics</span> <span class="n">where</span> <span class="s2">&quot;metric_name&quot;</span> <span class="o">=</span> <span class="s1">&#39;airflow.priority.p1.failed&#39;</span>
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -313,26 +316,8 @@ Note that some choices can be varied depending on your desired response time.</p
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="discord.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title">Discord</div>
-              </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-            </a>
-          <a class="prev-page" href="introduction.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-              <div class="page-info">
-                <div class="context">
-                  <span>Previous</span>
-                </div>
-                
-                <div class="title">Introduction</div>
-                
-              </div>
-            </a>
+          
+          
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -363,11 +348,12 @@ Note that some choices can be varied depending on your desired response time.</p
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Datadog</a><ul>
+<li><a class="reference internal" href="#">Logfire</a><ul>
 <li><a class="reference internal" href="#setup">Setup</a></li>
 <li><a class="reference internal" href="#configuration">Configuration</a></li>
 <li><a class="reference internal" href="#example">Example</a></li>
-<li><a class="reference internal" href="#monitor">Monitor</a></li>
+<li><a class="reference internal" href="#alerts">Alerts</a></li>
+<li><a class="reference internal" href="#utilities">Utilities</a></li>
 </ul>
 </li>
 </ul>

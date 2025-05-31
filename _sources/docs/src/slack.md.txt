@@ -1,6 +1,6 @@
 # Slack
 
-<img src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/slack.png" width=400 alt="Message in Slack reflecting DAG status">
+<img src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/slack.png" width=600 alt="Message in Slack reflecting DAG status">
 
 Slack integration will create new messages when a DAG fails, and optionally update those messages when a DAG reruns/succeeds.
 
@@ -17,7 +17,6 @@ Ensure your application has the following scopes for public and private channel 
 Enable and install your Slack application into your workspace, and add it as an integration in whatever channel you want it to post.
 
 Copy your Slack application's Oauth Token (starting with `xoxb-`) somewhere secure.
-
 
 ## Configuration
 

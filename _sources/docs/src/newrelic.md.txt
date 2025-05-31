@@ -1,9 +1,8 @@
 # NewRelic
 
-<img src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/newrelic.png" width=400 alt="Dashboard of newrelic metrics">
+<img src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/newrelic.png" width=600 alt="Dashboard of newrelic metrics">
 
 NewRelic integration will create [NewRelic metrics](https://docs.newrelic.com/docs/data-apis/understand-data/metric-data/metric-data-type/) for DAG `running`, `success`, and `failed` status.
-
 
 ## Setup
 
@@ -15,7 +14,6 @@ Note that the type should have `INGEST - LICENSE`.
 - `api_key`: (**Required**) the API Key from above
 - `metric`: (Optional) Override the name of the metric. The default is `airflow.custom.priority`, which will product metrics like `airflow.custom.priority.p1.failed`
 - `threshold`: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored
-
 
 ### Example
 
