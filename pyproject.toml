@@ -50,6 +50,7 @@ develop = [
     "logfire",
     "newrelic-telemetry-sdk",
     "opsgenie-sdk",
+    "pagerduty",
     "slack-sdk",
     # Config
     "airflow-config>=0.1.2",
