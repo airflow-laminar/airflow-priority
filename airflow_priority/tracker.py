@@ -175,7 +175,7 @@ tracker_inst.register(
 tracker_inst.register(
     backend="pagerduty",
     necessary_configs=[
-        ("pagerduty", "api_key"),
+        ("pagerduty", "routing_key"),
     ],
 )
 
