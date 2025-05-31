@@ -12,7 +12,7 @@ Note that the type should have `INGEST - LICENSE`.
 ## Configuration
 
 - `api_key`: (**Required**) the API Key from above
-- `metric`: (Optional) Override the name of the metric. The default is `airflow.custom.priority`, which will product metrics like `airflow.custom.priority.p1.failed`
+- `metric`: (Optional) Override the name of the metric. The default is `airflow.priority`, which will product metrics like `airflow.priority.p1.failed`
 - `threshold`: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored
 
 ### Example
@@ -29,7 +29,7 @@ threshold = 2  # only P1 and P2
 Under `Query Your Data` in the New Relic UI, you can create a query for the new custom metric:
 
 ```
-SELECT latest(`airflow.custom.priority.p1.failed`) FROM Metric FACET dag
+SELECT latest(`airflow.priority.p1.failed`) FROM Metric FACET dag
 ```
 
 With this, you can now [create a custom alert](https://docs.newrelic.com/docs/alerts/create-alert/examples/define-custom-metrics-alert-condition/).
@@ -55,7 +55,7 @@ Here is an example of querying all failed metrics in NewRelic in the last 30 min
 ```
 SELECT *
 FROM Metric
-WHERE metricName = 'airflow.custom.priority.p1.failed'
-WHERE `airflow.custom.priority.p1.failed` IS NOT NULL
+WHERE metricName = 'airflow.priority.p1.failed'
+WHERE `airflow.priority.p1.failed` IS NOT NULL
 SINCE 30 minutes ago UNTIL now
 ```

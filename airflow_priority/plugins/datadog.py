@@ -14,7 +14,7 @@ from ..common import DagStatus, get_config_option
 
 __all__ = ("send_metric",)
 
-DefaultMetric: str = "airflow.custom.priority"
+DefaultMetric: str = "airflow.priority"
 
 
 @lru_cache

@@ -12,7 +12,7 @@ Create a new Datadog api key [following their guide](https://docs.datadoghq.com/
 
 - `api_key`: (**Required**) the API Key from above
 - `host`: (Optional) Override the Datadog API host name. This is necessary for certain US and EU customers to use the Datadog API. The default is `https://api.datadoghq.com`
-- `metric`: (Optional) Override the name of the metric. The default is `airflow.custom.priority`, which will product metrics like `airflow.custom.priority.p1.failed`
+- `metric`: (Optional) Override the name of the metric. The default is `airflow.priority`, which will product metrics like `airflow.priority.p1.failed`
 - `threshold`: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored
 
 ## Example
@@ -34,7 +34,7 @@ Note that some choices can be varied depending on your desired response time.
 
 - Create a `New Monitor` and then choose `Metric`
 - Use the default `Threshold Alert`
-- Choose the correct metric source (the default would be something like `airflow.custom.priority.p1.failed`, but might vary if you customize the metric name)
+- Choose the correct metric source (the default would be something like `airflow.priority.p1.failed`, but might vary if you customize the metric name)
 - Select `from (everywhere)`, then `min by dag`
 - Evaluate `sum` over the `last 5 minutes`
 - Set `Alert Threshold > 0`, `Warning threshold > -1`, which alert as soon as a DAG fails
