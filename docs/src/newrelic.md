@@ -13,6 +13,7 @@ Note that the type should have `INGEST - LICENSE`.
 
 - `api_key`: (**Required**) the API Key from above
 - `metric`: (Optional) Override the name of the metric. The default is `airflow.priority`, which will product metrics like `airflow.priority.p1.failed`
+- `tags`: (Optional) Optional extra tags to include, should be a JSON `{"key":"value"`, e.g. `{"tag1":"val1","tag2":"val2"}`
 - `threshold`: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored
 
 ### Example

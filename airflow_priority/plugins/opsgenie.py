@@ -39,7 +39,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
     alert_api = get_client()
 
     message = f'A P{priority} DAG "{dag_id}" has been marked "{tag}"'
-    entity = get_config_option("opsgenie", "entity", default="airflow.priority.dag.{priority}.{tag}")
+    entity = get_config_option("opsgenie", "entity", default="airflow.priority.dag.p{priority}.{tag}")
     update_message = get_config_option("opsgenie", "update", default="true").lower() == "true"
 
     if "{tag}" in entity and "{priority}" in entity:

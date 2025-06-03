@@ -28,7 +28,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
     client = get_client()
 
     summary = f'A P{priority} DAG "{dag_id}" has been marked "{tag}"'
-    source = get_config_option("pagerduty", "source", default="airflow.priority.dag.{priority}.{tag}")
+    source = get_config_option("pagerduty", "source", default="airflow.priority.dag.p{priority}.{tag}")
     update_message = get_config_option("pagerduty", "update", default="true").lower() == "true"
 
     if "{tag}" in source and "{priority}" in source:
