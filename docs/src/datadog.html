@@ -282,6 +282,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">api_key</span></code>: (<strong>Required</strong>) the API Key from above</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">host</span></code>: (Optional) Override the Datadog API host name. This is necessary for certain US and EU customers to use the Datadog API. The default is <code class="docutils literal notranslate"><span class="pre">https://api.datadoghq.com</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">metric</span></code>: (Optional) Override the name of the metric. The default is <code class="docutils literal notranslate"><span class="pre">airflow.priority</span></code>, which will product metrics like <code class="docutils literal notranslate"><span class="pre">airflow.priority.p1.failed</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tags</span></code>: (Optional) Optional extra tags to include, should be a comma separated list of <code class="docutils literal notranslate"><span class="pre">key:value</span></code> strings, e.g. <code class="docutils literal notranslate"><span class="pre">tag1:val1,tag2:val2</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">threshold</span></code>: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored</p></li>
 </ul>
 </section>

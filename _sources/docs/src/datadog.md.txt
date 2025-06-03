@@ -13,6 +13,7 @@ Create a new Datadog api key [following their guide](https://docs.datadoghq.com/
 - `api_key`: (**Required**) the API Key from above
 - `host`: (Optional) Override the Datadog API host name. This is necessary for certain US and EU customers to use the Datadog API. The default is `https://api.datadoghq.com`
 - `metric`: (Optional) Override the name of the metric. The default is `airflow.priority`, which will product metrics like `airflow.priority.p1.failed`
+- `tags`: (Optional) Optional extra tags to include, should be a comma separated list of `key:value` strings, e.g. `tag1:val1,tag2:val2`
 - `threshold`: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored
 
 ## Example

@@ -282,6 +282,7 @@ Note that the type should have <code class="docutils literal notranslate"><span 
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">api_key</span></code>: (<strong>Required</strong>) the API Key from above</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">metric</span></code>: (Optional) Override the name of the metric. The default is <code class="docutils literal notranslate"><span class="pre">airflow.priority</span></code>, which will product metrics like <code class="docutils literal notranslate"><span class="pre">airflow.priority.p1.failed</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tags</span></code>: (Optional) Optional extra tags to include, should be a JSON <code class="docutils literal notranslate"><span class="pre">{&quot;key&quot;:&quot;value&quot;</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">{&quot;tag1&quot;:&quot;val1&quot;,&quot;tag2&quot;:&quot;val2&quot;}</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">threshold</span></code>: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored</p></li>
 </ul>
 <section id="example">
