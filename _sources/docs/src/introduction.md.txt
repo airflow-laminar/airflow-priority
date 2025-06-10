@@ -68,3 +68,8 @@ aws_region = "us-east-1"
 
 > [!NOTE]
 > AWS MWAA and terraform may require you to use the alternative configuration syntax
+
+## Configuration with [airflow-config](https://github.com/airflow-laminar/airflow-config)
+
+Configuration options can also be specified via [airflow-config](https://github.com/airflow-laminar/airflow-config).
+Place a `yaml` file called `config.yaml` in a folder called `config` inside to your `AIRFLOW_HOME` directory.
