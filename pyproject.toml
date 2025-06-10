@@ -54,7 +54,7 @@ develop = [
     "pagerduty",
     "slack-sdk",
     # Config
-    "airflow-config>=0.1.2",
+    "airflow-config>=1.8.2",
 ]
 aws = [
     "boto3",
@@ -100,7 +100,7 @@ Homepage = "https://github.com/airflow-laminar/airflow-priority"
 [tool.bumpversion]
 current_version = "1.5.0"
 commit = true
-tag = true 
+tag = true
 
 [[tool.bumpversion.files]]
 filename = "airflow_priority/__init__.py"

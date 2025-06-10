@@ -45,7 +45,9 @@ def get_config_option(section, key="", required=True, default=None):
         try:
             # TODO rework
             config = Configuration.load("config", "config", basepath=str(Path(os.environ.get("AIRFLOW_HOME", "")) / "dags"), _offset=4)
-            ret = getattr(getattr(config.extensions.get("priority", None), section, None), key, None)
+            ret = getattr(getattr(config.priority, section, None), key, None)
+            if ret is None:
+                ret = getattr(getattr(config.extensions.get("priority", None), section, None), key, None)
             if ret is not None:
                 return ret
         except ConfigNotFoundError:
