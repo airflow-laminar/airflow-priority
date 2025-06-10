@@ -27,6 +27,7 @@ classifiers = [
 
 dependencies = [
     "apache-airflow>=2,<3",
+    "pydantic>=2",
 ]
 
 [project.optional-dependencies]

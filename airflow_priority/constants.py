@@ -1,0 +1,7 @@
+AWSDefaultNamespace: str = "Airflow/Custom"
+AWSDefaultMetric: str = "priority_{tag}"
+DataDogDefaultMetric: str = "airflow.priority"
+LogfireDefaultMetric = "airflow.priority"
+NewRelicDefaultMetric: str = "airflow.priority"
+OpsGenieDefaultEntity: str = "airflow.priority"
+PagerDutyDefaultSource: str = "airflow.priority"
