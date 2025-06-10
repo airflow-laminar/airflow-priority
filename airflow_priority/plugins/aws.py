@@ -7,10 +7,7 @@ from boto3 import client as Boto3Client
 from botocore.config import Config
 
 from ..common import DagStatus, get_config_option
-
-DefaultNamespace: str = "Airflow/Custom"
-DefaultMetric: str = "priority_{tag}"
-
+from ..constants import AWSDefaultMetric, AWSDefaultNamespace
 
 __all__ = ("send_metric",)
 
@@ -21,8 +18,8 @@ def get_client():
 
 
 def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
-    namespace = get_config_option("aws", "namespace", default=DefaultNamespace)
-    metric = get_config_option("aws", "metric", default=DefaultMetric)
+    namespace = get_config_option("aws", "namespace", default=AWSDefaultNamespace)
+    metric = get_config_option("aws", "metric", default=AWSDefaultMetric)
 
     if "{tag}" in metric:
         metric = metric.format(tag=tag)

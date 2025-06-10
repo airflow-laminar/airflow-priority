@@ -5,10 +5,9 @@ from typing import Any, Dict
 from newrelic_telemetry_sdk import GaugeMetric, MetricClient
 
 from ..common import DagStatus, get_config_option
+from ..constants import NewRelicDefaultMetric
 
 __all__ = ("send_metric",)
-
-DefaultMetric: str = "airflow.priority"
 
 
 @lru_cache
@@ -17,7 +16,7 @@ def get_client() -> MetricClient:
 
 
 def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
-    metric = get_config_option("newrelic", "metric", default=DefaultMetric)
+    metric = get_config_option("newrelic", "metric", default=NewRelicDefaultMetric)
     tags = loads(get_config_option("newrelic", "tags", default="{}"))
     tags = {
         "application": "airflow",

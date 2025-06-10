@@ -7,9 +7,8 @@ default_args:
   owner: test
 extensions:
   priority:
-    _target_: airflow_config.PriorityConfiguration
+    _target_: airflow_priority.PriorityConfiguration
     slack:
-      _target_: airflow_config.SlackConfiguration
       token: abc
       channel: def
 """

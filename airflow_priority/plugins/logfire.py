@@ -4,11 +4,9 @@ from typing import Any, Dict
 import logfire
 
 from ..common import DagStatus, get_config_option
+from ..constants import LogfireDefaultMetric
 
 __all__ = ("send_metric",)
-
-
-DefaultMetric = "airflow.priority"
 
 
 @lru_cache
@@ -24,7 +22,7 @@ def get_client() -> logfire.Logfire:
 @lru_cache
 def get_gauges():
     client = get_client()
-    metric = get_config_option("logfire", "metric", default=DefaultMetric)
+    metric = get_config_option("logfire", "metric", default=LogfireDefaultMetric)
     return {
         ("success", 1): client.metric_gauge(name=f"{metric}.p1.success"),
         ("success", 2): client.metric_gauge(name=f"{metric}.p2.success"),

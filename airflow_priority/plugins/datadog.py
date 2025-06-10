@@ -11,10 +11,9 @@ from datadog_api_client.v2.model.metric_resource import MetricResource
 from datadog_api_client.v2.model.metric_series import MetricSeries
 
 from ..common import DagStatus, get_config_option
+from ..constants import DataDogDefaultMetric
 
 __all__ = ("send_metric",)
-
-DefaultMetric: str = "airflow.priority"
 
 
 @lru_cache
@@ -26,7 +25,7 @@ def get_configuration() -> Configuration:
 
 
 def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
-    metric = get_config_option("datadog", "metric", default=DefaultMetric)
+    metric = get_config_option("datadog", "metric", default=DataDogDefaultMetric)
     tags = get_config_option("datadog", "tags", default="").split(",")
     tags = ["application:airflow", f"priority:{priority}", f"dag:{dag_id}", *tags]
 

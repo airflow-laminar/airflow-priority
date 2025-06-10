@@ -4,10 +4,9 @@ from typing import Any, Dict
 from pagerduty import EventsApiV2Client
 
 from ..common import DagStatus, get_config_option
+from ..constants import PagerDutyDefaultSource
 
 __all__ = ("send_metric",)
-
-DefaultMetric: str = "airflow.priority"
 
 
 @lru_cache
@@ -28,7 +27,8 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
     client = get_client()
 
     summary = f'A P{priority} DAG "{dag_id}" has been marked "{tag}"'
-    source = get_config_option("pagerduty", "source", default="airflow.priority.dag.p{priority}.{tag}")
+    base_source = get_config_option("pagerduty", "source", default=PagerDutyDefaultSource)
+    source = f"{base_source}.p{priority}.{tag}"
     update_message = get_config_option("pagerduty", "update", default="true").lower() == "true"
 
     if "{tag}" in source and "{priority}" in source:

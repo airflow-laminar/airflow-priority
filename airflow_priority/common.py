@@ -43,6 +43,7 @@ def get_config_option(section, key="", required=True, default=None):
         from airflow_config import ConfigNotFoundError, Configuration
 
         try:
+            # TODO rework
             config = Configuration.load("config", "config", basepath=str(Path(os.environ.get("AIRFLOW_HOME", "")) / "dags"), _offset=4)
             ret = getattr(getattr(config.extensions.get("priority", None), section, None), key, None)
             if ret is not None:
