@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from ccflow import BaseModel
 
 from .aws import AwsConfiguration
 from .datadog import DataDogConfiguration

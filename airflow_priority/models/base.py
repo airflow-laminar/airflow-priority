@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from ccflow import BaseModel
 
 __all__ = ("BaseConfiguration",)
 
