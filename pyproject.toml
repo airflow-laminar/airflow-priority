@@ -54,7 +54,7 @@ develop = [
     "pagerduty",
     "slack-sdk",
     # Config
-    "airflow-config>=1.8.2",
+    "airflow-config>=1.9",
 ]
 aws = [
     "boto3",
