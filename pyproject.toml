@@ -61,7 +61,7 @@ aws = [
     "botocore",
 ]
 config = [
-    "airflow-config>=0.1.2",
+    "airflow-config>=1.9",
 ]
 datadog = [
     "datadog-api-client",
