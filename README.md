@@ -2,7 +2,7 @@
 
 Priority Tags for Airflow Dags
 
-[![Build Status](https://github.com/airflow-laminar/airflow-priority/actions/workflows/build.yml/badge.svg?branch=main&event=push)](https://github.com/airflow-laminar/airflow-priority/actions/workflows/build.yml)
+[![Build Status](https://github.com/airflow-laminar/airflow-priority/actions/workflows/build.yaml/badge.svg?branch=main&event=push)](https://github.com/airflow-laminar/airflow-priority/actions/workflows/build.yaml)
 [![codecov](https://codecov.io/gh/airflow-laminar/airflow-priority/branch/main/graph/badge.svg)](https://codecov.io/gh/airflow-laminar/airflow-priority)
 [![License](https://img.shields.io/github/license/airflow-laminar/airflow-priority)](https://github.com/airflow-laminar/airflow-priority)
 [![PyPI](https://img.shields.io/pypi/v/airflow-priority.svg)](https://pypi.python.org/pypi/airflow-priority)
