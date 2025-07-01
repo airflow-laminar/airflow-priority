@@ -1,8 +1,9 @@
 from importlib import import_module
 from logging import getLogger
-from typing import Dict, List, Tuple
+from typing import TYPE_CHECKING, Dict, List, Tuple
 
-from airflow.models.dagrun import DagRun
+if TYPE_CHECKING:
+    from airflow.models.dagrun import DagRun
 
 from .common import (
     AirflowPriorityConfigurationOptionNotFound,
@@ -62,7 +63,7 @@ class Tracker(object):
         if key not in self.dagruns:
             self.dagruns[key] = {}
 
-    def running(self, dag_run: DagRun):
+    def running(self, dag_run: "DagRun"):
         dag_id, priority = has_priority_tag(dag_run=dag_run)
 
         if priority:
@@ -83,7 +84,7 @@ class Tracker(object):
                 except Exception:
                     _log.exception(f"Failed to send running metric for DAG {dag_id} with priority {priority} on backend {backend}")
 
-    def success(self, dag_run: DagRun):
+    def success(self, dag_run: "DagRun"):
         dag_id, priority = has_priority_tag(dag_run=dag_run)
 
         if priority:
@@ -103,7 +104,7 @@ class Tracker(object):
                 except Exception:
                     _log.exception(f"Failed to send success metric for DAG {dag_id} with priority {priority} on backend {backend}")
 
-    def failed(self, dag_run: DagRun):
+    def failed(self, dag_run: "DagRun"):
         dag_id, priority = has_priority_tag(dag_run=dag_run)
         if priority:
             _log.info(f"DAG Failed: {dag_id} / P{priority}")
