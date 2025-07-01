@@ -25,14 +25,18 @@ def airflow_config_alt(airflow_config_base_setup):
         (Path(td) / "airflow.cfg").write_text(tmpl)
         os.environ["AIRFLOW_HOME"] = str(Path(td))
         os.environ["AIRFLOW_CONFIG"] = str((Path(td) / "airflow.cfg"))
-        import airflow.configuration
 
-        airflow.configuration.AIRFLOW_HOME = os.environ["AIRFLOW_HOME"]
-        airflow.configuration.AIRFLOW_CONFIG = os.environ["AIRFLOW_CONFIG"]
-        airflow_config_parser = airflow.configuration.AirflowConfigParser()
-        airflow.configuration.load_standard_airflow_configuration(airflow_config_parser)
-        airflow_config_parser.validate()
-        airflow.configuration.conf = airflow_config_parser
+        try:
+            import airflow.configuration
+
+            airflow.configuration.AIRFLOW_HOME = os.environ["AIRFLOW_HOME"]
+            airflow.configuration.AIRFLOW_CONFIG = os.environ["AIRFLOW_CONFIG"]
+            airflow_config_parser = airflow.configuration.AirflowConfigParser()
+            airflow.configuration.load_standard_airflow_configuration(airflow_config_parser)
+            airflow_config_parser.validate()
+            airflow.configuration.conf = airflow_config_parser
+        except ImportError:
+            return pytest.skip("Airflow configuration not available in this environment")
         yield str(Path(td))
 
 
@@ -43,22 +47,28 @@ def airflow_config(airflow_config_base_setup):
         (Path(td) / "airflow.cfg").write_text(tmpl)
         os.environ["AIRFLOW_HOME"] = str(Path(td))
         os.environ["AIRFLOW_CONFIG"] = str((Path(td) / "airflow.cfg"))
-        import airflow.configuration
+        try:
+            import airflow.configuration
 
-        airflow.configuration.AIRFLOW_HOME = os.environ["AIRFLOW_HOME"]
-        airflow.configuration.AIRFLOW_CONFIG = os.environ["AIRFLOW_CONFIG"]
-        airflow_config_parser = airflow.configuration.AirflowConfigParser()
-        airflow.configuration.load_standard_airflow_configuration(airflow_config_parser)
-        airflow_config_parser.validate()
-        airflow.configuration.conf = airflow_config_parser
+            airflow.configuration.AIRFLOW_HOME = os.environ["AIRFLOW_HOME"]
+            airflow.configuration.AIRFLOW_CONFIG = os.environ["AIRFLOW_CONFIG"]
+            airflow_config_parser = airflow.configuration.AirflowConfigParser()
+            airflow.configuration.load_standard_airflow_configuration(airflow_config_parser)
+            airflow_config_parser.validate()
+            airflow.configuration.conf = airflow_config_parser
+        except ImportError:
+            return pytest.skip("Airflow configuration not available in this environment")
         yield str(Path(td))
 
 
-@pytest.fixture(scope="function", autouse=True)
+@pytest.fixture(scope="function")
 def dag_run():
     from unittest.mock import MagicMock
 
-    from airflow.models.dagrun import DagRun
+    try:
+        from airflow.models.dagrun import DagRun
+    except ImportError:
+        return pytest.skip("Airflow DagRun model not available in this environment")
 
     dag_run = DagRun("UNIT TEST")
     dag_run.dag = MagicMock()
@@ -66,11 +76,14 @@ def dag_run():
     return dag_run
 
 
-@pytest.fixture(scope="function", autouse=True)
+@pytest.fixture(scope="function")
 def dag_run_p3():
     from unittest.mock import MagicMock
 
-    from airflow.models.dagrun import DagRun
+    try:
+        from airflow.models.dagrun import DagRun
+    except ImportError:
+        pytest.skip("Airflow DagRun model not available in this environment")
 
     dag_run = DagRun("UNIT TEST")
     dag_run.dag = MagicMock()

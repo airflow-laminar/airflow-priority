@@ -2,9 +2,10 @@ import os
 from functools import lru_cache
 from pathlib import Path
 from types import MappingProxyType
-from typing import Any, Callable, Dict, Literal, Optional, Tuple
+from typing import TYPE_CHECKING, Any, Callable, Dict, Literal, Optional, Tuple
 
-from airflow.models.dagrun import DagRun
+if TYPE_CHECKING:
+    from airflow.models.dagrun import DagRun
 
 __all__ = (
     "has_priority_tag",
@@ -55,34 +56,37 @@ def get_config_option(section, key="", required=True, default=None):
         # SKIP
         pass
 
-    import airflow.configuration
-    import airflow.exceptions
-
     config_option = default
 
-    if key:
-        try:
-            config_option = airflow.configuration.conf.get(f"priority.{section}", key, default)
-        except airflow.exceptions.AirflowConfigException:
+    try:
+        import airflow.configuration
+        import airflow.exceptions
+
+        if key:
             try:
-                # Try nested variant
-                config_option = airflow.configuration.conf.get("priority", f"{section}_{key}", default)
+                config_option = airflow.configuration.conf.get(f"priority.{section}", key, default)
+            except airflow.exceptions.AirflowConfigException:
+                try:
+                    # Try nested variant
+                    config_option = airflow.configuration.conf.get("priority", f"{section}_{key}", default)
+                except airflow.exceptions.AirflowConfigException:
+                    pass
+        else:
+            try:
+                config_option = airflow.configuration.conf.get("priority", section, default)
             except airflow.exceptions.AirflowConfigException:
                 pass
-    else:
-        try:
-            config_option = airflow.configuration.conf.get("priority", section, default)
-        except airflow.exceptions.AirflowConfigException:
-            pass
-    if not config_option:
-        # restore default/None
-        config_option = default
+        if not config_option:
+            # restore default/None
+            config_option = default
+    except ImportError:
+        pass
     if not config_option and required:
         raise AirflowPriorityConfigurationOptionNotFound(f"{section}.{key}")
     return config_option
 
 
-def has_priority_tag(dag_run: DagRun) -> Optional[Tuple[str, int]]:
+def has_priority_tag(dag_run: "DagRun") -> Optional[Tuple[str, int]]:
     dag = dag_run.dag
     dag_id = dag_run.dag_id
     tags = dag.tags
