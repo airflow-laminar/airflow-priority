@@ -4,8 +4,12 @@ __pycache__/
 *$py.class
 
 # C extensions
+*.a
 *.so
+*.obj
 *.dll
+*.exp
+*.lib
 
 # Distribution / packaging
 .Python
@@ -132,16 +136,34 @@ docs/src/_build/
 docs/api
 docs/index.md
 docs/html
+<<<<<<< before updating
+=======
+docs/jupyter_execute
+index.md
+_template/labextension
+
+# JS
+js/coverage
+js/dist
+js/lib
+js/node_modules
+airflow_priority/extension
+>>>>>>> after updating
 
 # Jupyter
 .ipynb_checkpoints
 .autoversion
+airflow_priority/nbextension
+airflow_priority/labextension
 
 # Mac
 .DS_Store
 
 # Rust
 target
+<<<<<<< before updating
 
 # Secrets
 .env.sh
+=======
+>>>>>>> after updating
