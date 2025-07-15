@@ -136,8 +136,6 @@ docs/src/_build/
 docs/api
 docs/index.md
 docs/html
-<<<<<<< before updating
-=======
 docs/jupyter_execute
 index.md
 _template/labextension
@@ -148,7 +146,6 @@ js/dist
 js/lib
 js/node_modules
 airflow_priority/extension
->>>>>>> after updating
 
 # Jupyter
 .ipynb_checkpoints
@@ -161,9 +158,6 @@ airflow_priority/labextension
 
 # Rust
 target
-<<<<<<< before updating
 
 # Secrets
 .env.sh
-=======
->>>>>>> after updating
