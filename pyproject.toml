@@ -42,7 +42,7 @@ develop = [
     "uv",
     "wheel",
     # Basics
-    "apache-airflow>=2,<3",
+    "apache-airflow>=2,<4",
     # Plugins
     "boto3",
     "botocore",
