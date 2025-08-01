@@ -9,6 +9,7 @@ Priority Tags for Airflow Dags
 
 ## Overview
 
+<<<<<<< before updating
 This repo provides an [Airflow Plugin](https://airflow.apache.org/docs/apache-airflow/stable/authoring-and-scheduling/plugins.html) for priority-driven DAG failure alerting.
 In layman's terms, one need only add a [tag](https://airflow.apache.org/docs/apache-airflow/stable/howto/add-dag-tags.html) to their DAG in `P1, P2, P3, P4, P5`, where `P1` corresponds to highest priority and `P5` corresponds to lowest, and that dag will send a notification to a backend integration.
 
@@ -45,3 +46,7 @@ conda install airflow-priority -c conda-forge
 ## License
 
 This software is licensed under the Apache 2.0 license. See the [LICENSE](LICENSE) file for details.
+=======
+> [!NOTE]
+> This library was generated using [copier](https://copier.readthedocs.io/en/stable/) from the [Base Python Project Template repository](https://github.com/python-project-templates/base).
+>>>>>>> after updating
