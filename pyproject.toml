@@ -34,7 +34,10 @@ develop = [
     "build",
     "bump-my-version",
     "check-manifest",
+    "codespell>=2.4,<2.5",
     "hatchling",
+    "mdformat>=0.7.22,<0.8",
+    "mdformat-tables>=1",
     "pytest",
     "pytest-cov",
     "ruff",
@@ -102,6 +105,7 @@ Homepage = "https://github.com/airflow-laminar/airflow-priority"
 current_version = "1.6.1"
 commit = true
 tag = true
+commit_args = "-s"
 
 [[tool.bumpversion.files]]
 filename = "airflow_priority/__init__.py"
