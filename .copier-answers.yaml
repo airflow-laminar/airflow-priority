@@ -1,8 +1,9 @@
 # Changes here will be overwritten by Copier
-_commit: c53b04c
+_commit: 2d0c192
 _src_path: https://github.com/python-project-templates/base.git
 add_docs: false
 add_extension: python
+add_wiki: false
 email: t.paine154@gmail.com
 github: airflow-laminar
 project_description: Priority Tags for Airflow Dags
