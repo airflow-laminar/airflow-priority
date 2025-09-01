@@ -47,7 +47,7 @@ develop = [
     "wheel",
     # Basics
     "apache-airflow>=2,<4",
-    "paramiko<4",
+    "paramiko<5",
     # Plugins
     "boto3",
     "botocore",
