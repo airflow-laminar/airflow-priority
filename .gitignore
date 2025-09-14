@@ -146,6 +146,7 @@ airflow_priority/extension
 # Jupyter
 .ipynb_checkpoints
 .autoversion
+Untitled*.ipynb
 !airflow_priority/extension/airflow_priority.json
 !airflow_priority/extension/install.json
 airflow_priority/nbextension
