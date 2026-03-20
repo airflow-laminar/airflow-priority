@@ -61,7 +61,7 @@ develop = [
     "datadog-api-client",
     "discord.py",
     "httpx",
-    "logfire",
+    "logfire>=4",
     "newrelic-telemetry-sdk",
     "opsgenie-sdk",
     "pagerduty",
