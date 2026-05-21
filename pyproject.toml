@@ -53,7 +53,7 @@ develop = [
     "apache-airflow>=2,<4",
     "apache-airflow-providers-ssh",
     "apache-airflow-providers-standard",
-    "paramiko<4",
+    "paramiko<6",
     "structlog<25.5.0",
     # Plugins
     "boto3",
