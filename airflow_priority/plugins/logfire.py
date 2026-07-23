@@ -1,5 +1,5 @@
 from functools import lru_cache
-from typing import Any, Dict
+from typing import Any
 
 import logfire
 
@@ -42,7 +42,7 @@ def get_gauges():
     }
 
 
-def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
     gauges = get_gauges()
 
     gauges[(tag, priority)].set(1)

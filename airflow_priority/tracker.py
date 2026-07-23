@@ -1,6 +1,6 @@
 from importlib import import_module
 from logging import getLogger
-from typing import TYPE_CHECKING, Dict, List, Tuple
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from airflow.models.dagrun import DagRun
@@ -18,16 +18,16 @@ from .common import (
 _log = getLogger(__name__)
 
 
-class Tracker(object):
+class Tracker:
     def __init__(self):
-        self.dagruns: Dict[DagContextIdentifier, Dict[DagStatus, BackendSpecificDagContext]] = {}
-        self.backends: Dict[str, SendMetricFunction] = {}
-        self.thresholds: Dict[str, int] = {}
+        self.dagruns: dict[DagContextIdentifier, dict[DagStatus, BackendSpecificDagContext]] = {}
+        self.backends: dict[str, SendMetricFunction] = {}
+        self.thresholds: dict[str, int] = {}
 
     def register(
         self,
         backend: str,
-        necessary_configs: List[Tuple[str, str]],
+        necessary_configs: list[tuple[str, str]],
     ):
         if backend in self.backends:
             _log.warning(f"Backend '{backend}' is already registered. Skipping registration.")
@@ -53,7 +53,7 @@ class Tracker(object):
             return
 
         # register
-        self.backends[backend] = getattr(module, "send_metric")
+        self.backends[backend] = module.send_metric
 
         # set threshold if available
         self.thresholds[backend] = int(get_config_option(backend, "threshold", default=get_config_option("threshold", default=5)))
@@ -81,7 +81,7 @@ class Tracker(object):
 
                 try:
                     sender(dag_id, priority, "running", self.dagruns[(backend, dag_run.id)])
-                except Exception:
+                except Exception:  # noqa: BLE001
                     _log.exception(f"Failed to send running metric for DAG {dag_id} with priority {priority} on backend {backend}")
 
     def success(self, dag_run: "DagRun"):
@@ -101,7 +101,7 @@ class Tracker(object):
 
                 try:
                     sender(dag_id, priority, "success", self.dagruns[(backend, dag_run.id)])
-                except Exception:
+                except Exception:  # noqa: BLE001
                     _log.exception(f"Failed to send success metric for DAG {dag_id} with priority {priority} on backend {backend}")
 
     def failed(self, dag_run: "DagRun"):
@@ -120,7 +120,7 @@ class Tracker(object):
 
                 try:
                     sender(dag_id, priority, "failed", self.dagruns[(backend, dag_run.id)])
-                except Exception:
+                except Exception:  # noqa: BLE001
                     _log.exception(f"Failed to send failed metric for DAG {dag_id} with priority {priority} on backend {backend}")
 
 

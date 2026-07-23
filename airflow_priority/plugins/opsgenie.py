@@ -1,6 +1,6 @@
 from functools import lru_cache
 from time import sleep
-from typing import Any, Dict
+from typing import Any
 
 from opsgenie_sdk import (
     AcknowledgeAlertPayload,
@@ -34,7 +34,7 @@ def get_client() -> AlertApi:
     return alert_api
 
 
-def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
     alert_api = get_client()
 
     message = f'A P{priority} DAG "{dag_id}" has been marked "{tag}"'

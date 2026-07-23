@@ -24,7 +24,7 @@ def airflow_config_alt(airflow_config_base_setup):
         tmpl = airflow_config_base_setup.get_template("airflow.cfg.alt").render()
         (Path(td) / "airflow.cfg").write_text(tmpl)
         os.environ["AIRFLOW_HOME"] = str(Path(td))
-        os.environ["AIRFLOW_CONFIG"] = str((Path(td) / "airflow.cfg"))
+        os.environ["AIRFLOW_CONFIG"] = str(Path(td) / "airflow.cfg")
 
         try:
             import airflow.configuration
@@ -46,7 +46,7 @@ def airflow_config(airflow_config_base_setup):
         tmpl = airflow_config_base_setup.get_template("airflow.cfg").render()
         (Path(td) / "airflow.cfg").write_text(tmpl)
         os.environ["AIRFLOW_HOME"] = str(Path(td))
-        os.environ["AIRFLOW_CONFIG"] = str((Path(td) / "airflow.cfg"))
+        os.environ["AIRFLOW_CONFIG"] = str(Path(td) / "airflow.cfg")
         try:
             import airflow.configuration
 

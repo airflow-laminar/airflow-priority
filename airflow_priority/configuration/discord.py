@@ -1,5 +1,3 @@
-from typing import Optional
-
 from .base import BaseConfiguration
 
 __all__ = ("DiscordConfiguration",)
@@ -8,32 +6,32 @@ __all__ = ("DiscordConfiguration",)
 class DiscordConfiguration(BaseConfiguration):
     token: str
     channel: str
-    update_message: Optional[bool] = False
-    send_running: Optional[bool] = False
-    send_success: Optional[bool] = False
-    failed_color: Optional[str] = None
-    running_color: Optional[str] = None
-    success_color: Optional[str] = None
-    channel_P1: Optional[str] = None
-    channel_P2: Optional[str] = None
-    channel_P3: Optional[str] = None
-    channel_P4: Optional[str] = None
-    channel_P5: Optional[str] = None
-    channel_failed: Optional[str] = None
-    channel_success: Optional[str] = None
-    channel_running: Optional[str] = None
-    channel_failed_P1: Optional[str] = None
-    channel_failed_P2: Optional[str] = None
-    channel_failed_P3: Optional[str] = None
-    channel_failed_P4: Optional[str] = None
-    channel_failed_P5: Optional[str] = None
-    channel_success_P1: Optional[str] = None
-    channel_success_P2: Optional[str] = None
-    channel_success_P3: Optional[str] = None
-    channel_success_P4: Optional[str] = None
-    channel_success_P5: Optional[str] = None
-    channel_running_P1: Optional[str] = None
-    channel_running_P2: Optional[str] = None
-    channel_running_P3: Optional[str] = None
-    channel_running_P4: Optional[str] = None
-    channel_running_P5: Optional[str] = None
+    update_message: bool | None = False
+    send_running: bool | None = False
+    send_success: bool | None = False
+    failed_color: str | None = None
+    running_color: str | None = None
+    success_color: str | None = None
+    channel_P1: str | None = None
+    channel_P2: str | None = None
+    channel_P3: str | None = None
+    channel_P4: str | None = None
+    channel_P5: str | None = None
+    channel_failed: str | None = None
+    channel_success: str | None = None
+    channel_running: str | None = None
+    channel_failed_P1: str | None = None
+    channel_failed_P2: str | None = None
+    channel_failed_P3: str | None = None
+    channel_failed_P4: str | None = None
+    channel_failed_P5: str | None = None
+    channel_success_P1: str | None = None
+    channel_success_P2: str | None = None
+    channel_success_P3: str | None = None
+    channel_success_P4: str | None = None
+    channel_success_P5: str | None = None
+    channel_running_P1: str | None = None
+    channel_running_P2: str | None = None
+    channel_running_P3: str | None = None
+    channel_running_P4: str | None = None
+    channel_running_P5: str | None = None

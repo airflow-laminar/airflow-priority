@@ -1,6 +1,6 @@
 import ssl
 from functools import lru_cache
-from typing import Any, Dict
+from typing import Any
 
 from httpx import post
 
@@ -26,7 +26,7 @@ def _client_cert_post(url: str, cert_file: str, key_file: str) -> str:
     context.load_cert_chain(certfile=cert_file, keyfile=key_file)
     response = post(url=url, verify=context, headers={"Content-Type": "application/json"}, data="{}")
     if response.status_code != 200:
-        raise Exception(f"Cannot connect for symphony handshake to {url}: {response.status_code}")
+        raise RuntimeError(f"Cannot connect for symphony handshake to {url}: {response.status_code}")
     return response.json()
 
 
@@ -68,10 +68,10 @@ def get_room_id(tag: DagStatus, priority: int) -> str:
             name = room.get("roomAttributes", {}).get("name")
             if name and name == config_options["room_name"]:
                 return room.get("roomSystemInfo", {}).get("id")
-    raise Exception("TODO")
+    raise RuntimeError(f"Symphony room not found: {channel_name}")
 
 
-def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
     send_running = get_config_option("symphony", "send_running", default="false").lower() == "true"
     send_success = get_config_option("symphony", "send_success", default="false").lower() == "true"
     update_message = get_config_option("symphony", "update_message", default="false").lower() == "true"

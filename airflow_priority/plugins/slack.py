@@ -1,6 +1,6 @@
 from functools import lru_cache
 from ssl import CERT_NONE, create_default_context
-from typing import Any, Dict
+from typing import Any
 
 from slack_sdk import WebClient
 
@@ -39,10 +39,10 @@ def get_channel_id(tag: DagStatus, priority: int) -> str:
         for channel in conversations.data["channels"]:
             if channel["name"] == channel_name:
                 return channel["id"]
-    raise Exception("TODO")
+    raise RuntimeError(f"Slack channel not found: {channel_name}")
 
 
-def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
     send_running = get_config_option("slack", "send_running", default="false").lower() == "true"
     send_success = get_config_option("slack", "send_success", default="false").lower() == "true"
     update_message = get_config_option("slack", "update_message", default="false").lower() == "true"
