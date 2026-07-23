@@ -1,28 +1,29 @@
 import os
+from collections.abc import Callable
 from functools import lru_cache
 from pathlib import Path
 from types import MappingProxyType
-from typing import TYPE_CHECKING, Any, Callable, Dict, Literal, Optional, Tuple
+from typing import TYPE_CHECKING, Any, Literal
 
 if TYPE_CHECKING:
     from airflow.models.dagrun import DagRun
 
 __all__ = (
-    "has_priority_tag",
-    "get_config_option",
-    "DagStatus",
+    "AirflowPriorityConfigurationOptionNotFound",
     "BackendSpecificDagContext",
     "DagContextIdentifier",
-    "SendMetricFunction",
+    "DagStatus",
     "PriorityTags",
-    "AirflowPriorityConfigurationOptionNotFound",
+    "SendMetricFunction",
+    "get_config_option",
+    "has_priority_tag",
 )
 
 
 DagStatus = Literal["running", "success", "failed"]
 BackendSpecificDagContext = Any
-DagContextIdentifier = Tuple[str, str]  # (backend, dag_instance_id)
-SendMetricFunction = Callable[[str, int, DagStatus, Dict[DagStatus, BackendSpecificDagContext]], None]
+DagContextIdentifier = tuple[str, str]  # (backend, dag_instance_id)
+SendMetricFunction = Callable[[str, int, DagStatus, dict[DagStatus, BackendSpecificDagContext]], None]
 
 PriorityTags = MappingProxyType(
     {
@@ -86,7 +87,7 @@ def get_config_option(section, key="", required=True, default=None):
     return config_option
 
 
-def has_priority_tag(dag_run: "DagRun") -> Optional[Tuple[str, int]]:
+def has_priority_tag(dag_run: "DagRun") -> tuple[str, int] | None:
     dag = dag_run.dag
     dag_id = dag_run.dag_id
     tags = dag.tags

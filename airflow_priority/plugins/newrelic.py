@@ -1,6 +1,6 @@
 from functools import lru_cache
 from json import loads
-from typing import Any, Dict
+from typing import Any
 
 from newrelic_telemetry_sdk import GaugeMetric, MetricClient
 
@@ -15,7 +15,7 @@ def get_client() -> MetricClient:
     return MetricClient(get_config_option("newrelic", "api_key"))
 
 
-def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
     metric = get_config_option("newrelic", "metric", default=NewRelicDefaultMetric)
     tags = loads(get_config_option("newrelic", "tags", default="{}"))
     tags = {

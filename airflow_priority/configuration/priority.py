@@ -1,5 +1,3 @@
-from typing import Optional
-
 from pydantic import BaseModel
 
 from .aws import AwsConfiguration
@@ -16,12 +14,12 @@ __all__ = ("PriorityConfiguration",)
 
 
 class PriorityConfiguration(BaseModel):
-    aws: Optional[AwsConfiguration] = None
-    datadog: Optional[DataDogConfiguration] = None
-    discord: Optional[DiscordConfiguration] = None
-    logfire: Optional[LogfireConfiguration] = None
-    newrelic: Optional[NewRelicConfiguration] = None
-    opsgenie: Optional[OpsGenieConfiguration] = None
-    pagerduty: Optional[PagerDutyConfiguration] = None
-    slack: Optional[SlackConfiguration] = None
-    symphony: Optional[SymphonyConfiguration] = None
+    aws: AwsConfiguration | None = None
+    datadog: DataDogConfiguration | None = None
+    discord: DiscordConfiguration | None = None
+    logfire: LogfireConfiguration | None = None
+    newrelic: NewRelicConfiguration | None = None
+    opsgenie: OpsGenieConfiguration | None = None
+    pagerduty: PagerDutyConfiguration | None = None
+    slack: SlackConfiguration | None = None
+    symphony: SymphonyConfiguration | None = None

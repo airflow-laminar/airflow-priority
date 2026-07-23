@@ -1,5 +1,5 @@
 from functools import lru_cache
-from typing import Any, Dict
+from typing import Any
 
 from pagerduty import EventsApiV2Client
 
@@ -14,7 +14,7 @@ def get_client() -> EventsApiV2Client:
     return EventsApiV2Client(api_key=get_config_option("pagerduty", "routing_key"))
 
 
-_severity_map: Dict[int, str] = {
+_severity_map: dict[int, str] = {
     1: "critical",
     2: "error",
     3: "warning",
@@ -23,7 +23,7 @@ _severity_map: Dict[int, str] = {
 }
 
 
-def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
     client = get_client()
 
     summary = f'A P{priority} DAG "{dag_id}" has been marked "{tag}"'

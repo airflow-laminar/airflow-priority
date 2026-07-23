@@ -2,7 +2,7 @@ from asyncio import sleep
 from functools import lru_cache
 from queue import Queue
 from threading import Thread
-from typing import Any, Dict, Optional
+from typing import Any
 
 from discord import Client, Color, Embed, Intents, Message, TextChannel
 
@@ -21,7 +21,7 @@ def get_client() -> Client:
     async def on_ready():
         channel: TextChannel
         msg: Message
-        new_msg: Optional[str]
+        new_msg: str | None
 
         while True:
             while client.outqueue.empty():
@@ -58,7 +58,7 @@ def get_channel_id(tag: DagStatus, priority: int) -> int:
     return int(channel_name)
 
 
-def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
     send_running = get_config_option("discord", "send_running", default="false").lower() == "true"
     send_success = get_config_option("discord", "send_success", default="false").lower() == "true"
     update_message = get_config_option("discord", "update_message", default="false").lower() == "true"

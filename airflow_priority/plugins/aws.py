@@ -1,7 +1,7 @@
 import os
-from datetime import datetime
+from datetime import UTC, datetime
 from functools import lru_cache
-from typing import Any, Dict
+from typing import Any
 
 from boto3 import client as Boto3Client
 from botocore.config import Config
@@ -14,10 +14,13 @@ __all__ = ("send_metric",)
 
 @lru_cache
 def get_client():
-    return Boto3Client("cloudwatch", config=Config(region_name=get_config_option("aws", "region"), retries=dict(max_attempts=10, mode="adaptive")))
+    return Boto3Client(
+        "cloudwatch",
+        config=Config(region_name=get_config_option("aws", "region"), retries={"max_attempts": 10, "mode": "adaptive"}),
+    )
 
 
-def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
     namespace = get_config_option("aws", "namespace", default=AWSDefaultNamespace)
     metric = get_config_option("aws", "metric", default=AWSDefaultMetric)
 
@@ -42,7 +45,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                 "Value": str(priority),
             },
         ],
-        "Timestamp": datetime.utcnow(),
+        "Timestamp": datetime.now(UTC),
         "Value": int(priority),
         "Unit": "Count",
     }

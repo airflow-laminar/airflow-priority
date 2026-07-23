@@ -1,5 +1,5 @@
-from datetime import datetime
-from unittest.mock import MagicMock, call, patch
+from datetime import UTC, datetime
+from unittest.mock import MagicMock, patch
 
 from datadog_api_client.v2.model.metric_payload import MetricPayload
 from datadog_api_client.v2.model.metric_point import MetricPoint
@@ -10,7 +10,7 @@ from airflow_priority.tracker import Tracker
 
 
 def test_datadog(airflow_config, dag_run):
-    now = datetime.now()
+    now = datetime.now(UTC)
     with (
         patch("airflow_priority.plugins.datadog.ApiClient"),
         patch("airflow_priority.plugins.datadog.MetricsApi") as mock_metrics_api,
@@ -26,7 +26,7 @@ def test_datadog(airflow_config, dag_run):
 
         # Assert that the ApiClient was called
         assert mock_metrics_api.return_value.submit_metrics.call_count == 1
-        mock_metrics_api.return_value.submit_metrics.assert_called_once_with == call(
+        mock_metrics_api.return_value.submit_metrics.assert_called_once_with(
             body=MetricPayload(
                 series=[
                     MetricSeries(
@@ -47,7 +47,7 @@ def test_datadog(airflow_config, dag_run):
 
 
 def test_datadog_send_sequence(airflow_config, dag_run):
-    now = datetime.now()
+    now = datetime.now(UTC)
     with (
         patch("airflow_priority.plugins.datadog.ApiClient"),
         patch("airflow_priority.plugins.datadog.MetricsApi") as mock_metrics_api,
@@ -68,7 +68,7 @@ def test_datadog_send_sequence(airflow_config, dag_run):
 
 
 def test_datadog_alt(airflow_config_alt, dag_run_p3):
-    now = datetime.now()
+    now = datetime.now(UTC)
     with (
         patch("airflow_priority.plugins.datadog.ApiClient"),
         patch("airflow_priority.plugins.datadog.MetricsApi") as mock_metrics_api,

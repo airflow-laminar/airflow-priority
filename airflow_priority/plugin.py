@@ -1,4 +1,5 @@
 import sys
+from typing import ClassVar
 
 from airflow.listeners import hookimpl
 from airflow.models.dagrun import DagRun
@@ -24,4 +25,4 @@ def on_dag_run_failed(dag_run: DagRun, msg: str):
 
 class AirflowPriorityPlugin(AirflowPlugin):
     name = "AirflowPriorityPlugin"
-    listeners = [sys.modules[__name__]]
+    listeners: ClassVar[list] = [sys.modules[__name__]]

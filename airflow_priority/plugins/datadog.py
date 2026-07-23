@@ -1,6 +1,6 @@
-from datetime import datetime
+from datetime import UTC, datetime
 from functools import lru_cache
-from typing import Any, Dict
+from typing import Any
 
 from datadog_api_client import ApiClient, Configuration
 from datadog_api_client.v2.api.metrics_api import MetricsApi
@@ -24,7 +24,7 @@ def get_configuration() -> Configuration:
     )
 
 
-def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagStatus, Any]) -> None:
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
     metric = get_config_option("datadog", "metric", default=DataDogDefaultMetric)
     tags = get_config_option("datadog", "tags", default="").split(",")
     tags = ["application:airflow", f"priority:{priority}", f"dag:{dag_id}", *tags]
@@ -37,7 +37,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                 type=MetricIntakeType.GAUGE,
                 points=[
                     MetricPoint(
-                        timestamp=int(datetime.now().timestamp()),
+                        timestamp=int(datetime.now(UTC).timestamp()),
                         value=1,
                     ),
                 ],
@@ -60,7 +60,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                         type=MetricIntakeType.GAUGE,
                         points=[
                             MetricPoint(
-                                timestamp=int(datetime.now().timestamp()),
+                                timestamp=int(datetime.now(UTC).timestamp()),
                                 value=-1,
                             ),
                         ],
@@ -82,7 +82,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                         type=MetricIntakeType.GAUGE,
                         points=[
                             MetricPoint(
-                                timestamp=int(datetime.now().timestamp()),
+                                timestamp=int(datetime.now(UTC).timestamp()),
                                 value=-1,
                             ),
                         ],
@@ -106,7 +106,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                         type=MetricIntakeType.GAUGE,
                         points=[
                             MetricPoint(
-                                timestamp=int(datetime.now().timestamp()),
+                                timestamp=int(datetime.now(UTC).timestamp()),
                                 value=-1,
                             ),
                         ],
@@ -128,7 +128,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                         type=MetricIntakeType.GAUGE,
                         points=[
                             MetricPoint(
-                                timestamp=int(datetime.now().timestamp()),
+                                timestamp=int(datetime.now(UTC).timestamp()),
                                 value=-1,
                             ),
                         ],
@@ -152,7 +152,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                         type=MetricIntakeType.GAUGE,
                         points=[
                             MetricPoint(
-                                timestamp=int(datetime.now().timestamp()),
+                                timestamp=int(datetime.now(UTC).timestamp()),
                                 value=-1,
                             ),
                         ],
@@ -174,7 +174,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: Dict[DagSta
                         type=MetricIntakeType.GAUGE,
                         points=[
                             MetricPoint(
-                                timestamp=int(datetime.now().timestamp()),
+                                timestamp=int(datetime.now(UTC).timestamp()),
                                 value=-1,
                             ),
                         ],
