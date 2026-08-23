@@ -302,7 +302,7 @@ Thresholds: Critical: Query result is above or equals 1 at least once in 1 minut
 <p>Here is an example of querying all failed metrics in NewRelic in the last 30 minutes, which might be useful for debugging connectivity issues/</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT *
 FROM Metric
-WHERE metricName = &#39;airflow.priority.p1.failed&#39;
+WHERE metricName = 'airflow.priority.p1.failed'
 WHERE `airflow.priority.p1.failed` IS NOT NULL
 SINCE 30 minutes ago UNTIL now
 </pre></div>
