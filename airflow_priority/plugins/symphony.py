@@ -66,7 +66,7 @@ def get_room_id(tag: DagStatus, priority: int) -> str:
     if res and res.status_code == 200:
         for room in res.json()["rooms"]:
             name = room.get("roomAttributes", {}).get("name")
-            if name and name == config_options["room_name"]:
+            if name and name == channel_name:
                 return room.get("roomSystemInfo", {}).get("id")
     raise RuntimeError(f"Symphony room not found: {channel_name}")
 

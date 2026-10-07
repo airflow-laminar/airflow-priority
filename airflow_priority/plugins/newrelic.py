@@ -17,7 +17,8 @@ def get_client() -> MetricClient:
 
 def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
     metric = get_config_option("newrelic", "metric", default=NewRelicDefaultMetric)
-    tags = loads(get_config_option("newrelic", "tags", default="{}"))
+    tags = get_config_option("newrelic", "tags", default="{}")
+    tags = loads(tags) if isinstance(tags, str) else tags
     tags = {
         "application": "airflow",
         "priority": str(priority),

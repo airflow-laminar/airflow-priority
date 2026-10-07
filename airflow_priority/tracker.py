@@ -74,7 +74,7 @@ class Tracker:
 
                 if priority > self.thresholds.get(backend, 5):
                     _log.info(f"Skipping running metric for backend {backend} with priority {priority} as it exceeds the threshold.")
-                    return
+                    continue
 
                 # Setup the context if needed
                 self._setup_context(backend, dag_run.id)
@@ -94,7 +94,7 @@ class Tracker:
 
                 if priority > self.thresholds.get(backend, 5):
                     _log.info(f"Skipping success metric for backend {backend} with priority {priority} as it exceeds the threshold.")
-                    return
+                    continue
 
                 # Setup the context if needed
                 self._setup_context(backend, dag_run.id)
@@ -113,7 +113,7 @@ class Tracker:
 
                 if priority > self.thresholds.get(backend, 5):
                     _log.info(f"Skipping failed metric for backend {backend} with priority {priority} as it exceeds the threshold.")
-                    return
+                    continue
 
                 # Setup the context if needed
                 self._setup_context(backend, dag_run.id)

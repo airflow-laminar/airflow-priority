@@ -25,16 +25,16 @@ lint-py:  ## lint python with ruff
 	python -m ruff format --check airflow_priority
 
 lint-docs:  ## lint docs with mdformat and codespell
-	python -m mdformat --check README.md 
-	python -m codespell_lib README.md 
+	python -m mdformat --check README.md docs/src
+	python -m codespell_lib README.md docs/src
 
 fix-py:  ## autoformat python code with ruff
 	python -m ruff check --fix airflow_priority
 	python -m ruff format airflow_priority
 
 fix-docs:  ## autoformat docs with mdformat and codespell
-	python -m mdformat README.md 
-	python -m codespell_lib --write README.md 
+	python -m mdformat README.md docs/src
+	python -m codespell_lib --write README.md docs/src
 
 lint: lint-py lint-docs  ## run all linters
 lints: lint
@@ -97,7 +97,7 @@ dist-build:  # build python dists
 	python -m build -w -s
 
 dist-check:  ## run python dist checker with twine
-	python -m twine check dist/*
+	uvx --from 'twine>=7' twine check dist/*
 
 dist: clean dist-build dist-check  ## build all dists
 

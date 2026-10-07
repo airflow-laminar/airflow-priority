@@ -1,27 +1,26 @@
-# OpsGenie
+# How to alert an existing Opsgenie integration
 
-<img src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/opsgenie.png" width=600 alt="OpsGenie alert showing failed DAG status">
+This guide applies to existing Opsgenie deployments. Atlassian ended new sales
+on June 4, 2025 and schedules end of support for April 5, 2027; consult its
+[migration guidance](https://support.atlassian.com/opsgenie/docs/choose-the-right-path-and-schedule-migration/)
+when planning deployment changes.
 
-OpsGenie integration will create [OpsGenie Alerts](https://docs.opsgenie.com/docs/alert-api) when a DAG fails.
+Install `airflow-priority[opsgenie]` and provide an API key for the existing
+integration:
 
-## Setup
-
-Under `Teams` -> `<your team>` -> `Integrations`, add a new `API` integration.
-This will generate an api key.
-
-## Configuration
-
-- `api_key`: (**Required**) the API Key from above
-- `entity`: (Optional) Override the name of the entity. The default is `airflow.priority`, which will product alerts with entity like `airflow.priority.p1.failed`
-- `update`: (Optional) Update an open alert when DAG is rerun or passes (default is `true`). When `true`, when the DAG is `running` again the alert will be ack'd. If the DAG succeeds, the alert will be closed.
-- `threshold`: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored
-
-## Example
-
-```
+```ini
 [priority.opsgenie]
-api_key = ...
-entity = my.entity
+api_key = YOUR_INTEGRATION_KEY
+entity = airflow.priority
+threshold = 2
 update = true
-threshold = 2  # only P1 and P2
 ```
+
+Restart Airflow components and trigger a failing P1/P2 test DAG. Confirm the
+created alert contains its DAG ID and priority. Sender logs report failed
+create, acknowledge, close, or request-status operations.
+
+Same-run running and success events can acknowledge and close the stored alert
+when its context remains in that process. See the
+[incident reference](API.md#incident-backends) for update semantics and
+[troubleshooting](how-to.md#how-to-troubleshoot-missing-alerts) for missing delivery.

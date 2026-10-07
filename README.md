@@ -1,50 +1,40 @@
 # airflow-priority
 
-Priority Tags for Airflow Dags
+Route tagged Airflow DAG-run events to alerting and metric backends.
 
 [![Build Status](https://github.com/airflow-laminar/airflow-priority/actions/workflows/build.yaml/badge.svg?branch=main&event=push)](https://github.com/airflow-laminar/airflow-priority/actions/workflows/build.yaml)
 [![codecov](https://codecov.io/gh/airflow-laminar/airflow-priority/branch/main/graph/badge.svg)](https://codecov.io/gh/airflow-laminar/airflow-priority)
 [![License](https://img.shields.io/github/license/airflow-laminar/airflow-priority)](https://github.com/airflow-laminar/airflow-priority)
 [![PyPI](https://img.shields.io/pypi/v/airflow-priority.svg)](https://pypi.python.org/pypi/airflow-priority)
 
-## Overview
+Tag a DAG with P1 through P5 and configure the destinations that should receive
+its state changes. Backends apply independent thresholds. The plugin observes
+DAG-run running, success, and failure events through Airflow listeners.
 
-This repo provides an [Airflow Plugin](https://airflow.apache.org/docs/apache-airflow/stable/authoring-and-scheduling/plugins.html) for priority-driven DAG failure alerting.
-In layman's terms, one need only add a [tag](https://airflow.apache.org/docs/apache-airflow/stable/howto/add-dag-tags.html) to their DAG in `P1, P2, P3, P4, P5`, where `P1` corresponds to highest priority and `P5` corresponds to lowest, and that dag will send a notification to a backend integration.
+## Documentation
 
-[See the documentation for more information on getting started](https://airflow-laminar.github.io/airflow-priority/docs/src/introduction.html)
+- [Tutorial: alert on one failed DAG](docs/src/tutorial.md) sends a tagged failure to a Slack test channel.
+- [How-to guides](docs/src/how-to.md) cover priorities, thresholds, environment variables, airflow-config, and delivery troubleshooting.
+- [API reference](docs/src/API.md) lists configuration models, backend options, routing, listener hooks, and tracker behavior.
+- [Why priority alerts follow DAG-run state](docs/src/explanation.md) explains task callbacks, recovery workflows, and process-local context.
 
-## Integrations
+Backend guides cover [Slack](docs/src/slack.md), [Discord](docs/src/discord.md),
+[PagerDuty](docs/src/pagerduty.md), [Opsgenie](docs/src/opsgenie.md),
+[Symphony](docs/src/symphony.md), [Datadog](docs/src/datadog.md),
+[New Relic](docs/src/newrelic.md), [Logfire](docs/src/logfire.md), and
+[AWS CloudWatch](docs/src/cloudwatch.md).
 
-| Integration                                                                                                                                                                                                        | Metric / Tag                                               | Docs                                                                                |
-| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------- | :---------------------------------------------------------------------------------- |
-| <a href="https://www.datadoghq.com"><img width=180 src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/datadog.png" alt="datadog logo"></a>                     | `airflow.priority.p{1,2,3,4,5}.{failed,succeeded,running}` | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/datadog.html)    |
-| <a href="http://discord.com"><img width=180 src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/discord.png" alt="discord logo"></a>                            | `N/A`                                                      | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/discord.html)    |
-| <a href="https://logfire.pydantic.dev"><img width=180 src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/logfire.png" alt="logfire logo"></a>                  | `airflow.priority.p{1,2,3,4,5}.{failed,succeeded,running}` | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/logfire.html)    |
-| <a href="https://pagerduty.com"><img width=180 src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/pagerduty.png" alt="pagerduty logo"></a>                     | `N/A`                                                      | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/pagerduty.html)  |
-| <a href="https://newrelic.com"><img width=180 src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/newrelic.png" alt="newrelic logo"></a>                        | `airflow.priority.p{1,2,3,4,5}.{failed,succeeded,running}` | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/newrelic.html)   |
-| <a href="https://www.atlassian.com/software/opsgenie"><img width=175 src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/opsgenie.png" alt="opsgenie logo"></a> | `N/A`                                                      | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/opsgenie.html)   |
-| <a href="http://slack.com"><img width=175 src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/slack.png" alt="slack logo"></a>                                  | `N/A`                                                      | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/slack.html)      |
-| <a href="http://symphony.com"><img width=175 src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/symphony.png" alt="symphony logo"></a>                         | `N/A`                                                      | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/symphony.html)   |
-| [AWS Cloudwatch](https://aws.amazon.com/cloudwatch/)                                                                                                                                                               | `airflow.priority.p{1,2,3,4,5}.{failed,succeeded,running}` | [Link](https://airflow-laminar.github.io/airflow-priority/docs/src/cloudwatch.html) |
+Published documentation:
+[airflow-laminar.github.io/airflow-priority](https://airflow-laminar.github.io/airflow-priority/).
 
-## Installation
+## Related integrations
 
-You can install from pip:
-
-```bash
-pip install airflow-priority
-```
-
-Or via conda:
-
-```bash
-conda install airflow-priority -c conda-forge
-```
+[airflow-supervisor](https://github.com/airflow-laminar/airflow-supervisor),
+[airflow-nomad](https://github.com/airflow-laminar/airflow-nomad), and
+[airflow-cron](https://github.com/airflow-laminar/airflow-cron) produce task logs
+and failure diagnostics. Priority routing observes their DAG outcomes;
+task callbacks handle task-specific notification needs.
 
 ## License
 
-This software is licensed under the Apache 2.0 license. See the [LICENSE](LICENSE) file for details.
-
-> [!NOTE]
-> This library was generated using [copier](https://copier.readthedocs.io/en/stable/) from the [Base Python Project Template repository](https://github.com/python-project-templates/base).
+Apache 2.0. See [LICENSE](LICENSE).
