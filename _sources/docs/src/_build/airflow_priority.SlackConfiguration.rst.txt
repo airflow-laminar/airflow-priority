@@ -1,0 +1,6 @@
+﻿airflow\_priority.SlackConfiguration
+====================================
+
+.. currentmodule:: airflow_priority
+
+.. autopydantic_model:: SlackConfiguration

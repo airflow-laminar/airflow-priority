@@ -1,0 +1,6 @@
+﻿airflow\_priority.SymphonyConfiguration
+=======================================
+
+.. currentmodule:: airflow_priority
+
+.. autopydantic_model:: SymphonyConfiguration

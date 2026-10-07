@@ -1,0 +1,6 @@
+﻿airflow\_priority.LogfireConfiguration
+======================================
+
+.. currentmodule:: airflow_priority
+
+.. autopydantic_model:: LogfireConfiguration

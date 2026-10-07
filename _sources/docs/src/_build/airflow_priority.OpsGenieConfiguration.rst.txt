@@ -1,0 +1,6 @@
+﻿airflow\_priority.OpsGenieConfiguration
+=======================================
+
+.. currentmodule:: airflow_priority
+
+.. autopydantic_model:: OpsGenieConfiguration

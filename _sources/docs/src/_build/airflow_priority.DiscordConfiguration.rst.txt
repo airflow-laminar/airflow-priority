@@ -1,0 +1,6 @@
+﻿airflow\_priority.DiscordConfiguration
+======================================
+
+.. currentmodule:: airflow_priority
+
+.. autopydantic_model:: DiscordConfiguration

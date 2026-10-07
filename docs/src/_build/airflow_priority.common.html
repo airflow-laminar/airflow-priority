@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="prev" title="API Reference" href="../API.html">
+<link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="airflow_priority.plugin" href="airflow_priority.plugin.html"><link rel="prev" title="airflow_priority.SymphonyConfiguration" href="airflow_priority.SymphonyConfiguration.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
         <title>airflow_priority.common - airflow-priority v1.6.1</title>
@@ -198,19 +198,35 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../datadog.html">Datadog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../discord.html">Discord</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../newrelic.html">NewRelic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../opsgenie.html">OpsGenie</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../logfire.html">Logfire</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slack.html">Slack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../symphony.html">Symphony</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cloudwatch.html">AWS MWAA CloudWatch</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../API.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial: alert on one failed DAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how-to.html">How-to guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanation.html">Why priority alerts follow DAG-run state</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../API.html">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="airflow_priority.PriorityConfiguration.html">airflow_priority.PriorityConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="airflow_priority.AwsConfiguration.html">airflow_priority.AwsConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="airflow_priority.DataDogConfiguration.html">airflow_priority.DataDogConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="airflow_priority.DiscordConfiguration.html">airflow_priority.DiscordConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="airflow_priority.LogfireConfiguration.html">airflow_priority.LogfireConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="airflow_priority.NewRelicConfiguration.html">airflow_priority.NewRelicConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="airflow_priority.OpsGenieConfiguration.html">airflow_priority.OpsGenieConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="airflow_priority.PagerDutyConfiguration.html">airflow_priority.PagerDutyConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="airflow_priority.SlackConfiguration.html">airflow_priority.SlackConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="airflow_priority.SymphonyConfiguration.html">airflow_priority.SymphonyConfiguration</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">airflow_priority.common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="airflow_priority.plugin.html">airflow_priority.plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="airflow_priority.tracker.Tracker.html">airflow_priority.tracker.Tracker</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../datadog.html">How to publish DAG status metrics to Datadog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../discord.html">How to send DAG failures to Discord</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../newrelic.html">How to publish DAG status metrics to New Relic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../opsgenie.html">How to alert an existing Opsgenie integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logfire.html">How to publish DAG status metrics to Logfire</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slack.html">How to send DAG failures to Slack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pagerduty.html">How to create PagerDuty incidents for failed DAGs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../symphony.html">How to send DAG failures to Symphony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloudwatch.html">How to publish DAG status metrics to CloudWatch</a></li>
 </ul>
 
 </div>
@@ -281,15 +297,23 @@
       <footer>
         
         <div class="related-pages">
-          
-          <a class="prev-page" href="../API.html">
+          <a class="next-page" href="airflow_priority.plugin.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">airflow_priority.plugin</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="airflow_priority.SymphonyConfiguration.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">API Reference</div>
+                <div class="title">airflow_priority.SymphonyConfiguration</div>
                 
               </div>
             </a>

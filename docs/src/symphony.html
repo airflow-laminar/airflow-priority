@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="AWS MWAA CloudWatch" href="cloudwatch.html"><link rel="prev" title="Slack" href="slack.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="How to publish DAG status metrics to CloudWatch" href="cloudwatch.html"><link rel="prev" title="How to create PagerDuty incidents for failed DAGs" href="pagerduty.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
-        <title>Symphony - airflow-priority v1.6.1</title>
+        <title>How to send DAG failures to Symphony - airflow-priority v1.6.1</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -198,19 +198,35 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datadog.html">Datadog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.html">Discord</a></li>
-<li class="toctree-l1"><a class="reference internal" href="newrelic.html">NewRelic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="opsgenie.html">OpsGenie</a></li>
-<li class="toctree-l1"><a class="reference internal" href="logfire.html">Logfire</a></li>
-<li class="toctree-l1"><a class="reference internal" href="slack.html">Slack</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Symphony</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloudwatch.html">AWS MWAA CloudWatch</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="API.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial: alert on one failed DAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how-to.html">How-to guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="explanation.html">Why priority alerts follow DAG-run state</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="API.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.PriorityConfiguration.html">airflow_priority.PriorityConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.AwsConfiguration.html">airflow_priority.AwsConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.DataDogConfiguration.html">airflow_priority.DataDogConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.DiscordConfiguration.html">airflow_priority.DiscordConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.LogfireConfiguration.html">airflow_priority.LogfireConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.NewRelicConfiguration.html">airflow_priority.NewRelicConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.OpsGenieConfiguration.html">airflow_priority.OpsGenieConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.PagerDutyConfiguration.html">airflow_priority.PagerDutyConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.SlackConfiguration.html">airflow_priority.SlackConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.SymphonyConfiguration.html">airflow_priority.SymphonyConfiguration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.common.html">airflow_priority.common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.plugin.html">airflow_priority.plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.tracker.Tracker.html">airflow_priority.tracker.Tracker</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datadog.html">How to publish DAG status metrics to Datadog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discord.html">How to send DAG failures to Discord</a></li>
+<li class="toctree-l1"><a class="reference internal" href="newrelic.html">How to publish DAG status metrics to New Relic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="opsgenie.html">How to alert an existing Opsgenie integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logfire.html">How to publish DAG status metrics to Logfire</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slack.html">How to send DAG failures to Slack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pagerduty.html">How to create PagerDuty incidents for failed DAGs</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">How to send DAG failures to Symphony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudwatch.html">How to publish DAG status metrics to CloudWatch</a></li>
 </ul>
 
 </div>
@@ -249,23 +265,31 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section class="tex2jax_ignore mathjax_ignore" id="symphony">
-<h1>Symphony<a class="headerlink" href="#symphony" title="Link to this heading">¶</a></h1>
-<p>Documentation coming soon!</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://docs.developers.symphony.com/bots/overview-of-rest-api">Overview of REST API</a></p></li>
-<li><p><a class="reference external" href="https://docs.developers.symphony.com/bots/authentication/certificate-authentication">Certificate Authentication Workflow</a></p></li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">symphony</span><span class="p">]</span>
-<span class="n">room_name</span> <span class="o">=</span> <span class="n">the</span> <span class="n">room</span> <span class="n">name</span>
-<span class="n">message_create_url</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mycompany</span><span class="o">.</span><span class="n">symphony</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">agent</span><span class="o">/</span><span class="n">v4</span><span class="o">/</span><span class="n">stream</span><span class="o">/</span><span class="n">SID</span><span class="o">/</span><span class="n">message</span><span class="o">/</span><span class="n">create</span>
-<span class="n">cert_file</span> <span class="o">=</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">cert</span><span class="o">.</span><span class="n">pem</span>
-<span class="n">key_file</span> <span class="o">=</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">key</span><span class="o">.</span><span class="n">pem</span>
-<span class="n">session_auth</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mycompany</span><span class="o">-</span><span class="n">api</span><span class="o">.</span><span class="n">symphony</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">sessionauth</span><span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">authenticate</span>
-<span class="n">key_auth</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mycompany</span><span class="o">-</span><span class="n">api</span><span class="o">.</span><span class="n">symphony</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keyauth</span><span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">authenticate</span>
-<span class="n">room_search_url</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mycompany</span><span class="o">.</span><span class="n">symphony</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pod</span><span class="o">/</span><span class="n">v3</span><span class="o">/</span><span class="n">room</span><span class="o">/</span><span class="n">search</span>
+          <section class="tex2jax_ignore mathjax_ignore" id="how-to-send-dag-failures-to-symphony">
+<h1>How to send DAG failures to Symphony<a class="headerlink" href="#how-to-send-dag-failures-to-symphony" title="Link to this heading">¶</a></h1>
+<p>Install <code class="docutils literal notranslate"><span class="pre">airflow-priority[symphony]</span></code>. Use the certificate and key for an existing
+Symphony service account and the endpoints for your deployment:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[priority.symphony]</span>
+<span class="na">room_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">airflow-alerts</span>
+<span class="na">message_create_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://symphony.example.com/agent/v4/stream/SID/message/create</span>
+<span class="na">cert_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/etc/symphony/cert.pem</span>
+<span class="na">key_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/etc/symphony/key.pem</span>
+<span class="na">session_auth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://symphony-api.example.com/sessionauth/v1/authenticate</span>
+<span class="na">key_auth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://symphony-api.example.com/keyauth/v1/authenticate</span>
+<span class="na">room_search_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://symphony.example.com/pod/v3/room/search</span>
+<span class="na">threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">2</span>
 </pre></div>
 </div>
+<p>Make the certificate files readable by the processes receiving listener events.
+Restart Airflow components, then trigger a failing P1/P2 test DAG. Confirm a
+message appears in the selected room. <code class="docutils literal notranslate"><span class="pre">SID</span></code> is replaced with the discovered
+room ID when the sender posts the message.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">room_name_failed_P1</span></code> to select a separate room for urgent failures.
+<code class="docutils literal notranslate"><span class="pre">send_running</span></code>, <code class="docutils literal notranslate"><span class="pre">send_success</span></code>, and <code class="docutils literal notranslate"><span class="pre">update_message</span></code> control additional posts;
+Symphony update handling posts another message rather than editing the old one.
+See the <a class="reference internal" href="API.html#messaging-backends"><span class="std std-ref">messaging reference</span></a> for routing and required
+fields, and <a class="reference internal" href="how-to.html#how-to-troubleshoot-missing-alerts"><span class="std std-ref">troubleshooting</span></a> for
+certificate authentication or room-search failures.</p>
 </section>
 
         </article>
@@ -278,18 +302,18 @@
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">AWS MWAA CloudWatch</div>
+                <div class="title">How to publish DAG status metrics to CloudWatch</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="slack.html">
+          <a class="prev-page" href="pagerduty.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Slack</div>
+                <div class="title">How to create PagerDuty incidents for failed DAGs</div>
                 
               </div>
             </a>

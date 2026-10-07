@@ -196,19 +196,35 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/datadog.html">Datadog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/discord.html">Discord</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/newrelic.html">NewRelic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/opsgenie.html">OpsGenie</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/logfire.html">Logfire</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/slack.html">Slack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/symphony.html">Symphony</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/cloudwatch.html">AWS MWAA CloudWatch</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="docs/src/API.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/tutorial.html">Tutorial: alert on one failed DAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/how-to.html">How-to guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/explanation.html">Why priority alerts follow DAG-run state</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="docs/src/API.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.PriorityConfiguration.html">airflow_priority.PriorityConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.AwsConfiguration.html">airflow_priority.AwsConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.DataDogConfiguration.html">airflow_priority.DataDogConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.DiscordConfiguration.html">airflow_priority.DiscordConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.LogfireConfiguration.html">airflow_priority.LogfireConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.NewRelicConfiguration.html">airflow_priority.NewRelicConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.OpsGenieConfiguration.html">airflow_priority.OpsGenieConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.PagerDutyConfiguration.html">airflow_priority.PagerDutyConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.SlackConfiguration.html">airflow_priority.SlackConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.SymphonyConfiguration.html">airflow_priority.SymphonyConfiguration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.common.html">airflow_priority.common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.plugin.html">airflow_priority.plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.tracker.Tracker.html">airflow_priority.tracker.Tracker</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/datadog.html">How to publish DAG status metrics to Datadog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/discord.html">How to send DAG failures to Discord</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/newrelic.html">How to publish DAG status metrics to New Relic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/opsgenie.html">How to alert an existing Opsgenie integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/logfire.html">How to publish DAG status metrics to Logfire</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/slack.html">How to send DAG failures to Slack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/pagerduty.html">How to create PagerDuty incidents for failed DAGs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/symphony.html">How to send DAG failures to Symphony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/cloudwatch.html">How to publish DAG status metrics to CloudWatch</a></li>
 </ul>
 
 </div>
@@ -264,6 +280,12 @@
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="docs/src/_build/airflow_priority.common.html#module-airflow_priority.common"><code class="xref">airflow_priority.common</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="docs/src/_build/airflow_priority.plugin.html#module-airflow_priority.plugin"><code class="xref">airflow_priority.plugin</code></a></td><td>
     <em></em></td>
   </tr>
 </table>

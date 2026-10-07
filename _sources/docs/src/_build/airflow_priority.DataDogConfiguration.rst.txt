@@ -1,0 +1,6 @@
+﻿airflow\_priority.DataDogConfiguration
+======================================
+
+.. currentmodule:: airflow_priority
+
+.. autopydantic_model:: DataDogConfiguration

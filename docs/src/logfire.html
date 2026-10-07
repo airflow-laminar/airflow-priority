@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Slack" href="slack.html"><link rel="prev" title="OpsGenie" href="opsgenie.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="How to send DAG failures to Slack" href="slack.html"><link rel="prev" title="How to alert an existing Opsgenie integration" href="opsgenie.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
-        <title>Logfire - airflow-priority v1.6.1</title>
+        <title>How to publish DAG status metrics to Logfire - airflow-priority v1.6.1</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -179,7 +179,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -198,19 +198,35 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datadog.html">Datadog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.html">Discord</a></li>
-<li class="toctree-l1"><a class="reference internal" href="newrelic.html">NewRelic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="opsgenie.html">OpsGenie</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Logfire</a></li>
-<li class="toctree-l1"><a class="reference internal" href="slack.html">Slack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="symphony.html">Symphony</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloudwatch.html">AWS MWAA CloudWatch</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="API.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial: alert on one failed DAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how-to.html">How-to guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="explanation.html">Why priority alerts follow DAG-run state</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="API.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.PriorityConfiguration.html">airflow_priority.PriorityConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.AwsConfiguration.html">airflow_priority.AwsConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.DataDogConfiguration.html">airflow_priority.DataDogConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.DiscordConfiguration.html">airflow_priority.DiscordConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.LogfireConfiguration.html">airflow_priority.LogfireConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.NewRelicConfiguration.html">airflow_priority.NewRelicConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.OpsGenieConfiguration.html">airflow_priority.OpsGenieConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.PagerDutyConfiguration.html">airflow_priority.PagerDutyConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.SlackConfiguration.html">airflow_priority.SlackConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.SymphonyConfiguration.html">airflow_priority.SymphonyConfiguration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.common.html">airflow_priority.common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.plugin.html">airflow_priority.plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.tracker.Tracker.html">airflow_priority.tracker.Tracker</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datadog.html">How to publish DAG status metrics to Datadog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discord.html">How to send DAG failures to Discord</a></li>
+<li class="toctree-l1"><a class="reference internal" href="newrelic.html">How to publish DAG status metrics to New Relic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="opsgenie.html">How to alert an existing Opsgenie integration</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">How to publish DAG status metrics to Logfire</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slack.html">How to send DAG failures to Slack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pagerduty.html">How to create PagerDuty incidents for failed DAGs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="symphony.html">How to send DAG failures to Symphony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudwatch.html">How to publish DAG status metrics to CloudWatch</a></li>
 </ul>
 
 </div>
@@ -244,56 +260,29 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section class="tex2jax_ignore mathjax_ignore" id="logfire">
-<h1>Logfire<a class="headerlink" href="#logfire" title="Link to this heading">¶</a></h1>
-<a class="reference internal image-reference" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logfire.png"><img alt="Logfire metric for failed DAG run" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logfire.png" style="width: 600px;" />
-</a>
-<p>Logfire integration will create <a class="reference external" href="https://logfire.pydantic.dev/docs/guides/onboarding-checklist/add-metrics/#gauge-callback">Logfire metrics</a> for DAG <code class="docutils literal notranslate"><span class="pre">running</span></code>, <code class="docutils literal notranslate"><span class="pre">success</span></code>, and <code class="docutils literal notranslate"><span class="pre">failed</span></code> status.</p>
-<section id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">¶</a></h2>
-<p>Create a new Logfire token <a class="reference external" href="https://logfire.pydantic.dev/docs/how-to-guides/create-write-tokens/">following their guide</a>.</p>
-</section>
-<section id="configuration">
-<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">token</span></code>: (<strong>Required</strong>) the token from above</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">metric</span></code>: (Optional) Override the name of the metric. The default is <code class="docutils literal notranslate"><span class="pre">airflow.priority</span></code>, which will product metrics like <code class="docutils literal notranslate"><span class="pre">airflow.priority.p1.failed</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">threshold</span></code>: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored</p></li>
-</ul>
-</section>
-<section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">logfire</span><span class="p">]</span>
-<span class="n">token</span> <span class="o">=</span> <span class="n">the</span> <span class="n">token</span>
-<span class="n">metric</span> <span class="o">=</span> <span class="n">my</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">metric</span>  <span class="c1"># will produce metrics like my.custom.metric.p2.success</span>
-<span class="n">threshold</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># only P1 and P2</span>
+          <section class="tex2jax_ignore mathjax_ignore" id="how-to-publish-dag-status-metrics-to-logfire">
+<h1>How to publish DAG status metrics to Logfire<a class="headerlink" href="#how-to-publish-dag-status-metrics-to-logfire" title="Link to this heading">¶</a></h1>
+<p>Install <code class="docutils literal notranslate"><span class="pre">airflow-priority[logfire]</span></code> and obtain a write token for the destination
+Logfire project:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[priority.logfire]</span>
+<span class="na">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">YOUR_WRITE_TOKEN</span>
+<span class="na">metric</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">airflow.priority</span>
+<span class="na">threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">2</span>
 </pre></div>
 </div>
-</section>
-<section id="alerts">
-<h2>Alerts<a class="headerlink" href="#alerts" title="Link to this heading">¶</a></h2>
-<p>Under <code class="docutils literal notranslate"><span class="pre">Alerts</span></code>, you can create a custom Logfire alert to generate alerts when your DAGs fail.</p>
-<p>To do so, follow the steps below.
-Note that some choices can be varied depending on your desired response time.</p>
-<ul class="simple">
-<li><p>Create a <code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">Alert</span></code></p></li>
-<li><p>Use the following SQL Query: <code class="docutils literal notranslate"><span class="pre">select</span> <span class="pre">*</span> <span class="pre">from</span> <span class="pre">metrics</span> <span class="pre">where</span> <span class="pre">&quot;metric_name&quot;</span> <span class="pre">=</span> <span class="pre">'airflow.priority.p1.failed'</span> <span class="pre">and</span> <span class="pre">&quot;scalar_value&quot;</span> <span class="pre">=</span> <span class="pre">1</span></code></p></li>
-<li><p>Adjust the notification parameters as needed, use <code class="docutils literal notranslate"><span class="pre">Notify</span> <span class="pre">me</span> <span class="pre">when</span></code> <code class="docutils literal notranslate"><span class="pre">the</span> <span class="pre">query</span> <span class="pre">has</span> <span class="pre">any</span> <span class="pre">results</span></code></p></li>
-<li><p>See Slack for information about creating a slack alert, you can use Slack webhooks</p></li>
-</ul>
-</section>
-<section id="utilities">
-<h2>Utilities<a class="headerlink" href="#utilities" title="Link to this heading">¶</a></h2>
-<p>Here is an example of querying all failed metrics in Logfire, which might be useful for debugging connectivity issues/</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span><span class="w"> </span><span class="nn">metrics</span> <span class="n">where</span> <span class="s2">"metric_name"</span> <span class="o">=</span> <span class="s1">'airflow.priority.p1.failed'</span>
-</pre></div>
-</div>
-</section>
+<p>Restart Airflow components and trigger a failing P1/P2 test DAG. Find the
+<code class="docutils literal notranslate"><span class="pre">airflow.priority.p1.failed</span></code> or <code class="docutils literal notranslate"><span class="pre">airflow.priority.p2.failed</span></code> gauge in Logfire.
+Configure an external alert on a positive failure sample with a window suited
+to the workflow’s cadence.</p>
+<p>Keep metric names aligned with the configured <code class="docutils literal notranslate"><span class="pre">metric</span></code> prefix. The state
+suffix is <code class="docutils literal notranslate"><span class="pre">success</span></code>, not <code class="docutils literal notranslate"><span class="pre">succeeded</span></code>. See the
+<a class="reference internal" href="API.html#metric-backends"><span class="std std-ref">metric reference</span></a> for defaults and the limitations of
+process-local status adjustments.</p>
 </section>
 
         </article>
@@ -306,7 +295,7 @@ Note that some choices can be varied depending on your desired response time.</p
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Slack</div>
+                <div class="title">How to send DAG failures to Slack</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -317,7 +306,7 @@ Note that some choices can be varied depending on your desired response time.</p
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">OpsGenie</div>
+                <div class="title">How to alert an existing Opsgenie integration</div>
                 
               </div>
             </a>
@@ -339,31 +328,8 @@ Note that some choices can be varied depending on your desired response time.</p
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">Logfire</a><ul>
-<li><a class="reference internal" href="#setup">Setup</a></li>
-<li><a class="reference internal" href="#configuration">Configuration</a></li>
-<li><a class="reference internal" href="#example">Example</a></li>
-<li><a class="reference internal" href="#alerts">Alerts</a></li>
-<li><a class="reference internal" href="#utilities">Utilities</a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>

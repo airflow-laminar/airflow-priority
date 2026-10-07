@@ -1,0 +1,26 @@
+﻿airflow\_priority.tracker.Tracker
+=================================
+
+.. currentmodule:: airflow_priority.tracker
+
+.. autoclass:: Tracker
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Tracker.__init__
+      ~Tracker.failed
+      ~Tracker.register
+      ~Tracker.running
+      ~Tracker.success
+   
+   
+
+   
+   
+   

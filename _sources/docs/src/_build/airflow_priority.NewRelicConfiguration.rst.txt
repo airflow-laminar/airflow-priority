@@ -1,0 +1,6 @@
+﻿airflow\_priority.NewRelicConfiguration
+=======================================
+
+.. currentmodule:: airflow_priority
+
+.. autopydantic_model:: NewRelicConfiguration

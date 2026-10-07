@@ -1,0 +1,6 @@
+﻿airflow\_priority.PriorityConfiguration
+=======================================
+
+.. currentmodule:: airflow_priority
+
+.. autopydantic_model:: PriorityConfiguration

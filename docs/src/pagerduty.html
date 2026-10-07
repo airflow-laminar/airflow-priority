@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="How to send DAG failures to Symphony" href="symphony.html"><link rel="prev" title="How to send DAG failures to Slack" href="slack.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
-        <title>Pagerduty - airflow-priority v1.6.1</title>
+        <title>How to create PagerDuty incidents for failed DAGs - airflow-priority v1.6.1</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -179,7 +179,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -197,20 +197,36 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul>
-<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datadog.html">Datadog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.html">Discord</a></li>
-<li class="toctree-l1"><a class="reference internal" href="newrelic.html">NewRelic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="opsgenie.html">OpsGenie</a></li>
-<li class="toctree-l1"><a class="reference internal" href="logfire.html">Logfire</a></li>
-<li class="toctree-l1"><a class="reference internal" href="slack.html">Slack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="symphony.html">Symphony</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloudwatch.html">AWS MWAA CloudWatch</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="API.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial: alert on one failed DAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how-to.html">How-to guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="explanation.html">Why priority alerts follow DAG-run state</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="API.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.PriorityConfiguration.html">airflow_priority.PriorityConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.AwsConfiguration.html">airflow_priority.AwsConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.DataDogConfiguration.html">airflow_priority.DataDogConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.DiscordConfiguration.html">airflow_priority.DiscordConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.LogfireConfiguration.html">airflow_priority.LogfireConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.NewRelicConfiguration.html">airflow_priority.NewRelicConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.OpsGenieConfiguration.html">airflow_priority.OpsGenieConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.PagerDutyConfiguration.html">airflow_priority.PagerDutyConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.SlackConfiguration.html">airflow_priority.SlackConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.SymphonyConfiguration.html">airflow_priority.SymphonyConfiguration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.common.html">airflow_priority.common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.plugin.html">airflow_priority.plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.tracker.Tracker.html">airflow_priority.tracker.Tracker</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datadog.html">How to publish DAG status metrics to Datadog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discord.html">How to send DAG failures to Discord</a></li>
+<li class="toctree-l1"><a class="reference internal" href="newrelic.html">How to publish DAG status metrics to New Relic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="opsgenie.html">How to alert an existing Opsgenie integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logfire.html">How to publish DAG status metrics to Logfire</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slack.html">How to send DAG failures to Slack</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">How to create PagerDuty incidents for failed DAGs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="symphony.html">How to send DAG failures to Symphony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudwatch.html">How to publish DAG status metrics to CloudWatch</a></li>
 </ul>
 
 </div>
@@ -244,41 +260,30 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section class="tex2jax_ignore mathjax_ignore" id="pagerduty">
-<h1>Pagerduty<a class="headerlink" href="#pagerduty" title="Link to this heading">¶</a></h1>
-<a class="reference internal image-reference" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/pagerduty.png"><img alt="Pagerduty alert showing failed DAG status" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/pagerduty.png" style="width: 600px;" />
-</a>
-<p>Pagerduty integration will create <a class="reference external" href="https://support.pagerduty.com/main/docs/alerts">Pagerduty Alerts</a> when a DAG fails.</p>
-<section id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">¶</a></h2>
-<p>Under <code class="docutils literal notranslate"><span class="pre">Services</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">Service</span></code>, create a new service.
-Choose your escalation and noise reduction strategies, then select “Events API V2” from <code class="docutils literal notranslate"><span class="pre">Integrations</span></code>.
-This will generate an <code class="docutils literal notranslate"><span class="pre">Integration</span> <span class="pre">Key</span></code>, which you can use below.</p>
-</section>
-<section id="configuration">
-<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">routing_key</span></code>: (<strong>Required</strong>) the Integration key from above</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">source</span></code>: (Optional) Override the name of the source. The default is <code class="docutils literal notranslate"><span class="pre">airflow.priority</span></code>, which will product alerts with entity like <code class="docutils literal notranslate"><span class="pre">airflow.priority.p1.failed</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">update</span></code>: (Optional) Update an open alert when DAG is rerun or passes (default is <code class="docutils literal notranslate"><span class="pre">true</span></code>). When <code class="docutils literal notranslate"><span class="pre">true</span></code>, when the DAG is <code class="docutils literal notranslate"><span class="pre">running</span></code> again the alert will be ack’d. If the DAG succeeds, the alert will be resolved.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">threshold</span></code>: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored</p></li>
-</ul>
-</section>
-<section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">pagerduty</span><span class="p">]</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="o">...</span>
-<span class="n">source</span> <span class="o">=</span> <span class="n">my</span><span class="o">.</span><span class="n">entity</span>
-<span class="n">update</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">threshold</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># only P1 and P2</span>
+          <section class="tex2jax_ignore mathjax_ignore" id="how-to-create-pagerduty-incidents-for-failed-dags">
+<h1>How to create PagerDuty incidents for failed DAGs<a class="headerlink" href="#how-to-create-pagerduty-incidents-for-failed-dags" title="Link to this heading">¶</a></h1>
+<p>Install <code class="docutils literal notranslate"><span class="pre">airflow-priority[pagerduty]</span></code>. Obtain an Events API v2 routing key for an
+existing PagerDuty service, then configure the Airflow components:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[priority.pagerduty]</span>
+<span class="na">routing_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">YOUR_EVENTS_ROUTING_KEY</span>
+<span class="na">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">airflow.priority</span>
+<span class="na">threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">2</span>
+<span class="na">update</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
 </pre></div>
 </div>
-</section>
+<p>Use <code class="docutils literal notranslate"><span class="pre">routing_key</span></code>; <code class="docutils literal notranslate"><span class="pre">api_key</span></code> is not the configuration option for this backend.
+Restart Airflow components and trigger a failing P1/P2 test DAG. Confirm an
+incident is created for its DAG ID and priority.</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">update=true</span></code>, later running/success events can acknowledge/resolve the
+stored incident for the same DagRun in the same process. To test that path,
+change the state of that existing run; a new run has a separate context.
+See the <a class="reference internal" href="API.html#incident-backends"><span class="std std-ref">incident reference</span></a> for severity and source
+formatting, and the <a class="reference internal" href="explanation.html"><span class="std std-doc">explanation</span></a> for context lifetime.</p>
 </section>
 
         </article>
@@ -286,8 +291,26 @@ This will generate an <code class="docutils literal notranslate"><span class="pr
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="symphony.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">How to send DAG failures to Symphony</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="slack.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">How to send DAG failures to Slack</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -306,29 +329,8 @@ This will generate an <code class="docutils literal notranslate"><span class="pr
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">Pagerduty</a><ul>
-<li><a class="reference internal" href="#setup">Setup</a></li>
-<li><a class="reference internal" href="#configuration">Configuration</a></li>
-<li><a class="reference internal" href="#example">Example</a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>

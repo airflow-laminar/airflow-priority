@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Symphony" href="symphony.html"><link rel="prev" title="Logfire" href="logfire.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="How to create PagerDuty incidents for failed DAGs" href="pagerduty.html"><link rel="prev" title="How to publish DAG status metrics to Logfire" href="logfire.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
-        <title>Slack - airflow-priority v1.6.1</title>
+        <title>How to send DAG failures to Slack - airflow-priority v1.6.1</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -179,7 +179,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -198,19 +198,35 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datadog.html">Datadog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.html">Discord</a></li>
-<li class="toctree-l1"><a class="reference internal" href="newrelic.html">NewRelic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="opsgenie.html">OpsGenie</a></li>
-<li class="toctree-l1"><a class="reference internal" href="logfire.html">Logfire</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Slack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="symphony.html">Symphony</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloudwatch.html">AWS MWAA CloudWatch</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="API.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial: alert on one failed DAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how-to.html">How-to guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="explanation.html">Why priority alerts follow DAG-run state</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="API.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.PriorityConfiguration.html">airflow_priority.PriorityConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.AwsConfiguration.html">airflow_priority.AwsConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.DataDogConfiguration.html">airflow_priority.DataDogConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.DiscordConfiguration.html">airflow_priority.DiscordConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.LogfireConfiguration.html">airflow_priority.LogfireConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.NewRelicConfiguration.html">airflow_priority.NewRelicConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.OpsGenieConfiguration.html">airflow_priority.OpsGenieConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.PagerDutyConfiguration.html">airflow_priority.PagerDutyConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.SlackConfiguration.html">airflow_priority.SlackConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.SymphonyConfiguration.html">airflow_priority.SymphonyConfiguration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.common.html">airflow_priority.common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.plugin.html">airflow_priority.plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.tracker.Tracker.html">airflow_priority.tracker.Tracker</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datadog.html">How to publish DAG status metrics to Datadog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discord.html">How to send DAG failures to Discord</a></li>
+<li class="toctree-l1"><a class="reference internal" href="newrelic.html">How to publish DAG status metrics to New Relic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="opsgenie.html">How to alert an existing Opsgenie integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logfire.html">How to publish DAG status metrics to Logfire</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">How to send DAG failures to Slack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pagerduty.html">How to create PagerDuty incidents for failed DAGs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="symphony.html">How to send DAG failures to Symphony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudwatch.html">How to publish DAG status metrics to CloudWatch</a></li>
 </ul>
 
 </div>
@@ -244,103 +260,38 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section class="tex2jax_ignore mathjax_ignore" id="slack">
-<h1>Slack<a class="headerlink" href="#slack" title="Link to this heading">¶</a></h1>
-<a class="reference internal image-reference" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/slack.png"><img alt="Message in Slack reflecting DAG status" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/slack.png" style="width: 600px;" />
-</a>
-<p>Slack integration will create new messages when a DAG fails, and optionally update those messages when a DAG reruns/succeeds.</p>
-<section id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">¶</a></h2>
-<p>Configure a new slack application following the <a class="reference external" href="https://api.slack.com/quickstart">Slack Quickstart</a>.</p>
-<p>Ensure your application has the following scopes for public and private channel access:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">channels:read</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">groups:read</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">chat:write</span></code></p></li>
-</ul>
-<p>Enable and install your Slack application into your workspace, and add it as an integration in whatever channel you want it to post.</p>
-<p>Copy your Slack application’s Oauth Token (starting with <code class="docutils literal notranslate"><span class="pre">xoxb-</span></code>) somewhere secure.</p>
-</section>
-<section id="configuration">
-<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">token</span></code>: (<strong>Required</strong>) the OAuth token from above</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel</span></code>: (<strong>Required</strong>) channel name to send messages to</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">threshold</span></code>: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">update_message</span></code>: (Optional) Update a failure message with running/succeeds. Defaults to <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">send_running</span></code>: (Optional) Send new messages when a DAG starts running. Defaults to <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">send_success</span></code>: (Optional) Send new messages when a DAG succeeds. Defaults to <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">failed_color</span></code>: (Optional) Color of a DAG failed message</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">running_color</span></code>: (Optional) Color of a DAG running message.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">success_color</span></code>: (Optional) Color of a DAG success message.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_P1</span></code>: (Optional) P1 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_P2</span></code>: (Optional) P2 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_P3</span></code>: (Optional) P3 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_P4</span></code>: (Optional) P4 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_P5</span></code>: (Optional) P5 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_failed</span></code>: (Optional) Failed channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_success</span></code>: (Optional) Success channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_running</span></code>: (Optional) Running channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_failed_P1</span></code>: (Optional) Failed P1 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_failed_P2</span></code>: (Optional) Failed P2 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_failed_P3</span></code>: (Optional) Failed P3 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_failed_P4</span></code>: (Optional) Failed P4 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_failed_P5</span></code>: (Optional) Failed P5 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_success_P1</span></code>: (Optional) Success P1 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_success_P2</span></code>: (Optional) Success P2 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_success_P3</span></code>: (Optional) Success P3 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_success_P4</span></code>: (Optional) Success P4 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_success_P5</span></code>: (Optional) Success P5 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_running_P1</span></code>: (Optional) Running P1 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_running_P2</span></code>: (Optional) Running P2 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_running_P3</span></code>: (Optional) Running P3 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_running_P4</span></code>: (Optional) Running P4 channel override</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">channel_running_P5</span></code>: (Optional) Running P5 channel override</p></li>
-</ul>
-</section>
-<section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">slack</span><span class="p">]</span>
-<span class="n">token</span> <span class="o">=</span> <span class="n">xoxb</span><span class="o">-...</span>
-<span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span><span class="o">-</span><span class="n">name</span>
-
-<span class="c1"># Configure tag and priority specific channels</span>
-<span class="n">channel_P3</span> <span class="o">=</span> <span class="o">...</span>
-<span class="n">channel_failed_P1</span> <span class="o">=</span> <span class="o">...</span>
+          <section class="tex2jax_ignore mathjax_ignore" id="how-to-send-dag-failures-to-slack">
+<h1>How to send DAG failures to Slack<a class="headerlink" href="#how-to-send-dag-failures-to-slack" title="Link to this heading">¶</a></h1>
+<p>Install <code class="docutils literal notranslate"><span class="pre">airflow-priority[slack]</span></code> in the Airflow environment. Use a bot installed
+in the workspace and invited to the destination channel. Enable <code class="docutils literal notranslate"><span class="pre">channels:read</span></code>,
+<code class="docutils literal notranslate"><span class="pre">groups:read</span></code>, and <code class="docutils literal notranslate"><span class="pre">chat:write</span></code> permissions for channel lookup and posting; see
+Slack’s <a class="reference external" href="https://docs.slack.dev/reference/methods/conversations.list/">listing</a>
+and <a class="reference external" href="https://docs.slack.dev/reference/methods/chat.postMessage/">message</a> APIs.</p>
+<p>Configure the scheduler and API server:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[priority.slack]</span>
+<span class="na">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">YOUR_BOT_TOKEN</span>
+<span class="na">channel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">airflow-alerts</span>
+<span class="na">threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">2</span>
 </pre></div>
 </div>
-</section>
-<section id="verbose-updates">
-<h2>Verbose updates<a class="headerlink" href="#verbose-updates" title="Link to this heading">¶</a></h2>
-<p>By default, only DAG failure events will be sent.
-On rerun, failure messages can be updated to reflect running/success.</p>
-<p>The plugin can also be configured to always send updates, including when a DAG starts running and/or succeeds.
-These can also be configured to send to different channels.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">slack</span><span class="p">]</span>
-<span class="c1"># Update messages to reflect current state</span>
-<span class="n">update_message</span> <span class="o">=</span> <span class="n">true</span>
-
-<span class="n">send_success</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">channel_success</span> <span class="o">=</span> <span class="n">a</span><span class="o">-</span><span class="n">different</span><span class="o">-</span><span class="n">channel</span>
-<span class="n">send_running</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">channel_running</span> <span class="o">=</span> <span class="n">a</span><span class="o">-</span><span class="n">different</span><span class="o">-</span><span class="n">channel</span>
+<p>Use the channel name without <code class="docutils literal notranslate"><span class="pre">#</span></code>. Restart Airflow components, then trigger a
+P1 or P2 test DAG that fails. Inspect the Airflow listener logs and destination
+channel. Follow the <a class="reference internal" href="tutorial.html"><span class="std std-doc">tutorial</span></a> for a complete test DAG.</p>
+<p>To route urgent failures separately, add:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[priority.slack]</span>
+<span class="na">channel_failed_P1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">urgent-airflow</span>
 </pre></div>
 </div>
-</section>
-<section id="customizing-message-colors">
-<h2>Customizing message colors<a class="headerlink" href="#customizing-message-colors" title="Link to this heading">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">slack</span><span class="p">]</span>
-<span class="n">failed_color</span> <span class="o">=</span> <span class="s2">"#FF0000"</span>
-<span class="n">running_color</span> <span class="o">=</span> <span class="s2">"#FFFF00"</span>
-<span class="n">success_color</span> <span class="o">=</span> <span class="s2">"#00FF00"</span>
-</pre></div>
-</div>
-</section>
+<p>Enable <code class="docutils literal notranslate"><span class="pre">send_running</span></code> or <code class="docutils literal notranslate"><span class="pre">send_success</span></code> to create messages for those states.
+Enable <code class="docutils literal notranslate"><span class="pre">update_message</span></code> to update a stored failure message when the same run
+changes state in the same process. See the
+<a class="reference internal" href="API.html#messaging-backends"><span class="std std-ref">messaging reference</span></a> for defaults and routing precedence,
+and <a class="reference internal" href="how-to.html#how-to-troubleshoot-missing-alerts"><span class="std std-ref">troubleshooting</span></a> for delivery errors.</p>
 </section>
 
         </article>
@@ -348,12 +299,12 @@ These can also be configured to send to different channels.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="symphony.html">
+          <a class="next-page" href="pagerduty.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Symphony</div>
+                <div class="title">How to create PagerDuty incidents for failed DAGs</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -364,7 +315,7 @@ These can also be configured to send to different channels.</p>
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Logfire</div>
+                <div class="title">How to publish DAG status metrics to Logfire</div>
                 
               </div>
             </a>
@@ -386,31 +337,8 @@ These can also be configured to send to different channels.</p>
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">Slack</a><ul>
-<li><a class="reference internal" href="#setup">Setup</a></li>
-<li><a class="reference internal" href="#configuration">Configuration</a></li>
-<li><a class="reference internal" href="#example">Example</a></li>
-<li><a class="reference internal" href="#verbose-updates">Verbose updates</a></li>
-<li><a class="reference internal" href="#customizing-message-colors">Customizing message colors</a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>

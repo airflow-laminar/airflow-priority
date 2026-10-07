@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Datadog" href="datadog.html"><link rel="prev" title="airflow-priority" href="../../index.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="How to publish DAG status metrics to Datadog" href="datadog.html"><link rel="prev" title="airflow_priority.tracker.Tracker" href="_build/airflow_priority.tracker.Tracker.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
         <title>Introduction - airflow-priority v1.6.1</title>
@@ -179,7 +179,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -198,19 +198,35 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datadog.html">Datadog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discord.html">Discord</a></li>
-<li class="toctree-l1"><a class="reference internal" href="newrelic.html">NewRelic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="opsgenie.html">OpsGenie</a></li>
-<li class="toctree-l1"><a class="reference internal" href="logfire.html">Logfire</a></li>
-<li class="toctree-l1"><a class="reference internal" href="slack.html">Slack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="symphony.html">Symphony</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloudwatch.html">AWS MWAA CloudWatch</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="API.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial: alert on one failed DAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how-to.html">How-to guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="explanation.html">Why priority alerts follow DAG-run state</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="API.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.PriorityConfiguration.html">airflow_priority.PriorityConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.AwsConfiguration.html">airflow_priority.AwsConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.DataDogConfiguration.html">airflow_priority.DataDogConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.DiscordConfiguration.html">airflow_priority.DiscordConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.LogfireConfiguration.html">airflow_priority.LogfireConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.NewRelicConfiguration.html">airflow_priority.NewRelicConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.OpsGenieConfiguration.html">airflow_priority.OpsGenieConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.PagerDutyConfiguration.html">airflow_priority.PagerDutyConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.SlackConfiguration.html">airflow_priority.SlackConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.SymphonyConfiguration.html">airflow_priority.SymphonyConfiguration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.common.html">airflow_priority.common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.plugin.html">airflow_priority.plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_build/airflow_priority.tracker.Tracker.html">airflow_priority.tracker.Tracker</a></li>
 </ul>
 </li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datadog.html">How to publish DAG status metrics to Datadog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discord.html">How to send DAG failures to Discord</a></li>
+<li class="toctree-l1"><a class="reference internal" href="newrelic.html">How to publish DAG status metrics to New Relic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="opsgenie.html">How to alert an existing Opsgenie integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logfire.html">How to publish DAG status metrics to Logfire</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slack.html">How to send DAG failures to Slack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pagerduty.html">How to create PagerDuty incidents for failed DAGs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="symphony.html">How to send DAG failures to Symphony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudwatch.html">How to publish DAG status metrics to CloudWatch</a></li>
 </ul>
 
 </div>
@@ -244,115 +260,18 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
           <section class="tex2jax_ignore mathjax_ignore" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
-<p>This repo provides an <a class="reference external" href="https://airflow.apache.org/docs/apache-airflow/stable/authoring-and-scheduling/plugins.html">Airflow Plugin</a> for priority-driven DAG failure alerting.
-In layman’s terms, one need only add a <a class="reference external" href="https://airflow.apache.org/docs/apache-airflow/stable/howto/add-dag-tags.html">tag</a> to their DAG in <code class="docutils literal notranslate"><span class="pre">P1,</span> <span class="pre">P2,</span> <span class="pre">P3,</span> <span class="pre">P4,</span> <span class="pre">P5</span></code>, where <code class="docutils literal notranslate"><span class="pre">P1</span></code> corresponds to highest priority and <code class="docutils literal notranslate"><span class="pre">P5</span></code> corresponds to lowest, and that dag will send a notification to a backend integration.</p>
-<section id="integrations">
-<h2>Integrations<a class="headerlink" href="#integrations" title="Link to this heading">¶</a></h2>
-<div class="table-wrapper colwidths-auto docutils container">
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head text-left"><p>Integration</p></th>
-<th class="head text-left"><p>Metric / Tag</p></th>
-<th class="head text-left"><p>Docs</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td class="text-left"><p><a href="https://www.datadoghq.com"><a class="reference internal" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/datadog.png"><img alt="datadog logo" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/datadog.png" style="width: 180px;" /></a></a></p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">airflow.priority.p{1,2,3,4,5}.{failed,succeeded,running}</span></code></p></td>
-<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/datadog.html">Link</a></p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p><a href="http://discord.com"><a class="reference internal" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/discord.png"><img alt="discord logo" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/discord.png" style="width: 180px;" /></a></a></p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
-<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/discord.html">Link</a></p></td>
-</tr>
-<tr class="row-even"><td class="text-left"><p><a href="https://logfire.pydantic.dev"><a class="reference internal" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/logfire.png"><img alt="logfire logo" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/logfire.png" style="width: 180px;" /></a></a></p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">airflow.priority.p{1,2,3,4,5}.{failed,succeeded,running}</span></code></p></td>
-<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/logfire.html">Link</a></p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p><a href="https://pagerduty.com"><a class="reference internal" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/pagerduty.png"><img alt="pagerduty logo" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/pagerduty.png" style="width: 180px;" /></a></a></p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
-<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/pagerduty.html">Link</a></p></td>
-</tr>
-<tr class="row-even"><td class="text-left"><p><a href="https://newrelic.com"><a class="reference internal" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/newrelic.png"><img alt="newrelic logo" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/newrelic.png" style="width: 180px;" /></a></a></p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">airflow.priority.p{1,2,3,4,5}.{failed,succeeded,running}</span></code></p></td>
-<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/newrelic.html">Link</a></p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p><a href="https://www.atlassian.com/software/opsgenie"><a class="reference internal" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/opsgenie.png"><img alt="opsgenie logo" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/opsgenie.png" style="width: 175px;" /></a></a></p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
-<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/opsgenie.html">Link</a></p></td>
-</tr>
-<tr class="row-even"><td class="text-left"><p><a href="http://slack.com"><a class="reference internal" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/slack.png"><img alt="slack logo" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/slack.png" style="width: 175px;" /></a></a></p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
-<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/slack.html">Link</a></p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p><a href="http://symphony.com"><a class="reference internal" href="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/symphony.png"><img alt="symphony logo" src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/logos/symphony.png" style="width: 175px;" /></a></a></p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
-<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/symphony.html">Link</a></p></td>
-</tr>
-<tr class="row-even"><td class="text-left"><p><a class="reference external" href="https://aws.amazon.com/cloudwatch/">AWS Cloudwatch</a></p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">airflow.priority.p{1,2,3,4,5}.{failed,succeeded,running}</span></code></p></td>
-<td class="text-left"><p><a class="reference external" href="https://airflow-laminar.github.io/airflow-priority/docs/src/cloudwatch.html">Link</a></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
-<p>You can install from pip:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>airflow-priority
-</pre></div>
-</div>
-<p>Or via conda:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>airflow-priority<span class="w"> </span>-c<span class="w"> </span>conda-forge
-</pre></div>
-</div>
-</section>
-<section id="configuration">
-<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
-<p>The primary mechanism for configuration is the standard <a class="reference external" href="https://airflow.apache.org/docs/apache-airflow/stable/howto/set-config.html"><code class="docutils literal notranslate"><span class="pre">airflow.cfg</span></code> file</a>.
-All configuration is under the <code class="docutils literal notranslate"><span class="pre">priority</span></code> header.
-Here is an example configuration from our tests.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="p">]</span>
-<span class="n">threshold</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># default threshold of all alerts to P1,P2, or P3 (ignore P4, P5)</span>
-
-<span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">datadog</span><span class="p">]</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="mi">1234567890</span><span class="n">abcdefg</span>
-<span class="n">host</span> <span class="o">=</span> <span class="n">us1</span><span class="o">.</span><span class="n">datadoghq</span><span class="o">.</span><span class="n">com</span>
-<span class="n">tags</span> <span class="o">=</span> <span class="n">environment</span><span class="p">:</span><span class="n">test</span><span class="p">,</span><span class="n">mycustom</span><span class="p">:</span><span class="n">tag</span>
-<span class="n">metric</span> <span class="o">=</span> <span class="n">custom</span><span class="o">.</span><span class="n">metric</span>
-<span class="n">threshold</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># datadog will only send a metric on P1, P2</span>
-
-</pre></div>
-</div>
-<p>All scoped configuration options can be set directly under <code class="docutils literal notranslate"><span class="pre">priority</span></code>.</p>
-<p>For example this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="o">.</span><span class="n">aws</span><span class="p">]</span>
-<span class="n">region</span> <span class="o">=</span> <span class="s2">"us-east-1"</span>
-</pre></div>
-</div>
-<p>Can be provided as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">priority</span><span class="p">]</span>
-<span class="n">aws_region</span> <span class="o">=</span> <span class="s2">"us-east-1"</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>AWS MWAA and terraform may require you to use the alternative configuration syntax</p>
-</div>
-</section>
-<section id="configuration-with-airflow-config">
-<h2>Configuration with <a class="reference external" href="https://github.com/airflow-laminar/airflow-config">airflow-config</a><a class="headerlink" href="#configuration-with-airflow-config" title="Link to this heading">¶</a></h2>
-<p>Configuration options can also be specified via <a class="reference external" href="https://github.com/airflow-laminar/airflow-config">airflow-config</a>.
-Place a <code class="docutils literal notranslate"><span class="pre">yaml</span></code> file called <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code> in a folder called <code class="docutils literal notranslate"><span class="pre">config</span></code> inside to your <code class="docutils literal notranslate"><span class="pre">AIRFLOW_HOME</span></code> directory.</p>
-</section>
+<p>Start with the <a class="reference internal" href="tutorial.html"><span class="std std-doc">failure-alert tutorial</span></a>, or follow the
+<a class="reference internal" href="how-to.html"><span class="std std-doc">how-to guides</span></a> to configure an existing deployment.</p>
+<p>The <a class="reference internal" href="API.html"><span class="std std-doc">reference</span></a> defines backend options and routing. The
+<a class="reference internal" href="explanation.html"><span class="std std-doc">explanation</span></a> covers DAG-run state, task callbacks, and the
+limits of process-local alert context.</p>
 </section>
 
         </article>
@@ -365,18 +284,18 @@ Place a <code class="docutils literal notranslate"><span class="pre">yaml</span>
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Datadog</div>
+                <div class="title">How to publish DAG status metrics to Datadog</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../../index.html">
+          <a class="prev-page" href="_build/airflow_priority.tracker.Tracker.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Home</div>
+                <div class="title">airflow_priority.tracker.Tracker</div>
                 
               </div>
             </a>
@@ -398,30 +317,8 @@ Place a <code class="docutils literal notranslate"><span class="pre">yaml</span>
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">Introduction</a><ul>
-<li><a class="reference internal" href="#integrations">Integrations</a></li>
-<li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#configuration">Configuration</a></li>
-<li><a class="reference internal" href="#configuration-with-airflow-config">Configuration with airflow-config</a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>

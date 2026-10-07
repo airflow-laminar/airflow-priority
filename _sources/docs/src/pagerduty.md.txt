@@ -1,28 +1,22 @@
-# Pagerduty
+# How to create PagerDuty incidents for failed DAGs
 
-<img src="https://raw.githubusercontent.com/airflow-laminar/airflow-priority/refs/heads/main/docs/img/pagerduty.png" width=600 alt="Pagerduty alert showing failed DAG status">
+Install `airflow-priority[pagerduty]`. Obtain an Events API v2 routing key for an
+existing PagerDuty service, then configure the Airflow components:
 
-Pagerduty integration will create [Pagerduty Alerts](https://support.pagerduty.com/main/docs/alerts) when a DAG fails.
-
-## Setup
-
-Under `Services` -> `New Service`, create a new service.
-Choose your escalation and noise reduction strategies, then select "Events API V2" from `Integrations`.
-This will generate an `Integration Key`, which you can use below.
-
-## Configuration
-
-- `routing_key`: (**Required**) the Integration key from above
-- `source`: (Optional) Override the name of the source. The default is `airflow.priority`, which will product alerts with entity like `airflow.priority.p1.failed`
-- `update`: (Optional) Update an open alert when DAG is rerun or passes (default is `true`). When `true`, when the DAG is `running` again the alert will be ack'd. If the DAG succeeds, the alert will be resolved.
-- `threshold`: (Optional) Maximum alert threshold. Alerts with higher numerical priority (lower logical priority) will be ignored
-
-## Example
-
-```
+```ini
 [priority.pagerduty]
-api_key = ...
-source = my.entity
+routing_key = YOUR_EVENTS_ROUTING_KEY
+source = airflow.priority
+threshold = 2
 update = true
-threshold = 2  # only P1 and P2
 ```
+
+Use `routing_key`; `api_key` is not the configuration option for this backend.
+Restart Airflow components and trigger a failing P1/P2 test DAG. Confirm an
+incident is created for its DAG ID and priority.
+
+With `update=true`, later running/success events can acknowledge/resolve the
+stored incident for the same DagRun in the same process. To test that path,
+change the state of that existing run; a new run has a separate context.
+See the [incident reference](API.md#incident-backends) for severity and source
+formatting, and the [explanation](explanation.md) for context lifetime.

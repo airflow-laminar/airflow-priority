@@ -1,0 +1,20 @@
+﻿airflow\_priority.plugin
+========================
+
+.. automodule:: airflow_priority.plugin
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      on_dag_run_failed
+      on_dag_run_running
+      on_dag_run_success
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      AirflowPriorityPlugin
+   

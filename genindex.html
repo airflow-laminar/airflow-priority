@@ -196,19 +196,35 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/datadog.html">Datadog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/discord.html">Discord</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/newrelic.html">NewRelic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/opsgenie.html">OpsGenie</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/logfire.html">Logfire</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/slack.html">Slack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/symphony.html">Symphony</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/src/cloudwatch.html">AWS MWAA CloudWatch</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="docs/src/API.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/tutorial.html">Tutorial: alert on one failed DAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/how-to.html">How-to guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/explanation.html">Why priority alerts follow DAG-run state</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="docs/src/API.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.PriorityConfiguration.html">airflow_priority.PriorityConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.AwsConfiguration.html">airflow_priority.AwsConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.DataDogConfiguration.html">airflow_priority.DataDogConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.DiscordConfiguration.html">airflow_priority.DiscordConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.LogfireConfiguration.html">airflow_priority.LogfireConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.NewRelicConfiguration.html">airflow_priority.NewRelicConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.OpsGenieConfiguration.html">airflow_priority.OpsGenieConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.PagerDutyConfiguration.html">airflow_priority.PagerDutyConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.SlackConfiguration.html">airflow_priority.SlackConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.SymphonyConfiguration.html">airflow_priority.SymphonyConfiguration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.common.html">airflow_priority.common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.plugin.html">airflow_priority.plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/src/_build/airflow_priority.tracker.Tracker.html">airflow_priority.tracker.Tracker</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/datadog.html">How to publish DAG status metrics to Datadog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/discord.html">How to send DAG failures to Discord</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/newrelic.html">How to publish DAG status metrics to New Relic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/opsgenie.html">How to alert an existing Opsgenie integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/logfire.html">How to publish DAG status metrics to Logfire</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/slack.html">How to send DAG failures to Slack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/pagerduty.html">How to create PagerDuty incidents for failed DAGs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/symphony.html">How to send DAG failures to Symphony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/src/cloudwatch.html">How to publish DAG status metrics to CloudWatch</a></li>
 </ul>
 
 </div>
@@ -244,8 +260,18 @@
           
 <section class="genindex-section">
   <h1 id="index">Index</h1>
-  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#M"><strong>M</strong></a></div>
+  <div class="genindex-jumpbox"><a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a></div>
 </section>
+<section id="_" class="genindex-section">
+  <h2>_</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.tracker.Tracker.html#airflow_priority.tracker.Tracker.__init__">__init__() (airflow_priority.tracker.Tracker method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
 <section id="A" class="genindex-section">
   <h2>A</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
@@ -257,6 +283,255 @@
           <li><a href="docs/src/_build/airflow_priority.common.html#module-airflow_priority.common">module</a>
 </li>
         </ul></li>
+        <li>
+    airflow_priority.plugin
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.plugin.html#module-airflow_priority.plugin">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.DataDogConfiguration.html#airflow_priority.DataDogConfiguration.api_key">api_key (airflow_priority.DataDogConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.NewRelicConfiguration.html#airflow_priority.NewRelicConfiguration.api_key">(airflow_priority.NewRelicConfiguration attribute)</a>
+</li>
+          <li><a href="docs/src/_build/airflow_priority.OpsGenieConfiguration.html#airflow_priority.OpsGenieConfiguration.api_key">(airflow_priority.OpsGenieConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.PriorityConfiguration.html#airflow_priority.PriorityConfiguration.aws">aws (airflow_priority.PriorityConfiguration attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="C" class="genindex-section">
+  <h2>C</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.cert_file">cert_file (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel">channel (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_failed">channel_failed (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_failed">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_failed_P1">channel_failed_P1 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_failed_P1">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_failed_P2">channel_failed_P2 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_failed_P2">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_failed_P3">channel_failed_P3 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_failed_P3">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_failed_P4">channel_failed_P4 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_failed_P4">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_failed_P5">channel_failed_P5 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_failed_P5">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_P1">channel_P1 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_P1">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_P2">channel_P2 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_P2">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_P3">channel_P3 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_P3">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_P4">channel_P4 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_P4">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_P5">channel_P5 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_P5">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_running">channel_running (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_running">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_running_P1">channel_running_P1 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_running_P1">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_running_P2">channel_running_P2 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_running_P2">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_running_P3">channel_running_P3 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_running_P3">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_running_P4">channel_running_P4 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_running_P4">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_running_P5">channel_running_P5 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_running_P5">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_success">channel_success (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_success">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_success_P1">channel_success_P1 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_success_P1">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_success_P2">channel_success_P2 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_success_P2">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_success_P3">channel_success_P3 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_success_P3">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_success_P4">channel_success_P4 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_success_P4">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.channel_success_P5">channel_success_P5 (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.channel_success_P5">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="D" class="genindex-section">
+  <h2>D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.PriorityConfiguration.html#airflow_priority.PriorityConfiguration.datadog">datadog (airflow_priority.PriorityConfiguration attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.PriorityConfiguration.html#airflow_priority.PriorityConfiguration.discord">discord (airflow_priority.PriorityConfiguration attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="E" class="genindex-section">
+  <h2>E</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.OpsGenieConfiguration.html#airflow_priority.OpsGenieConfiguration.entity">entity (airflow_priority.OpsGenieConfiguration attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="F" class="genindex-section">
+  <h2>F</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.failed_color">failed_color (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.failed_color">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+          <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.failed_color">(airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="H" class="genindex-section">
+  <h2>H</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.DataDogConfiguration.html#airflow_priority.DataDogConfiguration.host">host (airflow_priority.DataDogConfiguration attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="K" class="genindex-section">
+  <h2>K</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.key_auth">key_auth (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.key_file">key_file (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="L" class="genindex-section">
+  <h2>L</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.PriorityConfiguration.html#airflow_priority.PriorityConfiguration.logfire">logfire (airflow_priority.PriorityConfiguration attribute)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -265,11 +540,225 @@
   <h2>M</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.message_create_url">message_create_url (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.AwsConfiguration.html#airflow_priority.AwsConfiguration.metric">metric (airflow_priority.AwsConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.DataDogConfiguration.html#airflow_priority.DataDogConfiguration.metric">(airflow_priority.DataDogConfiguration attribute)</a>
+</li>
+          <li><a href="docs/src/_build/airflow_priority.LogfireConfiguration.html#airflow_priority.LogfireConfiguration.metric">(airflow_priority.LogfireConfiguration attribute)</a>
+</li>
+          <li><a href="docs/src/_build/airflow_priority.NewRelicConfiguration.html#airflow_priority.NewRelicConfiguration.metric">(airflow_priority.NewRelicConfiguration attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     module
 
         <ul>
           <li><a href="docs/src/_build/airflow_priority.common.html#module-airflow_priority.common">airflow_priority.common</a>
+</li>
+          <li><a href="docs/src/_build/airflow_priority.plugin.html#module-airflow_priority.plugin">airflow_priority.plugin</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="N" class="genindex-section">
+  <h2>N</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.AwsConfiguration.html#airflow_priority.AwsConfiguration.namespace">namespace (airflow_priority.AwsConfiguration attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.PriorityConfiguration.html#airflow_priority.PriorityConfiguration.newrelic">newrelic (airflow_priority.PriorityConfiguration attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="O" class="genindex-section">
+  <h2>O</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.PriorityConfiguration.html#airflow_priority.PriorityConfiguration.opsgenie">opsgenie (airflow_priority.PriorityConfiguration attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="P" class="genindex-section">
+  <h2>P</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.PriorityConfiguration.html#airflow_priority.PriorityConfiguration.pagerduty">pagerduty (airflow_priority.PriorityConfiguration attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="R" class="genindex-section">
+  <h2>R</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.AwsConfiguration.html#airflow_priority.AwsConfiguration.region">region (airflow_priority.AwsConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name">room_name (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_failed">room_name_failed (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_failed_P1">room_name_failed_P1 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_failed_P2">room_name_failed_P2 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_failed_P3">room_name_failed_P3 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_failed_P4">room_name_failed_P4 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_failed_P5">room_name_failed_P5 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_P1">room_name_P1 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_P2">room_name_P2 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_P3">room_name_P3 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_P4">room_name_P4 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_P5">room_name_P5 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_running">room_name_running (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_running_P1">room_name_running_P1 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_running_P2">room_name_running_P2 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_running_P3">room_name_running_P3 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_running_P4">room_name_running_P4 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_running_P5">room_name_running_P5 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_success">room_name_success (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_success_P1">room_name_success_P1 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_success_P2">room_name_success_P2 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_success_P3">room_name_success_P3 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_success_P4">room_name_success_P4 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_name_success_P5">room_name_success_P5 (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.room_search_url">room_search_url (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.PagerDutyConfiguration.html#airflow_priority.PagerDutyConfiguration.routing_key">routing_key (airflow_priority.PagerDutyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.running_color">running_color (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.running_color">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+          <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.running_color">(airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="S" class="genindex-section">
+  <h2>S</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.send_running">send_running (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.send_running">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+          <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.send_running">(airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.send_success">send_success (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.send_success">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+          <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.send_success">(airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.session_auth">session_auth (airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.PriorityConfiguration.html#airflow_priority.PriorityConfiguration.slack">slack (airflow_priority.PriorityConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.PagerDutyConfiguration.html#airflow_priority.PagerDutyConfiguration.source">source (airflow_priority.PagerDutyConfiguration attribute)</a>
+</li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.success_color">success_color (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.success_color">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+          <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.success_color">(airflow_priority.SymphonyConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.PriorityConfiguration.html#airflow_priority.PriorityConfiguration.symphony">symphony (airflow_priority.PriorityConfiguration attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="T" class="genindex-section">
+  <h2>T</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.DataDogConfiguration.html#airflow_priority.DataDogConfiguration.tags">tags (airflow_priority.DataDogConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.NewRelicConfiguration.html#airflow_priority.NewRelicConfiguration.tags">(airflow_priority.NewRelicConfiguration attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.token">token (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.LogfireConfiguration.html#airflow_priority.LogfireConfiguration.token">(airflow_priority.LogfireConfiguration attribute)</a>
+</li>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.token">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.tracker.Tracker.html#airflow_priority.tracker.Tracker">Tracker (class in airflow_priority.tracker)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="U" class="genindex-section">
+  <h2>U</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.OpsGenieConfiguration.html#airflow_priority.OpsGenieConfiguration.update">update (airflow_priority.OpsGenieConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.PagerDutyConfiguration.html#airflow_priority.PagerDutyConfiguration.update">(airflow_priority.PagerDutyConfiguration attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/src/_build/airflow_priority.DiscordConfiguration.html#airflow_priority.DiscordConfiguration.update_message">update_message (airflow_priority.DiscordConfiguration attribute)</a>
+
+        <ul>
+          <li><a href="docs/src/_build/airflow_priority.SlackConfiguration.html#airflow_priority.SlackConfiguration.update_message">(airflow_priority.SlackConfiguration attribute)</a>
+</li>
+          <li><a href="docs/src/_build/airflow_priority.SymphonyConfiguration.html#airflow_priority.SymphonyConfiguration.update_message">(airflow_priority.SymphonyConfiguration attribute)</a>
 </li>
         </ul></li>
     </ul></td>
