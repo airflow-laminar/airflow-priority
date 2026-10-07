@@ -27,6 +27,14 @@ jobs:
   build:
     runs-on: ubuntu-24.04
 
+    strategy:
+      matrix:
+        include:
+          - airflow: "2"
+            requirement: "apache-airflow>=2.8,<3"
+          - airflow: "3"
+            requirement: "apache-airflow>=3,<4"
+
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
@@ -39,7 +47,7 @@ jobs:
           version: "3.11"
 
       - name: Install dependencies
-        run: make develop
+        run: uv pip install -e .[develop] "${{ matrix.requirement }}"
 
       - name: Lint
         run: make lint
@@ -56,7 +64,7 @@ jobs:
       - name: Upload test results (Python)
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         with:
-          name: test-results
+          name: test-results-${{ matrix.airflow }}
           path: junit.xml
         if: always()
 
@@ -86,5 +94,5 @@ jobs:
       - name: Upload distributions
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         with:
-          name: dist
+          name: dist-${{ matrix.airflow }}
           path: dist

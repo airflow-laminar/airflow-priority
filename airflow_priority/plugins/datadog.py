@@ -26,7 +26,9 @@ def get_configuration() -> Configuration:
 
 def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
     metric = get_config_option("datadog", "metric", default=DataDogDefaultMetric)
-    tags = get_config_option("datadog", "tags", default="").split(",")
+    tags = get_config_option("datadog", "tags", required=False, default="")
+    tags = tags.split(",") if isinstance(tags, str) else tags
+    tags = [tag for tag in tags if tag]
     tags = ["application:airflow", f"priority:{priority}", f"dag:{dag_id}", *tags]
 
     with ApiClient(get_configuration()) as api_client:

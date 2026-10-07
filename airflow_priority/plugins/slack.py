@@ -34,11 +34,17 @@ def get_channel_id(tag: DagStatus, priority: int) -> str:
     channel_name = get_config_option("slack", f"channel_{tag}_P{priority}", default=channel_name)
 
     # Lookup the channel ID
-    conversations = get_client().conversations_list(types=["public_channel", "private_channel"])
-    if conversations.data["ok"]:
+    cursor = None
+    while True:
+        conversations = get_client().conversations_list(types=["public_channel", "private_channel"], cursor=cursor)
+        if not conversations.data["ok"]:
+            break
         for channel in conversations.data["channels"]:
             if channel["name"] == channel_name:
                 return channel["id"]
+        cursor = conversations.data.get("response_metadata", {}).get("next_cursor")
+        if not cursor:
+            break
     raise RuntimeError(f"Slack channel not found: {channel_name}")
 
 

@@ -49,7 +49,7 @@ def get_config_option(section, key="", required=True, default=None):
             config = Configuration.load("config", "config", basepath=str(Path(os.environ.get("AIRFLOW_HOME", "")) / "dags"), _offset=4)
             ret = getattr(getattr(config.extensions.get("priority", None), section, None), key, None)
             if ret is not None:
-                return ret
+                return str(ret).lower() if isinstance(ret, bool) else ret
         except ConfigNotFoundError:
             # SKIP
             pass

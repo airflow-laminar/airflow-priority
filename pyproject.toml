@@ -40,6 +40,7 @@ develop = [
     "codespell",
     "hatchling",
     "mdformat",
+    "mdformat-frontmatter",
     "mdformat-tables>=1",
     "pytest",
     "pytest-cov",
@@ -193,6 +194,10 @@ section-order = [
 title = "airflow-priority"
 root = "README.md"
 pages = [
+    "docs/src/tutorial.md",
+    "docs/src/how-to.md",
+    "docs/src/explanation.md",
+    "docs/src/API.md",
     "docs/src/introduction.md",
     "docs/src/datadog.md",
     "docs/src/discord.md",
@@ -200,8 +205,8 @@ pages = [
     "docs/src/opsgenie.md",
     "docs/src/logfire.md",
     "docs/src/slack.md",
+    "docs/src/pagerduty.md",
     "docs/src/symphony.md",
     "docs/src/cloudwatch.md",
-    "docs/src/API.md",
 ]
 use-autoapi = false

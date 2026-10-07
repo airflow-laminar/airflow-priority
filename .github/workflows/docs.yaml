@@ -27,7 +27,7 @@ jobs:
       - name: Download distributions
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8
         with:
-          pattern: dist
+          pattern: dist-3
           merge-multiple: true
           path: dist
           run-id: ${{ github.event.workflow_run.id }}
@@ -39,6 +39,7 @@ jobs:
         run: |
           uv pip install dist/*.whl
           uv pip install dist/*.whl --target . --no-deps
+          uv pip install -r pyproject.toml --extra develop
           uv pip install "yardang[themes]"
         if: github.event_name == 'workflow_run'
 
