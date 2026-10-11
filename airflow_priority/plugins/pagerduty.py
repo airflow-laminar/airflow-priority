@@ -11,7 +11,7 @@ __all__ = ("send_metric",)
 
 @lru_cache
 def get_client() -> EventsApiV2Client:
-    return EventsApiV2Client(api_key=get_config_option("pagerduty", "routing_key"))
+    return EventsApiV2Client(routing_key=get_config_option("pagerduty", "routing_key"))
 
 
 _severity_map: dict[int, str] = {

@@ -11,16 +11,21 @@ from ..common import DagStatus, get_config_option
 __all__ = ("send_metric",)
 
 
+class PriorityClient(Client):
+    def __init__(self):
+        super().__init__(intents=Intents.default())
+        self.inqueue: Queue[Message] = Queue()
+        self.outqueue: Queue[tuple[int, str | Message, str | None, str]] = Queue()
+
+
 @lru_cache
-def get_client() -> Client:
-    client = Client(intents=Intents.default())
-    client.inqueue = Queue()
-    client.outqueue = Queue()
+def get_client() -> PriorityClient:
+    client = PriorityClient()
 
     @client.event
     async def on_ready():
-        channel: TextChannel
-        msg: Message
+        channel: int
+        msg: str | Message
         new_msg: str | None
 
         while True:
@@ -31,8 +36,11 @@ def get_client() -> Client:
 
             if new_msg is None:
                 channel_inst = client.get_channel(channel)
+                assert isinstance(channel_inst, TextChannel)
+                assert isinstance(msg, str)
                 client.inqueue.put(await channel_inst.send(embed=Embed(description=msg, color=Color.from_str(color))))
             else:
+                assert isinstance(msg, Message)
                 client.inqueue.put(await msg.edit(embed=Embed(description=new_msg, color=Color.from_str(color))))
 
     token = get_config_option("discord", "token")

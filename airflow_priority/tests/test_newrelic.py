@@ -13,10 +13,10 @@ def test_newrelic(airflow_config, dag_run):
         from airflow_priority.plugins.newrelic import send_metric
 
         # Call the function to test
-        send_metric("UNIT TEST", 1, "testing", {})
+        send_metric("UNIT TEST", 1, "running", {})
 
         assert mock_client.send_batch.call_count == 1
-        assert mock_client.send_batch.call_args_list[0][0][0][0].name == "custom.metric.p1.testing"
+        assert mock_client.send_batch.call_args_list[0][0][0][0].name == "custom.metric.p1.running"
         assert mock_client.send_batch.call_args_list[0][0][0][0].tags == {
             "application": "airflow",
             "priority": "1",

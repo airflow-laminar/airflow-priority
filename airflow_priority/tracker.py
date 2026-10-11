@@ -1,6 +1,6 @@
 from importlib import import_module
 from logging import getLogger
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 if TYPE_CHECKING:
     from airflow.models.dagrun import DagRun
@@ -58,7 +58,7 @@ class Tracker:
         # set threshold if available
         self.thresholds[backend] = int(get_config_option(backend, "threshold", default=get_config_option("threshold", default=5)))
 
-    def _setup_context(self, backend: str, dag_instance_id: str):
+    def _setup_context(self, backend: str, dag_instance_id: int):
         key = (backend, dag_instance_id)
         if key not in self.dagruns:
             self.dagruns[key] = {}
@@ -77,10 +77,10 @@ class Tracker:
                     continue
 
                 # Setup the context if needed
-                self._setup_context(backend, dag_run.id)
+                self._setup_context(backend, cast(int, dag_run.id))
 
                 try:
-                    sender(dag_id, priority, "running", self.dagruns[(backend, dag_run.id)])
+                    sender(dag_id, priority, "running", self.dagruns[(backend, cast(int, dag_run.id))])
                 except Exception:  # noqa: BLE001
                     _log.exception(f"Failed to send running metric for DAG {dag_id} with priority {priority} on backend {backend}")
 
@@ -97,10 +97,10 @@ class Tracker:
                     continue
 
                 # Setup the context if needed
-                self._setup_context(backend, dag_run.id)
+                self._setup_context(backend, cast(int, dag_run.id))
 
                 try:
-                    sender(dag_id, priority, "success", self.dagruns[(backend, dag_run.id)])
+                    sender(dag_id, priority, "success", self.dagruns[(backend, cast(int, dag_run.id))])
                 except Exception:  # noqa: BLE001
                     _log.exception(f"Failed to send success metric for DAG {dag_id} with priority {priority} on backend {backend}")
 
@@ -116,10 +116,10 @@ class Tracker:
                     continue
 
                 # Setup the context if needed
-                self._setup_context(backend, dag_run.id)
+                self._setup_context(backend, cast(int, dag_run.id))
 
                 try:
-                    sender(dag_id, priority, "failed", self.dagruns[(backend, dag_run.id)])
+                    sender(dag_id, priority, "failed", self.dagruns[(backend, cast(int, dag_run.id))])
                 except Exception:  # noqa: BLE001
                     _log.exception(f"Failed to send failed metric for DAG {dag_id} with priority {priority} on backend {backend}")
 
