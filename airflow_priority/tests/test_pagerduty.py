@@ -41,3 +41,18 @@ def test_pagerduty_sequence(airflow_config, dag_run):
         assert mock_client.trigger.call_count == 1
         assert mock_client.acknowledge.call_count == 1
         assert mock_client.resolve.call_count == 1
+
+
+def test_pagerduty_client_uses_routing_key():
+    from airflow_priority.plugins.pagerduty import get_client
+
+    get_client.cache_clear()
+    try:
+        with (
+            patch("airflow_priority.plugins.pagerduty.get_config_option", return_value="routing"),
+            patch("airflow_priority.plugins.pagerduty.EventsApiV2Client") as client,
+        ):
+            get_client()
+        client.assert_called_once_with(routing_key="routing")
+    finally:
+        get_client.cache_clear()

@@ -37,12 +37,14 @@ def get_channel_id(tag: DagStatus, priority: int) -> str:
     cursor = None
     while True:
         conversations = get_client().conversations_list(types=["public_channel", "private_channel"], cursor=cursor)
-        if not conversations.data["ok"]:
+        data = conversations.data
+        assert isinstance(data, dict)
+        if not data["ok"]:
             break
-        for channel in conversations.data["channels"]:
+        for channel in data["channels"]:
             if channel["name"] == channel_name:
                 return channel["id"]
-        cursor = conversations.data.get("response_metadata", {}).get("next_cursor")
+        cursor = data.get("response_metadata", {}).get("next_cursor")
         if not cursor:
             break
     raise RuntimeError(f"Slack channel not found: {channel_name}")

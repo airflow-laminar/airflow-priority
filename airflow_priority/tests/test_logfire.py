@@ -7,14 +7,14 @@ def test_logfire(airflow_config, dag_run):
     with (
         patch("airflow_priority.plugins.logfire.get_gauges") as mock_gauges,
     ):
-        mock_gauges.return_value = {("testing", 1): MagicMock()}
+        mock_gauges.return_value = {("running", 1): MagicMock()}
 
         from airflow_priority.plugins.logfire import send_metric
 
         # Call the function to test
-        send_metric("UNIT TEST", 1, "testing", {})
+        send_metric("UNIT TEST", 1, "running", {})
 
-        assert mock_gauges.return_value[("testing", 1)].set.call_count == 1
+        assert mock_gauges.return_value[("running", 1)].set.call_count == 1
 
 
 def test_logfire_sequence(airflow_config, dag_run):

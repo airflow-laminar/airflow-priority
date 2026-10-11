@@ -25,4 +25,4 @@ def on_dag_run_failed(dag_run: DagRun, msg: str):
 
 class AirflowPriorityPlugin(AirflowPlugin):
     name = "AirflowPriorityPlugin"
-    listeners: ClassVar[list] = [sys.modules[__name__]]
+    listeners: ClassVar[list] = [sys.modules[__name__]]  # ty: ignore[invalid-attribute-override]

@@ -24,6 +24,7 @@ def test_config_loading_via_airflow_config(airflow_config, dag_run):
     from airflow_config import Configuration
 
     config = Configuration.load("config", "config", basepath=str(dags_path), _offset=4)
+    assert config.extensions is not None
     ret = getattr(getattr(config.extensions.get("priority", None), "slack", None), "token", None)
     assert ret == "abc"
 

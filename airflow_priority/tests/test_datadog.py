@@ -1,6 +1,7 @@
 from datetime import UTC, datetime
 from unittest.mock import MagicMock, patch
 
+from datadog_api_client.v2.model.metric_intake_type import MetricIntakeType
 from datadog_api_client.v2.model.metric_payload import MetricPayload
 from datadog_api_client.v2.model.metric_point import MetricPoint
 from datadog_api_client.v2.model.metric_resource import MetricResource
@@ -22,7 +23,7 @@ def test_datadog(airflow_config, dag_run):
         from airflow_priority.plugins.datadog import send_metric
 
         # Call the function to test
-        send_metric("UNIT TEST", 1, "testing", {})
+        send_metric("UNIT TEST", 1, "running", {})
 
         # Assert that the ApiClient was called
         assert mock_metrics_api.return_value.submit_metrics.call_count == 1
@@ -30,7 +31,7 @@ def test_datadog(airflow_config, dag_run):
             body=MetricPayload(
                 series=[
                     MetricSeries(
-                        metric="custom.metric.p1.testing",
+                        metric="custom.metric.p1.running",
                         points=[
                             MetricPoint(
                                 timestamp=int(now.timestamp()),
@@ -39,7 +40,7 @@ def test_datadog(airflow_config, dag_run):
                         ],
                         resources=[MetricResource(name="UNIT TEST", type="dag")],
                         tags=["application:airflow", "priority:1", "dag:UNIT TEST", "environment:test"],
-                        type=3,
+                        type=MetricIntakeType.GAUGE,
                     )
                 ]
             )
