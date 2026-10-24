@@ -1,21 +1,27 @@
 import os
 from collections.abc import Callable
+from datetime import datetime
 from functools import lru_cache
+from html import escape
 from pathlib import Path
 from types import MappingProxyType
 from typing import TYPE_CHECKING, Any, Literal, cast
+from urllib.parse import quote
 
 if TYPE_CHECKING:
     from airflow.models.dagrun import DagRun
 
 __all__ = (
     "AirflowPriorityConfigurationOptionNotFound",
+    "BackendContext",
     "BackendSpecificDagContext",
     "DagContextIdentifier",
     "DagStatus",
     "PriorityTags",
     "SendMetricFunction",
+    "format_message",
     "get_config_option",
+    "get_run_details",
     "has_priority_tag",
 )
 
@@ -23,7 +29,8 @@ __all__ = (
 DagStatus = Literal["running", "success", "failed"]
 BackendSpecificDagContext = Any
 DagContextIdentifier = tuple[str, int]  # (backend, dag_instance_id)
-SendMetricFunction = Callable[[str, int, DagStatus, dict[DagStatus, BackendSpecificDagContext]], None]
+BackendContext = dict[str, Any]
+SendMetricFunction = Callable[[str, int, DagStatus, BackendContext], None]
 
 PriorityTags = MappingProxyType(
     {
@@ -37,6 +44,49 @@ PriorityTags = MappingProxyType(
 
 
 class AirflowPriorityConfigurationOptionNotFound(RuntimeError): ...
+
+
+def get_run_details(dag_run: "DagRun") -> dict[str, str]:
+    """Return run identifiers, logical date, and the Airflow 2/3 UI URL."""
+    dag_id = cast(str, dag_run.dag_id)
+    details = {"dag_id": dag_id}
+    logical_date = getattr(dag_run, "logical_date", None)
+    if isinstance(logical_date, datetime):
+        details["logical_date"] = logical_date.isoformat()
+    run_id = getattr(dag_run, "run_id", None)
+    if not isinstance(run_id, str) or not run_id:
+        return details
+    details["run_id"] = run_id
+    try:
+        from airflow import __version__
+        from airflow.configuration import conf
+    except ImportError:
+        return details
+    airflow3 = int(__version__.split(".")[0]) >= 3
+    base_url = conf.get("api" if airflow3 else "webserver", "base_url", fallback=None)
+    if base_url:
+        dag_id = quote(dag_id, safe="")
+        run_id = quote(run_id, safe="")
+        suffix = f"/runs/{run_id}" if airflow3 else f"/grid?dag_run_id={run_id}"
+        details["url"] = f"{base_url.rstrip('/')}/dags/{dag_id}{suffix}"
+    return details
+
+
+def format_message(dag_id: str, priority: int, tag: DagStatus, context: BackendContext, *, html: bool = False) -> str:
+    """Format a notification with available run metadata."""
+    parts = [f'A P{priority} DAG "{dag_id}" has been marked "{tag}"']
+    run = context.get("run", {})
+    for label, key in (("Run", "run_id"), ("Logical date", "logical_date")):
+        if run.get(key):
+            parts.append(f"{label}: {run[key]}")
+    if html:
+        parts = [escape(part) for part in parts]
+        if run.get("url"):
+            parts.append(f'<a href="{escape(run["url"], quote=True)}">Open DAG run</a>')
+        return "<br/>".join(parts)
+    if run.get("url"):
+        parts.append(f"Run URL: {run['url']}")
+    return "\n".join(parts)
 
 
 @lru_cache

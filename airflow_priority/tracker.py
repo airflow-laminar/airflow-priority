@@ -7,11 +7,11 @@ if TYPE_CHECKING:
 
 from .common import (
     AirflowPriorityConfigurationOptionNotFound,
-    BackendSpecificDagContext,
+    BackendContext,
     DagContextIdentifier,
-    DagStatus,
     SendMetricFunction,
     get_config_option,
+    get_run_details,
     has_priority_tag,
 )
 
@@ -20,7 +20,7 @@ _log = getLogger(__name__)
 
 class Tracker:
     def __init__(self):
-        self.dagruns: dict[DagContextIdentifier, dict[DagStatus, BackendSpecificDagContext]] = {}
+        self.dagruns: dict[DagContextIdentifier, BackendContext] = {}
         self.backends: dict[str, SendMetricFunction] = {}
         self.thresholds: dict[str, int] = {}
 
@@ -80,6 +80,7 @@ class Tracker:
                 self._setup_context(backend, cast(int, dag_run.id))
 
                 try:
+                    self.dagruns[(backend, cast(int, dag_run.id))]["run"] = get_run_details(dag_run)
                     sender(dag_id, priority, "running", self.dagruns[(backend, cast(int, dag_run.id))])
                 except Exception:  # noqa: BLE001
                     _log.exception(f"Failed to send running metric for DAG {dag_id} with priority {priority} on backend {backend}")
@@ -100,6 +101,7 @@ class Tracker:
                 self._setup_context(backend, cast(int, dag_run.id))
 
                 try:
+                    self.dagruns[(backend, cast(int, dag_run.id))]["run"] = get_run_details(dag_run)
                     sender(dag_id, priority, "success", self.dagruns[(backend, cast(int, dag_run.id))])
                 except Exception:  # noqa: BLE001
                     _log.exception(f"Failed to send success metric for DAG {dag_id} with priority {priority} on backend {backend}")
@@ -119,6 +121,7 @@ class Tracker:
                 self._setup_context(backend, cast(int, dag_run.id))
 
                 try:
+                    self.dagruns[(backend, cast(int, dag_run.id))]["run"] = get_run_details(dag_run)
                     sender(dag_id, priority, "failed", self.dagruns[(backend, cast(int, dag_run.id))])
                 except Exception:  # noqa: BLE001
                     _log.exception(f"Failed to send failed metric for DAG {dag_id} with priority {priority} on backend {backend}")

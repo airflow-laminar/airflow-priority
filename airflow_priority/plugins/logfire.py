@@ -1,9 +1,8 @@
 from functools import lru_cache
-from typing import Any
 
 import logfire
 
-from ..common import DagStatus, get_config_option
+from ..common import BackendContext, DagStatus, get_config_option
 from ..constants import LogfireDefaultMetric
 
 __all__ = ("send_metric",)
@@ -42,7 +41,7 @@ def get_gauges():
     }
 
 
-def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: BackendContext) -> None:
     gauges = get_gauges()
 
     gauges[(tag, priority)].set(1)

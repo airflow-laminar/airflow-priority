@@ -1,6 +1,5 @@
 from datetime import UTC, datetime
 from functools import lru_cache
-from typing import Any
 
 from datadog_api_client import ApiClient, Configuration
 from datadog_api_client.v2.api.metrics_api import MetricsApi
@@ -10,7 +9,7 @@ from datadog_api_client.v2.model.metric_point import MetricPoint
 from datadog_api_client.v2.model.metric_resource import MetricResource
 from datadog_api_client.v2.model.metric_series import MetricSeries
 
-from ..common import DagStatus, get_config_option
+from ..common import BackendContext, DagStatus, get_config_option
 from ..constants import DataDogDefaultMetric
 
 __all__ = ("send_metric",)
@@ -24,7 +23,7 @@ def get_configuration() -> Configuration:
     )
 
 
-def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: BackendContext) -> None:
     metric = get_config_option("datadog", "metric", default=DataDogDefaultMetric)
     tags = get_config_option("datadog", "tags", required=False, default="")
     tags = tags.split(",") if isinstance(tags, str) else tags

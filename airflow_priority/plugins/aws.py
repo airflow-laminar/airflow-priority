@@ -1,12 +1,11 @@
 import os
 from datetime import UTC, datetime
 from functools import lru_cache
-from typing import Any
 
 from boto3 import client as Boto3Client
 from botocore.config import Config
 
-from ..common import DagStatus, get_config_option
+from ..common import BackendContext, DagStatus, get_config_option
 from ..constants import AWSDefaultMetric, AWSDefaultNamespace
 
 __all__ = ("send_metric",)
@@ -20,7 +19,7 @@ def get_client():
     )
 
 
-def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: BackendContext) -> None:
     namespace = get_config_option("aws", "namespace", default=AWSDefaultNamespace)
     metric = get_config_option("aws", "metric", default=AWSDefaultMetric)
 

@@ -1,10 +1,10 @@
 from functools import lru_cache
+from html import escape
 from ssl import CERT_NONE, create_default_context
-from typing import Any
 
 from slack_sdk import WebClient
 
-from ..common import DagStatus, get_config_option
+from ..common import BackendContext, DagStatus, format_message, get_config_option
 
 __all__ = ("send_metric",)
 
@@ -50,7 +50,7 @@ def get_channel_id(tag: DagStatus, priority: int) -> str:
     raise RuntimeError(f"Slack channel not found: {channel_name}")
 
 
-def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: BackendContext) -> None:
     send_running = get_config_option("slack", "send_running", default="false").lower() == "true"
     send_success = get_config_option("slack", "send_success", default="false").lower() == "true"
     update_message = get_config_option("slack", "update_message", default="false").lower() == "true"
@@ -69,7 +69,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagSta
             attachments=[
                 {
                     "mrkdwn_in": ["text"],
-                    "text": f'A P{priority} DAG "{dag_id}" has been marked "{tag}"',
+                    "text": escape(format_message(dag_id, priority, tag, context), quote=False),
                     "color": running_color if tag == "running" else failed_color if tag == "failed" else success_color,
                 }
             ],
@@ -89,7 +89,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagSta
                     {
                         "mrkdwn_in": ["text"],
                         "color": running_color if tag == "running" else success_color,
-                        "text": f'A P{priority} DAG "{dag_id}" has been marked "{tag}"',
+                        "text": escape(format_message(dag_id, priority, tag, context), quote=False),
                     }
                 ],
             )
