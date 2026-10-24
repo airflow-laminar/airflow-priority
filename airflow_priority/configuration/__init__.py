@@ -1,6 +1,7 @@
 from .aws import *
 from .datadog import *
 from .discord import *
+from .email import *
 from .logfire import *
 from .newrelic import *
 from .opsgenie import *

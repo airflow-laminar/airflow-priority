@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from .aws import AwsConfiguration
 from .datadog import DataDogConfiguration
 from .discord import DiscordConfiguration
+from .email import EmailConfiguration
 from .logfire import LogfireConfiguration
 from .newrelic import NewRelicConfiguration
 from .opsgenie import OpsGenieConfiguration
@@ -17,6 +18,7 @@ class PriorityConfiguration(BaseModel):
     aws: AwsConfiguration | None = None
     datadog: DataDogConfiguration | None = None
     discord: DiscordConfiguration | None = None
+    email: EmailConfiguration | None = None
     logfire: LogfireConfiguration | None = None
     newrelic: NewRelicConfiguration | None = None
     opsgenie: OpsGenieConfiguration | None = None

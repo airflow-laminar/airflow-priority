@@ -153,6 +153,13 @@ tracker_inst.register(
 )
 
 tracker_inst.register(
+    backend="email",
+    necessary_configs=[
+        ("email", "to"),
+    ],
+)
+
+tracker_inst.register(
     backend="logfire",
     necessary_configs=[
         ("logfire", "token"),

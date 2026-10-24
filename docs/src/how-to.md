@@ -26,7 +26,7 @@ dag = DAG(
 )
 ```
 
-Install the integration extra for each configured backend in the Airflow
+Install the integration extras required by configured backends in the Airflow
 environment. Set a global threshold in `airflow.cfg`, then override it for
 individual backends:
 
@@ -47,6 +47,37 @@ threshold = 3
 This routes P1/P2 events to both backends and P3 events only to Datadog.
 A threshold filters only its own backend. Choose destinations in the
 [backend reference](API.md#backends).
+
+## How to send priority alerts by email
+
+Configure Airflow's email backend and SMTP credentials as for ordinary Airflow
+email notifications. Add recipients and a threshold in `airflow.cfg`:
+
+```ini
+[priority.email]
+to = ops@example.com, backup@example.com
+threshold = 2
+send_success = true
+```
+
+This sends failures and successes for P1 and P2 DAGs. Leave `send_success` unset
+to send only failures. Set `send_running = true` to include running events.
+
+For `airflow-config`, use the email configuration model:
+
+```yaml
+# @package _global_
+_target_: airflow_config.Configuration
+extensions:
+  priority:
+    _target_: airflow_priority.PriorityConfiguration
+    email:
+      to: [ops@example.com, backup@example.com]
+      threshold: 2
+      send_success: true
+```
+
+Restart the Airflow scheduler after changing backend configuration.
 
 ## How to inject configuration through environment variables
 
