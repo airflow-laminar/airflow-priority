@@ -23,6 +23,8 @@ Backend guides cover [Slack](docs/src/slack.md), [Discord](docs/src/discord.md),
 [Symphony](docs/src/symphony.md), [Datadog](docs/src/datadog.md),
 [New Relic](docs/src/newrelic.md), [Logfire](docs/src/logfire.md), and
 [AWS CloudWatch](docs/src/cloudwatch.md).
+The [email guide](docs/src/how-to.md#how-to-send-priority-alerts-by-email) uses
+Airflow's configured email backend.
 
 Published documentation:
 [airflow-laminar.github.io/airflow-priority](https://airflow-laminar.github.io/airflow-priority/).
