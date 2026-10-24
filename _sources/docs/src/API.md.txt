@@ -57,9 +57,9 @@ are skipped for that backend only.
 
 ## Backends
 
-Each configured backend also needs its package extra installed. Registration
+Backends with an extra listed below need that extra installed. Registration
 requires the options listed below. `PriorityConfiguration` contains optional
-fields named `aws`, `datadog`, `discord`, `logfire`, `newrelic`, `opsgenie`,
+fields named `aws`, `datadog`, `discord`, `email`, `logfire`, `newrelic`, `opsgenie`,
 `pagerduty`, `slack`, and `symphony`; each defaults to `None`.
 
 | Backend        | Extra       | Required registration options                                                                             | Configuration model      |
@@ -67,6 +67,7 @@ fields named `aws`, `datadog`, `discord`, `logfire`, `newrelic`, `opsgenie`,
 | AWS CloudWatch | `aws`       | `region`                                                                                                  | `AwsConfiguration`       |
 | Datadog        | `datadog`   | `api_key`                                                                                                 | `DataDogConfiguration`   |
 | Discord        | `discord`   | `token`, `channel`                                                                                        | `DiscordConfiguration`   |
+| Email          | None        | `to`                                                                                                      | `EmailConfiguration`     |
 | Logfire        | `logfire`   | `token`                                                                                                   | `LogfireConfiguration`   |
 | New Relic      | `newrelic`  | `api_key`                                                                                                 | `NewRelicConfiguration`  |
 | Opsgenie       | `opsgenie`  | `api_key`                                                                                                 | `OpsGenieConfiguration`  |
@@ -88,6 +89,12 @@ These adjustments depend on events seen in that process and do not establish
 a durable global count. The state suffix is `success`, not `succeeded`.
 
 ### Messaging backends
+
+Email uses Airflow's configured email backend, SMTP settings, and email connection.
+`EmailConfiguration.to` accepts a recipient string or list; INI values use Airflow's
+comma- or semicolon-separated recipient syntax. `send_running` and `send_success`
+default to false. Failures always send; running and success events send when enabled.
+Each email contains the DAG ID, priority, and state. HTML content escapes the DAG ID.
 
 Slack, Discord, and Symphony expose `send_running`, `send_success`, and
 `update_message`, all defaulting to false. Only failures create notifications
