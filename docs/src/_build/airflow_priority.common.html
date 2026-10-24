@@ -264,8 +264,14 @@
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_config_option</span></code>(section[, key, required, ...])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">format_message</span></code>(dag_id, priority, tag, context, *)</p></td>
+<td><p>Format a notification with available run metadata.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_config_option</span></code>(section[, key, required, ...])</p></td>
 <td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_run_details</span></code>(dag_run)</p></td>
+<td><p>Return run identifiers, logical date, and the Airflow 2/3 UI URL.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_priority_tag</span></code>(dag_run)</p></td>
 <td><p></p></td>

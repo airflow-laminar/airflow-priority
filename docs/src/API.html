@@ -486,6 +486,17 @@ not stop later backends. There is no tracker-managed delivery queue or retry.</p
 limits, and <code class="docutils literal notranslate"><span class="pre">dagruns</span></code> maps <code class="docutils literal notranslate"><span class="pre">(backend,</span> <span class="pre">DagRun.id)</span></code> to backend context dictionaries.
 The dictionaries are process-local and not persisted. Most senders clear the
 context dictionary after success; tracker entries themselves remain in memory.</p>
+<p>Before each delivery, <code class="docutils literal notranslate"><span class="pre">context[&quot;run&quot;]</span></code> contains a fresh mapping with <code class="docutils literal notranslate"><span class="pre">dag_id</span></code> and,
+when available, <code class="docutils literal notranslate"><span class="pre">run_id</span></code>, ISO-formatted <code class="docutils literal notranslate"><span class="pre">logical_date</span></code>, and <code class="docutils literal notranslate"><span class="pre">url</span></code>. Notification
+backends include these details in their messages. Email and Symphony use escaped
+HTML with a link; PagerDuty uses <code class="docutils literal notranslate"><span class="pre">custom_details</span></code> and an event link; Opsgenie uses
+its description and details fields. Metric backends also receive metadata through context.</p>
+<p>Run URLs preserve deployment prefixes and encode identifiers. Airflow 2 uses
+<code class="docutils literal notranslate"><span class="pre">[webserver]</span> <span class="pre">base_url</span></code> with <code class="docutils literal notranslate"><span class="pre">/dags/&lt;dag_id&gt;/grid?dag_run_id=&lt;run_id&gt;</span></code>; Airflow 3
+uses <code class="docutils literal notranslate"><span class="pre">[api]</span> <span class="pre">base_url</span></code> with <code class="docutils literal notranslate"><span class="pre">/dags/&lt;dag_id&gt;/runs/&lt;run_id&gt;</span></code>. A missing base URL or
+run ID omits the link. A missing logical date omits that field.</p>
+<p><code class="docutils literal notranslate"><span class="pre">get_run_details(dag_run)</span></code> constructs this mapping. <code class="docutils literal notranslate"><span class="pre">format_message(dag_id,</span> <span class="pre">priority,</span> <span class="pre">tag,</span> <span class="pre">context,</span> <span class="pre">html=False)</span></code> formats the available details and accepts
+an ordinary backend context with no run metadata.</p>
 <p>Each sender has signature
 <code class="docutils literal notranslate"><span class="pre">send_metric(dag_id,</span> <span class="pre">priority,</span> <span class="pre">tag,</span> <span class="pre">context)</span></code> and may mutate its context. The
 singleton <code class="docutils literal notranslate"><span class="pre">tracker_inst</span></code> attempts to register all supported backends when the

@@ -256,6 +256,9 @@
     <a href="#how-to-alert-on-supervisor-nomad-and-cron-failures">How to alert on Supervisor, Nomad, and Cron failures</a>
   </li>
   <li class="fd-toc-item" data-depth="1">
+    <a href="#how-to-link-alerts-to-the-airflow-ui">How to link alerts to the Airflow UI</a>
+  </li>
+  <li class="fd-toc-item" data-depth="1">
     <a href="#how-to-troubleshoot-missing-alerts">How to troubleshoot missing alerts</a>
   </li>
 </ul>
@@ -415,6 +418,25 @@ or its process diagnostics. Priority listeners observe DAG-run state and send
 the DAG ID, priority, and state. They do not forward workload stdout/stderr or
 include task exception traces in backend messages.</p>
 </section>
+<section id="how-to-link-alerts-to-the-airflow-ui">
+<h2>How to link alerts to the Airflow UI<a class="headerlink" href="#how-to-link-alerts-to-the-airflow-ui" title="Link to this heading">¶</a></h2>
+<p>Set the externally reachable UI URL, including any reverse-proxy path prefix.
+For Airflow 2, configure:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[webserver]</span>
+<span class="na">base_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://airflow.example.com/airflow</span>
+</pre></div>
+</div>
+<p>For Airflow 3, configure:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[api]</span>
+<span class="na">base_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://airflow.example.com/airflow</span>
+</pre></div>
+</div>
+<p>Restart the scheduler after deployment configuration changes. Notifications
+include the run ID, logical date when available, and a link to that specific
+run. Existing priority tags, thresholds, and destination settings still apply.</p>
+<p>For a custom sender, read <code class="docutils literal notranslate"><span class="pre">context[&quot;run&quot;]</span></code> or use <code class="docutils literal notranslate"><span class="pre">format_message()</span></code> from
+<code class="docutils literal notranslate"><span class="pre">airflow_priority</span></code>. The four-argument sender signature remains unchanged.</p>
+</section>
 <section id="how-to-troubleshoot-missing-alerts">
 <h2>How to troubleshoot missing alerts<a class="headerlink" href="#how-to-troubleshoot-missing-alerts" title="Link to this heading">¶</a></h2>
 <p>Check these conditions in order:</p>
@@ -479,6 +501,9 @@ Use a test DAG and destination when manually changing state. See the
   </li>
   <li class="fd-toc-item" data-depth="1">
     <a href="#how-to-alert-on-supervisor-nomad-and-cron-failures">How to alert on Supervisor, Nomad, and Cron failures</a>
+  </li>
+  <li class="fd-toc-item" data-depth="1">
+    <a href="#how-to-link-alerts-to-the-airflow-ui">How to link alerts to the Airflow UI</a>
   </li>
   <li class="fd-toc-item" data-depth="1">
     <a href="#how-to-troubleshoot-missing-alerts">How to troubleshoot missing alerts</a>

@@ -8,7 +8,9 @@
 
    .. autosummary::
    
+      format_message
       get_config_option
+      get_run_details
       has_priority_tag
    
    .. rubric:: Exceptions

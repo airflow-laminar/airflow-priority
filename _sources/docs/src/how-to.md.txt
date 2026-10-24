@@ -177,6 +177,30 @@ or its process diagnostics. Priority listeners observe DAG-run state and send
 the DAG ID, priority, and state. They do not forward workload stdout/stderr or
 include task exception traces in backend messages.
 
+## How to link alerts to the Airflow UI
+
+Set the externally reachable UI URL, including any reverse-proxy path prefix.
+For Airflow 2, configure:
+
+```ini
+[webserver]
+base_url = https://airflow.example.com/airflow
+```
+
+For Airflow 3, configure:
+
+```ini
+[api]
+base_url = https://airflow.example.com/airflow
+```
+
+Restart the scheduler after deployment configuration changes. Notifications
+include the run ID, logical date when available, and a link to that specific
+run. Existing priority tags, thresholds, and destination settings still apply.
+
+For a custom sender, read `context["run"]` or use `format_message()` from
+`airflow_priority`. The four-argument sender signature remains unchanged.
+
 ## How to troubleshoot missing alerts
 
 Check these conditions in order:
