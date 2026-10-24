@@ -1,9 +1,8 @@
 from functools import lru_cache
-from typing import Any
 
 from pagerduty import EventsApiV2Client
 
-from ..common import DagStatus, get_config_option
+from ..common import BackendContext, DagStatus, get_config_option
 from ..constants import PagerDutyDefaultSource
 
 __all__ = ("send_metric",)
@@ -23,7 +22,7 @@ _severity_map: dict[int, str] = {
 }
 
 
-def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: BackendContext) -> None:
     client = get_client()
 
     summary = f'A P{priority} DAG "{dag_id}" has been marked "{tag}"'
@@ -39,7 +38,13 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagSta
         source = source.format(priority=priority)
 
     if tag == "failed":
-        create_dedup_key = client.trigger(summary=summary, source=source, severity=_severity_map[priority])
+        create_dedup_key = client.trigger(
+            summary=summary,
+            source=source,
+            severity=_severity_map[priority],
+            custom_details=context.get("run", {}),
+            links=[{"href": context["run"]["url"], "text": "Open DAG run"}] if context.get("run", {}).get("url") else [],
+        )
         context[tag] = create_dedup_key
 
     # Update the failure message

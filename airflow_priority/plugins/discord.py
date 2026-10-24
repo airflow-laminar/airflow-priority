@@ -2,11 +2,10 @@ from asyncio import sleep
 from functools import lru_cache
 from queue import Queue
 from threading import Thread
-from typing import Any
 
 from discord import Client, Color, Embed, Intents, Message, TextChannel
 
-from ..common import DagStatus, get_config_option
+from ..common import BackendContext, DagStatus, format_message, get_config_option
 
 __all__ = ("send_metric",)
 
@@ -66,7 +65,7 @@ def get_channel_id(tag: DagStatus, priority: int) -> int:
     return int(channel_name)
 
 
-def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: BackendContext) -> None:
     send_running = get_config_option("discord", "send_running", default="false").lower() == "true"
     send_success = get_config_option("discord", "send_success", default="false").lower() == "true"
     update_message = get_config_option("discord", "update_message", default="false").lower() == "true"
@@ -86,7 +85,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagSta
         client_out_queue.put(
             (
                 channel,
-                f'A P{priority} DAG "{dag_id}" has been marked "{tag}"',
+                format_message(dag_id, priority, tag, context),
                 None,
                 running_color if tag == "running" else failed_color if tag == "failed" else success_color,
             )
@@ -101,7 +100,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagSta
             (
                 channel,
                 failed_context,
-                f'A P{priority} DAG "{dag_id}" has been marked "{tag}"',
+                format_message(dag_id, priority, tag, context),
                 running_color if tag == "running" else success_color,
             )
         )

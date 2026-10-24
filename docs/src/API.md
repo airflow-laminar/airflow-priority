@@ -148,6 +148,20 @@ limits, and `dagruns` maps `(backend, DagRun.id)` to backend context dictionarie
 The dictionaries are process-local and not persisted. Most senders clear the
 context dictionary after success; tracker entries themselves remain in memory.
 
+Before each delivery, `context["run"]` contains a fresh mapping with `dag_id` and,
+when available, `run_id`, ISO-formatted `logical_date`, and `url`. Notification
+backends include these details in their messages. Email and Symphony use escaped
+HTML with a link; PagerDuty uses `custom_details` and an event link; Opsgenie uses
+its description and details fields. Metric backends also receive metadata through context.
+
+Run URLs preserve deployment prefixes and encode identifiers. Airflow 2 uses
+`[webserver] base_url` with `/dags/<dag_id>/grid?dag_run_id=<run_id>`; Airflow 3
+uses `[api] base_url` with `/dags/<dag_id>/runs/<run_id>`. A missing base URL or
+run ID omits the link. A missing logical date omits that field.
+
+`get_run_details(dag_run)` constructs this mapping. `format_message(dag_id, priority, tag, context, html=False)` formats the available details and accepts
+an ordinary backend context with no run metadata.
+
 Each sender has signature
 `send_metric(dag_id, priority, tag, context)` and may mutate its context. The
 singleton `tracker_inst` attempts to register all supported backends when the

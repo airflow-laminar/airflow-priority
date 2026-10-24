@@ -4,7 +4,7 @@ from typing import Any
 
 from httpx import post
 
-from ..common import DagStatus, get_config_option
+from ..common import BackendContext, DagStatus, format_message, get_config_option
 
 __all__ = ("send_metric",)
 
@@ -71,7 +71,7 @@ def get_room_id(tag: DagStatus, priority: int) -> str:
     raise RuntimeError(f"Symphony room not found: {channel_name}")
 
 
-def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagStatus, Any]) -> None:
+def send_metric(dag_id: str, priority: int, tag: DagStatus, context: BackendContext) -> None:
     send_running = get_config_option("symphony", "send_running", default="false").lower() == "true"
     send_success = get_config_option("symphony", "send_success", default="false").lower() == "true"
     update_message = get_config_option("symphony", "update_message", default="false").lower() == "true"
@@ -80,7 +80,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagSta
         # Send a message to the corresponding channel
         context[tag] = post(
             url=get_config_options()["message_create_url"].replace("SID", get_room_id(tag, priority)),
-            json={"message": f'<messageML>A P{priority} DAG "{dag_id}" has been marked "{tag}"</messageML>'},
+            json={"message": f"<messageML>{format_message(dag_id, priority, tag, context, html=True)}</messageML>"},
             headers=get_headers(),
         )
 
@@ -89,7 +89,7 @@ def send_metric(dag_id: str, priority: int, tag: DagStatus, context: dict[DagSta
         # Update the message for the failed DAG
         context["failed"] = post(
             url=get_config_options()["message_create_url"].replace("SID", get_room_id("failed", priority)),
-            json={"message": f'<messageML>A P{priority} DAG "{dag_id}" has been marked "{tag}"</messageML>'},
+            json={"message": f"<messageML>{format_message(dag_id, priority, tag, context, html=True)}</messageML>"},
             headers=get_headers(),
         )
 
