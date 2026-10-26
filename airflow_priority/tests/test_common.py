@@ -11,3 +11,7 @@ def test_get_config_option(airflow_config):
 
 def test_get_config_option_alt(airflow_config_alt):
     assert get_config_option("datadog", "api_key") == "datadog_api_key"
+
+
+def test_get_config_option_alt_with_default(airflow_config_alt):
+    assert get_config_option("datadog", "host", default="https://default.host") == "https://datadog.host"

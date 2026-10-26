@@ -115,8 +115,10 @@ def get_config_option(section, key="", required=True, default=None):
 
         if key:
             try:
-                config_option = airflow.configuration.conf.get(f"priority.{section}", key, fallback=default)
+                config_option = airflow.configuration.conf.get(f"priority.{section}", key, fallback=None)
             except airflow.exceptions.AirflowConfigException:
+                config_option = None
+            if not config_option:
                 try:
                     # Try nested variant
                     config_option = airflow.configuration.conf.get("priority", f"{section}_{key}", fallback=default)
