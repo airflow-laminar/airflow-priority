@@ -91,6 +91,13 @@ def dag_run_p3():
     return dag_run
 
 
+@pytest.fixture(autouse=True)
+def clear_config_option_cache():
+    from airflow_priority.common import get_config_option
+
+    get_config_option.cache_clear()
+
+
 @pytest.fixture(scope="function", autouse=True)
 def new_tracker():
     from airflow_priority.tracker import Tracker
